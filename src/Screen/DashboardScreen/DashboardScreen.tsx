@@ -1,0 +1,51 @@
+import React, {useEffect, useState} from "react";
+import "./DashboardScreen.css"
+import {ReadResearchCarousel} from "../../Components/ReadResearchCarousel/ReadResearchCarousel";
+import {
+    Switch,
+    Route,
+    useRouteMatch
+} from "react-router-dom";
+import {SelectResearch} from "../../Components/SelectResearch/SelectResearch";
+import {ResearchList} from "../../Components/ResearchList/ResearchList";
+import {FirestoreManager} from "../../utils/Services/FirebaseManager/FirestoreManager";
+import {generateFakeData} from "../../utils/Data/FakeResearchData";
+import {Research} from "../../utils/Data/ResearchData";
+import firebase from "firebase";
+import {ReduxState} from "../../redux/reducer";
+import {useSelector} from "react-redux";
+import {CircularProgress} from "@material-ui/core";
+export const DashboardScreen = () => {
+    const { path } = useRouteMatch();
+    const [loading, setLoading] = useState(true);
+    const firestoreManager = new FirestoreManager();
+    useEffect(() => {
+        /* TODO - Find ways to reduce requests to firestore */
+        firestoreManager.read().then(() => {
+            setLoading(false);
+        })
+    }, [])
+    /* TODO - ADD LOADING */
+    const _renderPage = () => {
+        if (loading) {
+            return <div className={"loadingIndicatorDiv"}>
+                <CircularProgress />
+            </div>
+        } else {
+            return (
+                <>
+                    <ResearchList/>
+                    <Switch>
+                        <Route exact path={path} component={SelectResearch}/>
+                        <Route path={`${path}/research/:id`} component={ReadResearchCarousel}/>
+                    </Switch>
+                    </>
+            )
+        }
+    }
+    return (
+        <div className={"mainContainerDashboardScreen"}>
+            {_renderPage()}
+        </div>
+    )
+}

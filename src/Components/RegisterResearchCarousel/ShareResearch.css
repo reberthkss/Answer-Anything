@@ -1,0 +1,22 @@
+.shareResearchContainer {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: #3F51B5 !important;
+}
+
+.shareMessageContainer {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    background-color: #ffa100;
+}
+
+.shareMessageText {
+    width: 100%;
+    text-align: center;
+    padding: 20px 0;
+}

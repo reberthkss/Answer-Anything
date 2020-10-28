@@ -1,0 +1,48 @@
+
+.optionQuestionDiv {
+    height: 38px;
+    width: 100%;
+    background-color: #ffa100;
+}
+
+.optionQuestionEnabled {
+    width: 95%;
+    height: 100%;
+    border: none;
+    background-color: transparent;
+    cursor: auto;
+}
+
+.optionQuestionDisabled {
+    height: 100%;
+    width: 100%;
+    background-color: red;
+    cursor: pointer;
+}
+
+.optionQuestionEnabledContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.spanError {
+    font-size: 10px;
+    color: red;
+    font-weight: bold;
+}
+
+.optionQuestionDisabledDiv {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+.deleteOptionButton {
+    height: 100%;
+    width: 10%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}

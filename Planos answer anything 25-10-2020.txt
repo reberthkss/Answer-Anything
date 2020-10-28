@@ -1,0 +1,40 @@
+Elaborar fluxo para resposta das pesquisas:
+   -> Aonde os dados serão salvos?
+   -> Qual melhor jeito de salvar os dados? Banco de dados ou analytics?
+
+
+
+=> Criar Classe que vai armazenar os dados referentes Às respostas dos usuarios
+   -> Criar função parse e from (mandar e receber do firebase)
+   
+=> Criar uma sub-collection que vai ser responsavel por armazenar as respostas dos usuarios
+
+Obter pesquisa do bancode dados -- OK
+Redirecionar para 404 page quando o id da pesquisa for invalido -- OK
+
+Registrar cada resposta selecionada (ou seja, não esperar o usuario responder todas as perguntas para saber enviar as respostas)
+
+Redux =>
+
+   -> Quando o usuário não finalizar uma resposta, salvar no redux que a pesquisa está incompleta. Salvar os seguintes itens:
+        * Em qual questão o usuário parou;
+		
+
+Site => 
+   -> /researchs
+       * Adicionar o logo do projeto para ser clicável e levar até a HOMEPAGE 
+		
+		
+		
+		
+Share Social media => Think on ways to generate share links
+
+todos =>
+
+AnswerResearchCarousel. linha 33 /* TODO - start questionnaire (register a new answer with given user data) */
+Loading. linha 7 /*TODO - Simplify spring refs generation*/
+AppToolbar. linha 58 /*TODO - Get authenticated user*/
+ReadResearchCarousel.linha 35 /*TODO - Refactor this*/
+AnswerResearch. linha 25 /*TODO - MAKE A CALL TO REGISTER A ANSWER*/
+FirestoreManager. linha 26 /*TODO - UPDATE THIS TO CHOOSE COLLECTION*/
+Overview => Check if is necessary

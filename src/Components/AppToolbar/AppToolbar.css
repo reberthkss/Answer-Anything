@@ -1,0 +1,46 @@
+.popOver {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 200px;
+    padding: 5px 0;
+}
+
+.signOut {
+    display: flex;
+    flex-direction: row;
+    cursor: pointer;
+    width: 200px;
+}
+
+.signOut:hover {
+    text-decoration: underline;
+}
+
+.registerNewResearchDiv {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0px 10px;
+}
+
+.registerNewResearchText {
+    display: flex;
+    background-color: #039be5;
+    elevation: 100deg;
+    cursor: pointer;
+    font-weight: 600;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+    padding: 15px 5px;
+    border-radius: 2px;
+    align-items: center;
+}
+
+.registerNewResearchText:hover {
+    transform: translate(0px, -2.5px);
+}
+
+.link {
+    text-decoration: none;
+}

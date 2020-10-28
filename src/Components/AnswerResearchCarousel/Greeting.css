@@ -1,0 +1,58 @@
+.greetingRootContainer {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.greetingTitleContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #61dafb;
+    height: 100%;
+}
+
+.greetingDescriptionContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #ffa100;
+    height: 100%;
+}
+
+.greetingUserDataContainer {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 300px;
+    background-color: #3F51B5;
+    height: 100%;
+}
+
+.greetingNextSectionContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+    height: 100%;
+}
+
+
+.startAnswerButton {
+    background-color: #fff;
+    padding: 20px 100px;
+    border: solid 1px #039be5;
+    cursor: pointer;
+}
+
+.startAnswerButton:hover {
+    border: solid 1px hotpink;
+}
+
+.inputContainer {
+    width: 100%;
+    margin: 10px 10px;
+}

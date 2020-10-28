@@ -1,0 +1,6 @@
+export enum ActionsTypes {
+    SAVE_AUTHENTICATED_USER,
+    SAVE_RESEARCHS,
+    SAVE_RESEARCH,
+    CLEAR_SAVED_USER,
+}

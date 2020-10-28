@@ -1,0 +1,25 @@
+.mainGridContainer {
+    height: 100%;
+}
+
+.linkContainer {
+    text-decoration: none;
+}
+
+.rootContainerOfTheList {
+    width: 100%;
+}
+
+.mainContainerOfTheItem {
+    background-color: #3F51B5;
+    color: white;
+    font-family: Arial, serif;
+    font-weight: bold;
+    padding: 10px;
+}
+
+.mainContainerOfTheItem:hover {
+    opacity: 0.7;
+    color: black;
+    cursor: pointer;
+}
