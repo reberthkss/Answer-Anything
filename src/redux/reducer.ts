@@ -1,12 +1,26 @@
 import {ActionsTypes} from "./ActionTypes";
 import {UserData} from "../utils/Data/UserData";
 import {Research} from "../utils/Data/ResearchData";
+import {AnswerData} from "../utils/Data/AnswerData";
 
 
+/*Mudar estrutura do redux para separar:
+
+ *   Os reducers do Dashboard do usuário
+ *   Os reducers da tela de respostas
+
+ +/- assim:
+
+ dashboard: {},
+ answerScreen: {}
+
+ */
 export interface ReduxState {
     user: UserData | null,
     research: Research | null,
-    researchs: Research[]
+    researchs: {id: string, research: Research}[],
+    answerResearchPayload: AnswerResearchPayloadProps | null,
+    answersOfResearch: {researchId: string, answers: AnswerData[]} | null
 }
 
 export interface ReduxAction {
@@ -14,10 +28,17 @@ export interface ReduxAction {
     type: ActionsTypes
 }
 
+export interface AnswerResearchPayloadProps {
+    researchId: string,
+    answerResearchId: string
+}
+
 const initialState: ReduxState = {
     user: null,
     research: null,
-    researchs: []
+    researchs: [],
+    answerResearchPayload: null,
+    answersOfResearch: null
 }
 
 export const rootReducer = (state: ReduxState = initialState, action: ReduxAction): ReduxState => {
@@ -31,6 +52,10 @@ export const rootReducer = (state: ReduxState = initialState, action: ReduxActio
             return {...state, researchs: payload};
         case ActionsTypes.SAVE_RESEARCH:
             return {...state, research: payload};
+        case ActionsTypes.SAVE_ANSWER_RESEARCH_PAYLOAD:
+            return {...state, answerResearchPayload: payload};
+        case ActionsTypes.SAVE_ANSWERS_OF_RESEARCH:
+            return {...state, answersOfResearch: payload};
         default:
             return state;
     }

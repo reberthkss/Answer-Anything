@@ -1,9 +1,9 @@
 import React from "react"
 import "./SocialMediaIcons.css"
 
-export const TelegramIcon = ({onClick}: {onClick: () => void}) => {
+export const TelegramIcon = () => {
     return (
-        <div className={"cursor"} onClick={onClick}>
+        <div className={"cursor"}>
             <svg
                 height={64} width={64}
                 viewBox="0 0 240 240">

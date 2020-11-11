@@ -2,33 +2,47 @@ import React, {ChangeEvent, useState} from "react";
 import "./Greeting.css";
 import {TextField} from "@material-ui/core";
 import {Validators} from "../../utils/Validators/Validators";
+import {UserData} from "./AnswerResearchCarousel";
+import {isDevEnv} from "../../utils/utils";
 
-interface Status { error: boolean, message: string }
+
+interface Status {
+    error: boolean,
+    message: string
+}
+
 interface InputStatus {
     email: Status,
     name: Status
 }
 
+interface GreetingProps {
+    title: string,
+    description: string,
+    onStartQuestionnaire: (userData: UserData) => void
+}
 
-export const Greeting = ({title, description, onGetEmail, onGetName, onStartQuestionnaire}: { title: string, description: string, onGetEmail: (email: string) => void, onGetName: (name: string) => void, onStartQuestionnaire: () => void }) => {
-    const [inputsStatus, setInputStatus] = useState<InputStatus>({email: {error: false, message: ""}, name: {error: false, message: ""}});
-    const [userData, setUserData] = useState<{email: string, name: string}>({email: "", name: ""});
 
-    const onBlurEmail = (event: ChangeEvent<HTMLTextAreaElement|HTMLInputElement>) => {
+export const Greeting = ({title, description, onStartQuestionnaire}: GreetingProps) => {
+    const [inputsStatus, setInputStatus] = useState<InputStatus>({
+        email: {error: false, message: ""},
+        name: {error: false, message: ""}
+    });
+    const [userData, setUserData] = useState<{ email: string, name: string }>({email: isDevEnv() ? "reberthkss@outlook.com" : "", name: isDevEnv() ? "reberth": ""});
+
+    const onBlurEmail = (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
         if (!Validators.isEmailValid(event.target.value)) {
             setInputStatus({...inputsStatus, email: {error: true, message: "E-mail inválido!"}})
         } else {
             setUserData({...userData, email: event.target.value});
-            onGetEmail(event.target.value);
         }
     }
 
-    const onBlurName = (event: ChangeEvent<HTMLTextAreaElement|HTMLInputElement>) => {
+    const onBlurName = (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
         if (event.target.value.length === 0) {
             setInputStatus({...inputsStatus, name: {error: true, message: "Nome inválido!"}})
         } else {
             setUserData({...userData, name: event.target.value});
-            onGetName(event.target.value);
         }
     }
 
@@ -42,13 +56,16 @@ export const Greeting = ({title, description, onGetEmail, onGetName, onStartQues
 
     const handleStartEvent = () => {
         if (userData.name.length === 0 && userData.email.length === 0) {
-            setInputStatus({email: {error: true, message: "Digite um e-mail!"}, name: {error: true, message: "Digite um nome!"}});
+            setInputStatus({
+                email: {error: true, message: "Digite um e-mail!"},
+                name: {error: true, message: "Digite um nome!"}
+            });
         } else if (userData.name.length === 0) {
             setInputStatus({...inputsStatus, name: {error: true, message: "Digite um nome!"}});
         } else if (userData.email.length === 0) {
             setInputStatus({...inputsStatus, email: {error: true, message: "Digite um e-mail!"}});
         } else {
-            onStartQuestionnaire();
+            onStartQuestionnaire(userData);
         }
     }
 

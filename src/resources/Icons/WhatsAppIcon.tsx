@@ -1,9 +1,9 @@
 import React from "react"
 import "./SocialMediaIcons.css"
 
-export const WhatsappIcon = ({onClick}: {onClick: () => void}) => {
+export const WhatsappIcon = () => {
     return (
-        <div className={"cursor"} onClick={onClick}>
+        <div className={"cursor"}>
             <svg xmlns="http://www.w3.org/2000/svg"
                  fill="#fff"
                  height={64} width={64}

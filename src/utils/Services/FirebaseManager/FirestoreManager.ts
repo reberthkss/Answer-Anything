@@ -4,7 +4,7 @@ import {ReduxAction, ReduxState} from "../../../redux/reducer";
 import {PersistPartial} from "redux-persist/lib/persistReducer";
 import {Store} from "redux";
 import {store} from "../../../redux/ConfigureStore";
-import {saveResearch, saveResearchs} from "../../../redux/Actions";
+import {saveAnswerResearchPayload, saveResearch, saveResearchs} from "../../../redux/Actions";
 import {AnswerData} from "../../Data/AnswerData";
 
 interface FirestoreManagerResponse {
@@ -30,12 +30,18 @@ export class FirestoreManager {
     /*TODO - UPDATE THIS TO CHOOSE COLLECTION*/
     async read(): Promise<FirestoreManagerResponse> {
         try {
-            const research: Research[] = [];
-            const res = (await this.firestore
+
+            const researchs = (await this.firestore
                 .collection(FirestoreManager.COLLECTIONS.RESEARCH)
                 .get())
-            res.forEach((querySnapShot) => research.push(Research.from(querySnapShot.data())));
-            this.store.dispatch(saveResearchs(research));
+                .docs.map((doc) => {
+                    return {
+                        id: doc.id,
+                        research: Research.from(doc.data())
+                    }
+                });
+
+            this.store.dispatch(saveResearchs(researchs));
             return {result: true, error: null}
         } catch (e) {
             console.log("error => ", e);
@@ -47,11 +53,15 @@ export class FirestoreManager {
     async write(research: Research): Promise<FirestoreManagerResponse> {
         /* TODO - Look ways to block updated from here */
         try {
-            const userId = this.store.getState().user?.user.id;
-            (await this.firestore
+            const researchSaved = await this.firestore
                 .collection(FirestoreManager.COLLECTIONS.RESEARCH)
-                .doc(`${userId}-${research.id}`)
-                .set(research.parseFirebase()))
+                .add(research.parseFirebase())
+
+            this.store.dispatch(saveAnswerResearchPayload({
+                answerResearchId: "",
+                researchId: researchSaved.id
+            }));
+
             console.log(this.TAG, "Successful saved research!");
             return {result: true, error: null};
         } catch (e) {
@@ -60,11 +70,11 @@ export class FirestoreManager {
         }
     }
 
-    async update(research: Research): Promise<FirestoreManagerResponse> {
+    async update(research: Research, researchId: string): Promise<FirestoreManagerResponse> {
         try {
             await this.firestore
                 .collection(FirestoreManager.COLLECTIONS.RESEARCH)
-                .doc(research.documentID())
+                .doc(researchId)
                 .update(research.parseFirebase());
             console.log(this.TAG, "Updated research")
             return {result: true, error: null};
@@ -75,11 +85,11 @@ export class FirestoreManager {
         }
     }
 
-    async delete(research: Research): Promise<FirestoreManagerResponse> {
+    async delete(research: Research, researchId: string): Promise<FirestoreManagerResponse> {
         try {
             await this.firestore
                 .collection(FirestoreManager.COLLECTIONS.RESEARCH)
-                .doc(research.documentID())
+                .doc(researchId)
                 .delete();
             console.log(this.TAG, "Document removed! ");
             return {result: true, error: null};

@@ -17,7 +17,6 @@
     display: flex;
     flex-direction: column-reverse;
     justify-content: center;
-    background-color: red;
     margin: 20px 0px;
     overflow: auto ;
 }
@@ -26,7 +25,6 @@
     width: 100%;
     display: flex;
     justify-content: center;
-    background-color: #282c34;
     padding: 5px 0px;
 }
 
@@ -54,7 +52,6 @@
     display: flex;
     align-items: center;
     flex-direction: column;
-    background-color: red;
 }
 
 .questionOptions {

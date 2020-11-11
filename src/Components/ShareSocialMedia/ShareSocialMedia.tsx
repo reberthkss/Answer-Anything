@@ -10,25 +10,41 @@ import {TelegramIcon} from "../../resources/Icons/TelegramIcon";
 import {WhatsappIcon} from "../../resources/Icons/WhatsAppIcon";
 import "./ShareSocialMedia.css";
 import React from "react";
+import {FacebookShareButton, FacebookMessengerShareButton, LinkedinShareButton, TelegramShareButton, WhatsappShareButton} from "react-share";
 
-export const ShareSocialMedia = () => {
-
+export interface ShareSocialMediaProps {
+    url: string,
+    message: string | null
+}
+export const ShareSocialMedia = ({url, message}: ShareSocialMediaProps ) => {
     return (
         <div className={"shareOptionsContainer"}>
             <div className={"socialMedia"}>
-                <DiscordIcon onClick={() => null}/>
-                <FacebookIcon onClick={() => null}/>
-                <GmailIcon onClick={() => null}/>
-                <InstagramIcon onClick={() => null} />
-                <LinkedinIcon onClick={() => null}/>
+                {/*<DiscordIcon onClick={() => null}/>*/}
+                <FacebookShareButton url={url}>
+                    <FacebookIcon/>
+                </FacebookShareButton>
+                <LinkedinShareButton url={url}>
+                    <LinkedinIcon/>
+                </LinkedinShareButton>
+                {/*<GmailIcon onClick={() => null}/>*/}
+                {/*<InstagramIcon onClick={() => null} />*/}
             </div>
             <div className={"socialMedia"}>
-                <MessengerIcon onClick={() => null}/>
-                <OutlookIcon onClick={() => null}/>
-                <SlackIcon onClick={() => null}/>
-                <TelegramIcon onClick={() => null}/>
-                <WhatsappIcon onClick={() => null}/>
+                {/*<MessengerIcon onClick={() => null}/>*/}
+                {/*<OutlookIcon onClick={() => null}/>*/}
+                {/*<SlackIcon onClick={() => null}/>*/}
+                <TelegramShareButton url={url}>
+                    <TelegramIcon />
+                </TelegramShareButton>
+                <WhatsappShareButton url={url}>
+                    <WhatsappIcon />
+                </WhatsappShareButton>
             </div>
         </div>
     )
+}
+
+ShareSocialMedia.defaultProps = {
+    message: null
 }

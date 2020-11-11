@@ -36,7 +36,7 @@ const getRoles = () => {
 
 export const RegisterCarousel = () => {
     const [loading, setLoading] = useState<LoadingState>({loading: false, result: true});
-    const [actualStep, setStep] = useState(STEPS.THREE);
+    const [actualStep, setStep] = useState(STEPS.ONE);
     const [questions, saveQuestions] = useState<QuestionsState[] | null>(null);
     const [error, setError] = useState<boolean>(false);
     const research: Research = useRef(new Research()).current;
@@ -164,7 +164,7 @@ export const RegisterCarousel = () => {
                     mapOptions(question.options),
                     null
                 )
-            )
+            );
         research.roles = getRoles();
         research.status = ResearchStatus.OPEN;
         const response = await firestoreManager.write(research);

@@ -2,11 +2,17 @@ import React from "react";
 import "./ShareResearch.css";
 import TextField from "@material-ui/core/TextField/TextField";
 import {ShareSocialMedia} from "../ShareSocialMedia/ShareSocialMedia";
+import {useSelector} from "react-redux";
+import {ReduxState} from "../../redux/reducer";
+import {ShareManager} from "../../utils/Services/ShareManager/ShareManager";
 
 export const ShareResearch = () => {
     /*
     * TODO - Generate deep links
     *  */
+
+    const researchId = useSelector((state: ReduxState) => state.answerResearchPayload?.researchId || null);
+
     return (
         <div className={"shareResearchContainer"}>
             <div className={"shareMessageContainer"}>
@@ -20,7 +26,7 @@ export const ShareResearch = () => {
                         multiline={true}
                     />
                 </div>
-                <ShareSocialMedia/>
+                <ShareSocialMedia url={ShareManager.shareResearch(researchId)}/>
             </div>
         </div>
     )

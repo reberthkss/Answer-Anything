@@ -15,6 +15,7 @@ import firebase from "firebase";
 import {ReduxState} from "../../redux/reducer";
 import {useSelector} from "react-redux";
 import {CircularProgress} from "@material-ui/core";
+import {RegisterResearchScreen} from "../RegisterResearch/RegisterResearchScreen";
 export const DashboardScreen = () => {
     const { path } = useRouteMatch();
     const [loading, setLoading] = useState(true);
@@ -29,17 +30,19 @@ export const DashboardScreen = () => {
     const _renderPage = () => {
         if (loading) {
             return <div className={"loadingIndicatorDiv"}>
-                <CircularProgress />
+                <CircularProgress/>
             </div>
         } else {
             return (
                 <>
                     <ResearchList/>
                     <Switch>
-                        <Route exact path={path} component={SelectResearch}/>
+                        <Route path={path} exact component={SelectResearch}/>
                         <Route path={`${path}/research/:id`} component={ReadResearchCarousel}/>
+                        <Route path={`${path}/register-research`} component={RegisterResearchScreen}/>
+
                     </Switch>
-                    </>
+                </>
             )
         }
     }

@@ -5,15 +5,16 @@ import {Link, useRouteMatch} from "react-router-dom";
 import "./ResearchList.css"
 import {useSelector} from "react-redux";
 import {ReduxState} from "../../redux/reducer";
+import {Research} from "../../utils/Data/ResearchData";
 
 export const ResearchList = () => {
     let { url } = useRouteMatch();
-    const _renderItem = (item: any) => {
+    const _renderItem = (item: {id: string, research: Research}) => {
         return (
             <Link className={"linkContainer"} to={`${url}/research/${item.id}`}>
                 <div className={"rootContainerOfTheList"}>
                     <div className={"mainContainerOfTheItem"}>
-                        {item.title}
+                        {item.research.title}
                     </div>
                 </div>
             </Link>

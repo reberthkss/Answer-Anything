@@ -1,9 +1,9 @@
 import React from "react"
 import "./SocialMediaIcons.css"
 
-export const FacebookIcon = ({onClick}: {onClick: () => void}) => {
+export const FacebookIcon = () => {
     return (
-        <div className={"cursor"} onClick={onClick}>
+        <div className={"cursor"}>
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 1365.3333 1365.3333"

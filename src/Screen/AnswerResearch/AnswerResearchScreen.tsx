@@ -9,18 +9,20 @@ import {FirestoreManager} from "../../utils/Services/FirebaseManager/FirestoreMa
 import {ReduxState} from "../../redux/reducer";
 import {useSelector} from "react-redux";
 import {AnswerData} from "../../utils/Data/AnswerData";
+import {AnswerResearchManager} from "../../utils/Services/AnswerResearchManager/AnswerResearchManager";
 
-export const AnswerResearch = () => {
+export const AnswerResearchScreen = () => {
     const [loading, setLoading] = useState<boolean>(false);
     const [research, updateResearch] = useState<Research | null>(null);
     const [isInvalidResearch, setIsInvalidResearch] = useState(false);
+    const {answerResearchPayload} = useSelector((state: ReduxState) => state);
     const history = useHistory();
-    const firestoreManager = new FirestoreManager();
     const {id} = useParams();
     const currentResearch: Research | null = useSelector((state: ReduxState) => state.research);
     const TAG = "AnswerResearch";
 
     const loadResearch = async (id: string) => {
+        const firestoreManager = new FirestoreManager();
         setLoading(true);
         const result = await firestoreManager.find(id);
         if (result.result) {
@@ -33,11 +35,25 @@ export const AnswerResearch = () => {
 
     const handleOptionSelection = async (question: ResearchQuestionData, selectedOption: number) => {
         if (research === null ) return ;
+        const answerResearchManager = new AnswerResearchManager();
         const questionPosition = research
             .questions
             .indexOf(question);
         research.questions[questionPosition].selectedOption = selectedOption;
-        const newResearch = new Research(research.id, research.title, research.subtitle, research.description, research.questions, research.status, research.roles);
+        const newResearch = new Research(research.title, research.subtitle, research.description, research.questions, research.status, research.roles);
+        const responseOnSave = await answerResearchManager.saveAnsweredQuestion({
+            researchId: answerResearchPayload?.researchId || null,
+            answerResearchId: answerResearchPayload?.answerResearchId || null,
+            answeredQuestionId: question.id,
+            selectedOption: selectedOption
+        });
+
+        if (responseOnSave.result) {
+            /* TODO - Success*/
+        } else {
+            /* TODO - Error*/
+        }
+
         /*TODO - MAKE A CALL TO REGISTER A ANSWER*/
         updateResearch(newResearch);
     }
@@ -56,6 +72,7 @@ export const AnswerResearch = () => {
                 <div className={"mainContent"}>
                     {/*TODO - ADD A LOGO TO RENDER ON THE TOP LEFT CORNER OF SITE*/}
                     <AnswerResearchCarousel
+                        researchId={id}
                         research={research}
                         onGetSelectedOption={handleOptionSelection}
                     />

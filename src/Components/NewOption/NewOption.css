@@ -2,7 +2,6 @@
 .optionQuestionDiv {
     height: 38px;
     width: 100%;
-    background-color: #ffa100;
 }
 
 .optionQuestionEnabled {
@@ -16,7 +15,6 @@
 .optionQuestionDisabled {
     height: 100%;
     width: 100%;
-    background-color: red;
     cursor: pointer;
 }
 

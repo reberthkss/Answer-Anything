@@ -9,7 +9,7 @@ import {NotFound} from "./Screen/NotFound";
 import {LoginScreen} from "./Screen/LoginScreen/LoginScreen";
 import {MainScreen} from "./Screen/MainScreen/MainScreen";
 import {RootDirectory} from "./Screen/RootDiretory/RootDirectory";
-import {AnswerResearch} from "./Screen/AnswerResearch/AnswerResearch";
+import {AnswerResearchScreen} from "./Screen/AnswerResearch/AnswerResearchScreen";
 
 function App() {
 
@@ -20,7 +20,7 @@ function App() {
                   <Route path={"/"} exact component={RootDirectory}/>
                   <Route path="/dashboard"  component={MainScreen}/>
                   <Route path="/login"  component={LoginScreen}/>
-                  <Route exact path={"/researchs/:id"} component={AnswerResearch}/>
+                  <Route exact path={"/researchs/:id"} component={AnswerResearchScreen}/>
                   <Route path={"*"} component={NotFound}/>
               </Switch>
           </div>

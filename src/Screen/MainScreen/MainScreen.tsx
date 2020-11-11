@@ -7,6 +7,7 @@ import {ReduxState} from "../../redux/reducer";
 import {useSelector} from "react-redux";
 import {DashboardScreen} from "../DashboardScreen/DashboardScreen";
 import {RegisterResearchScreen} from "../RegisterResearch/RegisterResearchScreen";
+import {ReadResearchCarousel} from "../../Components/ReadResearchCarousel/ReadResearchCarousel";
 
 
 
@@ -31,9 +32,9 @@ export const MainScreen = () => {
         <div>
             <AppToolbar/>
             <Switch>
-                <Route exact path={path} component={DashboardScreen}/>
-                <Route path={`${path}/configurations`} component={ConfigurationScreen}/>
-                <Route path={`${path}/register-research`} component={RegisterResearchScreen}/>
+                <Route path={path} component={DashboardScreen}/>
+                {/*<Route path={`${path}/configurations`} component={ConfigurationScreen}/>*/}
+                {/*<Route path={`${path}/register-research`} component={RegisterResearchScreen}/>*/}
             </Switch>
         </div>
     )

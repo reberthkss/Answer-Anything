@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import "./ReadResearchCarousel.css"
 import Card from "@material-ui/core/Card";
 import { useParams } from "react-router-dom";
@@ -7,56 +7,58 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import firebase from "firebase";
+import {ReduxState} from "../../redux/reducer";
+import {useSelector} from "react-redux";
+import {FirestoreManager} from "../../utils/Services/FirebaseManager/FirestoreManager";
+import {AnswerResearchManager} from "../../utils/Services/AnswerResearchManager/AnswerResearchManager";
+import { CircularProgress } from "@material-ui/core";
 
 export const ReadResearchCarousel = () => {
 
-    /* TODO - Get research from redux */
     const {id} = useParams();
-    const fakeData = generateFakeData(firebase.auth().currentUser?.uid);
-    const research = fakeData.filter((item: any) => item.id === id);
+    const [loading, setLoading] = useState(true);
+    const research = useSelector((state: ReduxState) => state.researchs).find((research) => research.id === id) || null;
     const [questionId, setQuestion] = useState(0);
+    const answers = useSelector((state: ReduxState) => state.answersOfResearch);
     const _renderTitle = () => {
+        if (!research) return null;
+
         return (
             <div className={"header"}>
-                {research[0].id} - {research[0].title}
+               {research.research.title}
             </div>
         )
     }
 
     const _renderQuestion = () => {
+        if (!research) return null;
         return (
             <div className={"question"}>
-                {research[0].questions[questionId].question}
+                {research.research.questions[questionId].question}
             </div>
         )
     }
 
     const _renderOptions = () => {
-        /*TODO - Refactor this*/
-       const optionsMap: any = research[0]
-           .questions[questionId]
-           .options;
-       const optionsArray: string[] = [];
-       for (const option in optionsMap) {
-           const value = optionsMap[option];
-           optionsArray.push(value);
-       }
-       return <div className={"optionsContainer"}>
-           {optionsArray.map((option) => (
-               <div className={"option"}>
-                   <div>
-                       {option}
-                   </div>
-                   <div>
-                       67% {/* TODO  -  GET REAL DATA*/}
-                   </div>
-               </div>
-           ))}
-       </div>
+        if (research === null) return;
+        return Array
+            .from(research!!.research.questions[questionId].options!!.entries())
+            .map((option) => {
+                return (
+                    <div className={"option"}>
+                        <div>
+                            {option[1][option[0]]}
+                        </div>
+                        <div>
+                            67% {/*TODO - Handle*/}
+                        </div>
+                    </div>
+                )
+            })
     }
 
     const _renderLeftArrow = () => {
-        if (questionId != 0 ) {
+        if (questionId !== 0 ) {
             return (
                 <div className={"arrow"}>
                     <ChevronLeftIcon
@@ -70,7 +72,8 @@ export const ReadResearchCarousel = () => {
     }
 
     const _renderRightArrow = () => {
-        if (questionId != research[0].questions.length-1) {
+        if (!research) return null;
+        if (questionId !== research.research.questions.length-1) {
             return (
                 <div className={"arrow"}>
                     <ChevronRightIcon
@@ -84,37 +87,76 @@ export const ReadResearchCarousel = () => {
     }
 
     const _renderDots = () => {
+        if (!research) return null;
+
         return (
             <div className={"dotsContainer"}>
                 {
-                    research[0]
+                    research
+                        .research
                         .questions
                         .map((question) =>
                             (<FiberManualRecordIcon
-                                fontSize={question.id == questionId.toString() ? "default" : "small"}
+                                fontSize={question.id === questionId.toString() ? "default" : "small"}
                                 style={
-                                    {color: question.id == questionId.toString() ? "grey" : "black"}
+                                    {color: question.id === questionId.toString() ? "grey" : "black"}
                                 }/>))
                 }
             </div>
         )
     }
-    return (
-        <div className={"researchDetailContainer"}>
-            <div className={"researchCarouselContainer"}>
-                <Card className={"researchCardContainer"} elevation={5}>
-                    {_renderTitle()}
-                    <div className={"questionContainer"}>
-                        {_renderLeftArrow()}
-                        <div className={"rootViewContainerResearchCarousel"}>
-                            {_renderQuestion()}
-                            {_renderOptions()}
-                        </div>
-                        {_renderRightArrow()}
-                    </div>
-                    {_renderDots()}
-                </Card>
+
+
+    const _loadAnswers = async (researchId: string) => {
+        const answerResearchManager = new AnswerResearchManager();
+        const response = await answerResearchManager.loadAnswersByResearch(researchId);
+        if (response.result) {
+            console.log("Successfull loaded answers");
+        } else {
+            /*TODO - Error*/
+            console.log("Error")
+        }
+        setLoading(false);
+    }
+
+    useEffect(() => {
+        _loadAnswers(id);
+    }, [])
+
+    const renderLoading = () => {
+        return (
+            <div className={"loading"}>
+                <CircularProgress/>
             </div>
-        </div>
-    )
+        )
+    }
+
+    const renderContent = () => {
+        return (
+            <div className={"researchDetailContainer"}>
+                <div className={"researchCarouselContainer"}>
+                    <Card className={"researchCardContainer"} elevation={5}>
+                        {_renderTitle()}
+                        <div className={"questionContainer"}>
+                            {_renderLeftArrow()}
+                            <div className={"rootViewContainerResearchCarousel"}>
+                                {_renderQuestion()}
+                                <div className={"optionsContainer"}>
+                                    {_renderOptions()}
+                                </div>
+                            </div>
+                            {_renderRightArrow()}
+                        </div>
+                        {_renderDots()}
+                    </Card>
+                </div>
+            </div>
+        )
+    }
+
+    if (loading) {
+        return renderLoading();
+    } else {
+        return renderContent();
+    }
 }

@@ -62,10 +62,10 @@ export const AnswerQuestion = ({questions, onFinishAnswerQuestion, onAnswerQuest
     }
 
     const GetOptions = () => {
-       return Array.from(questions[currentQuestion].options!!).map(([key, option], index) => {
-            return (
-                <div className={"answerQuestionOption"} style={{borderRadius: 5}} onClick={() => handleOptionSelect(key)}>
-                    {option}
+       return Array.from(questions[currentQuestion].options!!).map((item, index) => {
+           return (
+               <div className={"answerQuestionOption"} style={{borderRadius: 5}} onClick={() => handleOptionSelect(index)}>
+                    {item[index]}
                 </div>
             )
         })

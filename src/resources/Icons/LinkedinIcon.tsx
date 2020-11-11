@@ -1,9 +1,9 @@
 import React from "react"
 import "./SocialMediaIcons.css"
 
-export const LinkedinIcon = ({onClick}: {onClick: () => void}) => {
+export const LinkedinIcon = () => {
     return (
-        <div className={"cursor"} onClick={onClick}>
+        <div className={"cursor"}>
             <svg width="64px" height="64px"
                  viewBox="0 0 72 72" version="1.1"><title>linkedin</title>
                 <g id="providers-list" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">

@@ -10,43 +10,75 @@ import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import {ResearchQuestionData} from "../../utils/Data/ResearchQuestionData";
 import {AnswerData} from "../../utils/Data/AnswerData";
+import {AnswerResearchManager} from "../../utils/Services/AnswerResearchManager/AnswerResearchManager";
+import {getStore} from "../../redux/ConfigureStore";
+import { useLocation } from "react-router-dom";
+import {ShareManager} from "../../utils/Services/ShareManager/ShareManager";
 
 interface AnswerResearchCarouselProps {
+    researchId: string,
     research: Research,
     onGetSelectedOption: (question: ResearchQuestionData, selectedOption: number) => void
 }
 
 export interface UserData {email: string, name: string}
 
-export const AnswerResearchCarousel = ({ research, onGetSelectedOption}: AnswerResearchCarouselProps) => {
+export const AnswerResearchCarousel = ({ researchId, research, onGetSelectedOption}: AnswerResearchCarouselProps) => {
     const [currentStep, setStep] = useState<number>(STEPS.ONE);
-    const [userData, setUserData] = useState<UserData>({email: "", name: ""});
+    const [answerData, setAnswerData] = useState<AnswerData | null>(null);
+
+    const _handleEndOfResearch = async () => {
+        const answerResearchPayload = getStore().getState().answerResearchPayload;
+        const answerResearchManager = new AnswerResearchManager();
+        const resFromFirebase = await answerResearchManager.endQuestionnaire({
+            researchId: answerResearchPayload?.researchId || null,
+            answerResearchId: answerResearchPayload?.answerResearchId || null
+        });
+
+        if (resFromFirebase.result) {
+            setStep(STEPS.THREE);
+        } else {
+            console.log("Error => ", resFromFirebase.error);
+        }
+
+
+
+    }
 
     const GetContent = () => {
+        const answerResearchManager = new AnswerResearchManager();
         switch (currentStep) {
             case STEPS.ONE:
                 return (
                     <Greeting
-                        onGetEmail={(email: string) => setUserData({...userData, email})}
-                        onGetName={(name: string) => setUserData({...userData, name})}
-                        onStartQuestionnaire={() => {
-                            /* TODO - start questionnaire (register a new answer with given user data) */
-                            setStep(1);
+                        onStartQuestionnaire={async ({email, name}) => {
+                            const answerData = new AnswerData({email, name});
+                            const res = await answerResearchManager.startQuestionnaire(researchId, answerData);
+                            if (res.result) {
+                                setAnswerData(answerData);
+                                setStep(1);
+                            } else {
+                                /*TODO - display error*/
+                                console.log(res.error);
+                            }
+
                         }}
                         title={research.title!!}
                         description={research.description!!}/>
                 )
             case STEPS.TWO:
+                if (answerData === null) throw new Error("Answer data is invalid");
                 return (
                     <AnswerQuestion questions={research.questions}
-                                    userData={userData}
-                                    onFinishAnswerQuestion={() => setStep(STEPS.THREE)}
+                                    userData={answerData.userData}
+                                    onFinishAnswerQuestion={_handleEndOfResearch}
                                     onAnswerQuestion={onGetSelectedOption}
                     />
                 )
             case STEPS.THREE:
+                const answerResearchPayload = getStore().getState().answerResearchPayload;
                 return (
-                    <Conclusion/>
+                    <Conclusion researchUrl={ShareManager.shareResearch(answerResearchPayload?.researchId || null)}/>
                 )
             default:
                 throw new Error("Step not found");
