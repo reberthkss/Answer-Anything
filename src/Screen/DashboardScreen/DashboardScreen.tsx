@@ -40,7 +40,6 @@ export const DashboardScreen = () => {
                         <Route path={path} exact component={SelectResearch}/>
                         <Route path={`${path}/research/:id`} component={ReadResearchCarousel}/>
                         <Route path={`${path}/register-research`} component={RegisterResearchScreen}/>
-
                     </Switch>
                 </>
             )

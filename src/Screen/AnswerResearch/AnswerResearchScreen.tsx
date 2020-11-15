@@ -17,7 +17,8 @@ export const AnswerResearchScreen = () => {
     const [isInvalidResearch, setIsInvalidResearch] = useState(false);
     const {answerResearchPayload} = useSelector((state: ReduxState) => state);
     const history = useHistory();
-    const {id} = useParams();
+    const params: any = useParams();
+    const id = params.id || {id: null}
     const currentResearch: Research | null = useSelector((state: ReduxState) => state.research);
     const TAG = "AnswerResearch";
 

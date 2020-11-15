@@ -15,7 +15,9 @@ import { CircularProgress } from "@material-ui/core";
 
 export const ReadResearchCarousel = () => {
 
-    const {id} = useParams();
+
+    const params: any = useParams();
+    const id = params.id || {id: null};
     const [loading, setLoading] = useState(true);
     const research = useSelector((state: ReduxState) => state.researchs).find((research) => research.id === id) || null;
     const [questionId, setQuestion] = useState(0);

@@ -10,7 +10,6 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: #61dafb;
     height: 100%;
 }
 
@@ -19,7 +18,6 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: #ffa100;
     height: 100%;
 }
 
@@ -27,7 +25,6 @@
     display: flex;
     flex-direction: column;
     padding: 10px 300px;
-    background-color: #3F51B5;
     height: 100%;
 }
 
