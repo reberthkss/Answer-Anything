@@ -1,23 +1,23 @@
 Elaborar fluxo para resposta das pesquisas:
-   -> Aonde os dados serão salvos?
-   -> Qual melhor jeito de salvar os dados? Banco de dados ou analytics?
+   -> Aonde os dados serão salvos? -- ok
+   -> Qual melhor jeito de salvar os dados? Banco de dados ou analytics? -- ok
 
 
 
-=> Criar Classe que vai armazenar os dados referentes Às respostas dos usuarios
-   -> Criar função parse e from (mandar e receber do firebase)
+=> Criar Classe que vai armazenar os dados referentes Às respostas dos usuarios -- ok
+   -> Criar função parse e from (mandar e receber do firebase) -- ok
    
-=> Criar uma sub-collection que vai ser responsavel por armazenar as respostas dos usuarios
+=> Criar uma sub-collection que vai ser responsavel por armazenar as respostas dos usuarios -- ok
 
 Obter pesquisa do bancode dados -- OK
 Redirecionar para 404 page quando o id da pesquisa for invalido -- OK
 
-Registrar cada resposta selecionada (ou seja, não esperar o usuario responder todas as perguntas para saber enviar as respostas)
+Registrar cada resposta selecionada (ou seja, não esperar o usuario responder todas as perguntas para saber enviar as respostas) -- ok
 
 Redux =>
 
    -> Quando o usuário não finalizar uma resposta, salvar no redux que a pesquisa está incompleta. Salvar os seguintes itens:
-        * Em qual questão o usuário parou;
+        * Em qual questão o usuário parou; 
 		
 
 Site => 
@@ -27,7 +27,7 @@ Site =>
 		
 		
 		
-Share Social media => Think on ways to generate share links
+Share Social media => Think on ways to generate share links -- ok
 
 todos =>
 

@@ -14,8 +14,6 @@ import {AnswerResearchManager} from "../../utils/Services/AnswerResearchManager/
 import { CircularProgress } from "@material-ui/core";
 
 export const ReadResearchCarousel = () => {
-
-
     const params: any = useParams();
     const id = params.id || {id: null};
     const [loading, setLoading] = useState(true);

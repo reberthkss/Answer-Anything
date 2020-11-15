@@ -25,6 +25,6 @@ export const saveAnswerResearchPayload = (researchPayload: AnswerResearchPayload
     return {payload: researchPayload, type: ActionsTypes.SAVE_ANSWER_RESEARCH_PAYLOAD};
 }
 
-export const saveAnswersOfResearch = (answersResearch: {id: string, answers: AnswerData[]}): ReduxAction => {
+export const saveAnswersOfResearch = (answersResearch: {researchId: string, answers: AnswerData[]}): ReduxAction => {
     return {payload: answersResearch, type: ActionsTypes.SAVE_ANSWERS_OF_RESEARCH }
 }

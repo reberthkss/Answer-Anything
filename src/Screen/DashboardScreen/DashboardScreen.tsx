@@ -16,6 +16,7 @@ import {ReduxState} from "../../redux/reducer";
 import {useSelector} from "react-redux";
 import {CircularProgress} from "@material-ui/core";
 import {RegisterResearchScreen} from "../RegisterResearch/RegisterResearchScreen";
+import {Analysis} from "../Analysis/Analysis";
 export const DashboardScreen = () => {
     const { path } = useRouteMatch();
     const [loading, setLoading] = useState(true);
@@ -38,7 +39,7 @@ export const DashboardScreen = () => {
                     <ResearchList/>
                     <Switch>
                         <Route path={path} exact component={SelectResearch}/>
-                        <Route path={`${path}/research/:id`} component={ReadResearchCarousel}/>
+                        <Route path={`${path}/research/:id`} component={Analysis}/>
                         <Route path={`${path}/register-research`} component={RegisterResearchScreen}/>
                     </Switch>
                 </>

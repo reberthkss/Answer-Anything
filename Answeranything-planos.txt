@@ -6,12 +6,12 @@ Na etapa 1:
 		Só pode dar next se os campos "question", "options" forem diferentes de null -- OK
 -> Se voltar da etapa 2 para 1 os campos ficam não preenchidos. --> OK
 
-Contabilizar o ID para gerar um ID unico para pesquisa
+Contabilizar o ID para gerar um ID unico para pesquisa -- ok
 
 Na etapa 2:
 -> Só pode dar next se todos campos estiverem preenchidos -- ok
--> Adicionar opção para excluir opção
--> Mínimo de opções=> 2
+-> Adicionar opção para excluir opção -- ok
+-> Mínimo de opções=> 2 
 -> O overflow sobre as opções não está funcionando
 https://prnt.sc/uxr7pa -- ok
 

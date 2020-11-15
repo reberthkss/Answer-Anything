@@ -34,7 +34,9 @@ export class FirestoreManager {
             const researchs = (await this.firestore
                 .collection(FirestoreManager.COLLECTIONS.RESEARCH)
                 .get())
-                .docs.map((doc) => {
+                .docs
+                .map((doc) => {
+
                     return {
                         id: doc.id,
                         research: Research.from(doc.data())

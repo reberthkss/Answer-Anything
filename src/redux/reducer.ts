@@ -15,12 +15,15 @@ import {AnswerData} from "../utils/Data/AnswerData";
  answerScreen: {}
 
  */
+
+export interface AnswerResearchProps {researchId: string, answers: AnswerData[]}
+export interface ResearchProps {id: string, research: Research}
 export interface ReduxState {
     user: UserData | null,
     research: Research | null,
-    researchs: {id: string, research: Research}[],
+    researchs: ResearchProps[],
     answerResearchPayload: AnswerResearchPayloadProps | null,
-    answersOfResearch: {researchId: string, answers: AnswerData[]} | null
+    answersOfResearch: AnswerResearchProps | null
 }
 
 export interface ReduxAction {

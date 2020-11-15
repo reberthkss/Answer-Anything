@@ -105,7 +105,7 @@ export class AnswerResearchManager {
 
 
             const answersOfResearch = {
-                id: researchId,
+                researchId: researchId,
                 answers: answers
             }
             getStore().dispatch(saveAnswersOfResearch(answersOfResearch));
