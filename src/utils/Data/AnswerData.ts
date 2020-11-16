@@ -2,7 +2,7 @@ import {UserData} from "../../Components/AnswerResearchCarousel/AnswerResearchCa
 import firebase from "firebase";
 
 interface AnsweredQuestions {
-    questionId: number,
+    question: number,
     selectedOption: number
 }
 
@@ -23,7 +23,7 @@ export class AnswerData {
 
        const answeredQuestions: {"questionId": number, "selectedOption": number}[] = this.answeredQuestions
             .map((answeredQuestion, index) =>({
-                "questionId": answeredQuestion.questionId,
+                "questionId": answeredQuestion.question,
                     "selectedOption": answeredQuestion.selectedOption
             }));
 
@@ -41,7 +41,7 @@ export class AnswerData {
         // console.log(data["answeredQuestion"])
         return new AnswerData(
             {email: data["userData"].email, name: data["userData"].name},
-            data["answeredQuestion"].map((answeredQuestion: any) => ({question: answeredQuestion["questionId"], selectedOption: answeredQuestion["selectedOption"]})),
+            data["answeredQuestion"].map((answeredQuestion: any) => ({question: parseInt(answeredQuestion["questionId"]), selectedOption: answeredQuestion["selectedOption"]})),
             data["status"]
         )
     }
