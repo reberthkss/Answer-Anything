@@ -30,9 +30,10 @@ export class FirestoreManager {
     /*TODO - UPDATE THIS TO CHOOSE COLLECTION*/
     async read(): Promise<FirestoreManagerResponse> {
         try {
-
+            const user = this.store.getState().user;
             const researchs = (await this.firestore
                 .collection(FirestoreManager.COLLECTIONS.RESEARCH)
+                .where(`roles.${user?.user.id}`, "==", "owner")
                 .get())
                 .docs
                 .map((doc) => {

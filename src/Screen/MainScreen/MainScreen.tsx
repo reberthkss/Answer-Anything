@@ -25,7 +25,7 @@ export const MainScreen = () => {
         if (user == null) {
             history.push("/login");
         }
-    }, [path, url])
+    }, [user])
     console.log("path => ", path);
     console.log("url => ", url);
     return (
