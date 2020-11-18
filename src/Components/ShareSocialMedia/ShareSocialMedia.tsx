@@ -11,7 +11,7 @@ import {WhatsappIcon} from "../../resources/Icons/WhatsAppIcon";
 import "./ShareSocialMedia.css";
 import React from "react";
 import {FacebookShareButton, FacebookMessengerShareButton, LinkedinShareButton, TelegramShareButton, WhatsappShareButton} from "react-share";
-
+import Clipboard from 'react-clipboard.js';
 export interface ShareSocialMediaProps {
     url: string,
     message: string | null
@@ -19,6 +19,22 @@ export interface ShareSocialMediaProps {
 export const ShareSocialMedia = ({url, message}: ShareSocialMediaProps ) => {
     return (
         <div className={"shareOptionsContainer"}>
+            <div className={"urlShareOptionContainer"}>
+                <div>
+                    Share with your friends with that url below:
+                </div>
+                <div className={"copyAndPasteContainer"}>
+                    <div className={"urlContainer"}>
+                        {url}
+                    </div>
+                    <Clipboard className={"copyAndPasteBtn"} data-clipboard-text={url} button-title="Copie" >
+                        Copiar
+                    </Clipboard>
+                </div>
+                <div>
+                    Or share on your social media:
+                </div>
+            </div>
             <div className={"socialMedia"}>
                 {/*<DiscordIcon onClick={() => null}/>*/}
                 <FacebookShareButton url={url}>
