@@ -20,7 +20,7 @@ export const ShareSocialMedia = ({url, message}: ShareSocialMediaProps ) => {
     return (
         <div className={"shareOptionsContainer"}>
             <div className={"urlShareOptionContainer"}>
-                <div>
+                <div className={"shareWithFriendsText"}>
                     Share with your friends with that url below:
                 </div>
                 <div className={"copyAndPasteContainer"}>
@@ -31,7 +31,7 @@ export const ShareSocialMedia = ({url, message}: ShareSocialMediaProps ) => {
                         Copiar
                     </Clipboard>
                 </div>
-                <div>
+                <div className={"orShareOnSocialMediaText"}>
                     Or share on your social media:
                 </div>
             </div>
