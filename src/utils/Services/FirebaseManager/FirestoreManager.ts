@@ -37,7 +37,6 @@ export class FirestoreManager {
                 .get())
                 .docs
                 .map((doc) => {
-
                     return {
                         id: doc.id,
                         research: Research.from(doc.data())

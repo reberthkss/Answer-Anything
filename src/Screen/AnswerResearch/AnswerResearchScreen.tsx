@@ -1,4 +1,4 @@
-import React, {useEffect, useReducer, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {useParams, useHistory} from "react-router-dom";
 import "./AnswerResearch.css"
 import { CircularProgress } from "@material-ui/core";
@@ -8,18 +8,18 @@ import {ResearchQuestionData} from "../../utils/Data/ResearchQuestionData";
 import {FirestoreManager} from "../../utils/Services/FirebaseManager/FirestoreManager";
 import {ReduxState} from "../../redux/reducer";
 import {useSelector} from "react-redux";
-import {AnswerData} from "../../utils/Data/AnswerData";
 import {AnswerResearchManager} from "../../utils/Services/AnswerResearchManager/AnswerResearchManager";
+import {getStore} from "../../redux/ConfigureStore";
+import {saveResearch} from "../../redux/Actions";
+import {isDevEnv} from "../../utils/utils";
 
 export const AnswerResearchScreen = () => {
     const [loading, setLoading] = useState<boolean>(false);
-    const [research, updateResearch] = useState<Research | null>(null);
-    const [isInvalidResearch, setIsInvalidResearch] = useState(false);
+    const {research} = useSelector((state:ReduxState) => state);
     const {answerResearchPayload} = useSelector((state: ReduxState) => state);
     const history = useHistory();
     const params: any = useParams();
     const id = params.id || {id: null}
-    const currentResearch: Research | null = useSelector((state: ReduxState) => state.research);
     const TAG = "AnswerResearch";
 
     const loadResearch = async (id: string) => {
@@ -27,9 +27,10 @@ export const AnswerResearchScreen = () => {
         setLoading(true);
         const result = await firestoreManager.find(id);
         if (result.result) {
-            updateResearch(currentResearch);
+            isDevEnv() && console.log(TAG, "Research is valid")
         } else {
-            setIsInvalidResearch(true);
+            isDevEnv() && console.log(TAG, "Research is invalid");
+            history.replace("/404");
         }
         setLoading(false);
     }
@@ -56,7 +57,7 @@ export const AnswerResearchScreen = () => {
         }
 
         /*TODO - MAKE A CALL TO REGISTER A ANSWER*/
-        updateResearch(newResearch);
+        getStore().dispatch(saveResearch(newResearch))
     }
 
     const Content = () => {
@@ -85,10 +86,6 @@ export const AnswerResearchScreen = () => {
     useEffect(() => {
         loadResearch(id);
     }, []);
-
-    useEffect(() => {
-        if (isInvalidResearch) history.replace("/404");
-    }, [isInvalidResearch]);
 
     return (
         <div className={"rootAnswerResearch"}>
