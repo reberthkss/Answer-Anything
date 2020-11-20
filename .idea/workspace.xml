@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d976f240-fc95-46ac-a213-ca6d9e7f9038" name="Default Changelist" comment="fix research limitation">
-      <change afterPath="$PROJECT_DIR$/.env" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.firebase/hosting.cHVibGlj.cache" beforeDir="false" afterPath="$PROJECT_DIR$/.firebase/hosting.cHVibGlj.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/firebase.json" beforeDir="false" afterPath="$PROJECT_DIR$/firebase.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,6 +34,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/public" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -39,6 +42,11 @@
     <property name="nodejs_package_manager_path" value="yarn" />
     <property name="ts.external.directory.path" value="D:\AnswerAnything\Web\answer_anything\node_modules\typescript\lib" />
     <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\AnswerAnything\Web\answer_anything\public" />
+    </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -54,6 +62,9 @@
       <workItem from="1605559071555" duration="5250000" />
       <workItem from="1605614315803" duration="32000" />
       <workItem from="1605646905397" duration="3692000" />
+      <workItem from="1605732547057" duration="356000" />
+      <workItem from="1605736656961" duration="4111000" />
+      <workItem from="1605895293577" duration="1217000" />
     </task>
     <task id="LOCAL-00001" summary="fix project">
       <created>1605452593861</created>
@@ -83,7 +94,42 @@
       <option name="project" value="LOCAL" />
       <updated>1605648523207</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="fix error on asnwer research research">
+      <created>1605737486016</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1605737486016</updated>
+    </task>
+    <task id="LOCAL-00006" summary="removed colors">
+      <created>1605737909371</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1605737909371</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Added option to copy and paste">
+      <created>1605739354429</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1605739354429</updated>
+    </task>
+    <task id="LOCAL-00008" summary="add classname css">
+      <created>1605739563340</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1605739563340</updated>
+    </task>
+    <task id="LOCAL-00009" summary="some adjustments">
+      <created>1605895318979</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1605895318979</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -94,25 +140,30 @@
     <MESSAGE value="Charts" />
     <MESSAGE value="implemented charts" />
     <MESSAGE value="fix research limitation" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix research limitation" />
+    <MESSAGE value="fix error on asnwer research research" />
+    <MESSAGE value="removed colors" />
+    <MESSAGE value="Added option to copy and paste" />
+    <MESSAGE value="add classname css" />
+    <MESSAGE value="some adjustments" />
+    <option name="LAST_COMMIT_MESSAGE" value="some adjustments" />
   </component>
   <component name="WindowStateProjectService">
     <state x="494" y="239" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1605651133341">
       <screen x="0" y="0" width="1440" height="860" />
     </state>
     <state x="494" y="239" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1440.860@0.0.1440.860" timestamp="1605651133341" />
-    <state x="347" y="2" key="CommitChangelistDialog2" timestamp="1605651574526">
+    <state x="347" y="2" key="CommitChangelistDialog2" timestamp="1605895314749">
       <screen x="0" y="0" width="1440" height="860" />
     </state>
-    <state x="347" y="2" key="CommitChangelistDialog2/0.0.1440.860@0.0.1440.860" timestamp="1605651574526" />
+    <state x="347" y="2" key="CommitChangelistDialog2/0.0.1440.860@0.0.1440.860" timestamp="1605895314749" />
     <state x="522" y="136" key="RollbackChangesDialog" timestamp="1605651572721">
       <screen x="0" y="0" width="1440" height="860" />
     </state>
     <state x="522" y="136" key="RollbackChangesDialog/0.0.1440.860@0.0.1440.860" timestamp="1605651572721" />
-    <state x="312" y="165" key="Vcs.Push.Dialog.v2" timestamp="1605563627257">
+    <state x="312" y="165" key="Vcs.Push.Dialog.v2" timestamp="1605895321680">
       <screen x="0" y="0" width="1440" height="860" />
     </state>
-    <state x="312" y="165" key="Vcs.Push.Dialog.v2/0.0.1440.860@0.0.1440.860" timestamp="1605563627257" />
+    <state x="312" y="165" key="Vcs.Push.Dialog.v2/0.0.1440.860@0.0.1440.860" timestamp="1605895321680" />
     <state x="376" y="195" key="run.anything.popup" timestamp="1605559718719">
       <screen x="0" y="0" width="1440" height="860" />
     </state>
