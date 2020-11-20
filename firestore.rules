@@ -1,8 +1,35 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    match /{document=**} {
-      allow read, write: if request.auth != null;
+    match /researchs/{research} {
+    function getUserId() {
+  return request.auth != null ? request.auth.uid : null;
     }
+    function isSignedIn() {return request.auth != null;}
+    function getRole(rsc) {
+    return rsc != null ? rsc.data.roles[getUserId()] : null;
+    }
+    function isOneOfTheRoles(rsc, array) {
+    return isSignedIn() && (getRole(rsc) in array);
+    }
+    
+    function isValidNewResearch() {
+    return resource == null;
+    }
+    
+    function isValidResearch(rsc) {
+    return rsc != null;
+    }
+
+    allow read: if(true);
+    allow write: if isValidResearch(resource) && isOneOfTheRoles(resource, ["owner", "writer"])
+    allow create: if isValidNewResearch() && isOneOfTheRoles(request.resource, ['owner']);
+ 		match /answeredQuestions/{answeredQuestion} {
+    		allow read, write, update, delete, create: if true;
+    	}
+    }
+    
+   
   }
+
 }
