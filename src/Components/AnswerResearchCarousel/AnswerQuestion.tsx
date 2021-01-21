@@ -9,8 +9,8 @@ import {UserData} from "./AnswerResearchCarousel";
 
 interface AnswerQuestionProps {
     questions: ResearchQuestionData[],
-    onFinishAnswerQuestion: () => void,
-    onAnswerQuestion: (question: ResearchQuestionData, selectedOption: number) => void
+    onFinishAnswerQuestion: () => Promise<void>,
+    onAnswerQuestion: (question: ResearchQuestionData, selectedOption: number) => Promise<void>,
     userData: UserData
 }
 
@@ -20,10 +20,12 @@ export const AnswerQuestion = ({questions, onFinishAnswerQuestion, onAnswerQuest
     if (questions[currentQuestion].id === null) throw new Error("Question is null");
     if (questions[currentQuestion].options === null) throw new Error("None options are available");
 
-    const goBackClick = () => {
+    const goBackClick = async () => {
+        console.log("go back clicked!");
         if (currentQuestion === 0) {
             throw new Error("Already in the first question")
         } else {
+
             setCurrentQuestion(currentQuestion-1);
         }
     }
@@ -44,7 +46,7 @@ export const AnswerQuestion = ({questions, onFinishAnswerQuestion, onAnswerQuest
         return currentQuestion === questions.length-1;
     }
 
-    const handleOptionSelect = (selectedOptionIndex: number) => {
+    const handleOptionSelect = async (selectedOptionIndex: number) => {
         if (selectedOptionIndex < 0 || selectedOptionIndex > questions[currentQuestion].options!!.size + 1) {
             throw new Error("Selected options doesn't exists");
         } else {
@@ -52,9 +54,9 @@ export const AnswerQuestion = ({questions, onFinishAnswerQuestion, onAnswerQuest
             * to save on firebase
             * */
             questions[currentQuestion].selectedOption = selectedOptionIndex;
-            onAnswerQuestion(questions[currentQuestion], selectedOptionIndex);
+            await onAnswerQuestion(questions[currentQuestion], selectedOptionIndex);
             if (currentQuestion === questions.length - 1) {
-                onFinishAnswerQuestion()
+                await onFinishAnswerQuestion();
             } else {
                 setCurrentQuestion(currentQuestion + 1);
             }

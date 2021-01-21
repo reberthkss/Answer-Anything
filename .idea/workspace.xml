@@ -1,11 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d976f240-fc95-46ac-a213-ca6d9e7f9038" name="Default Changelist" comment="fix research limitation">
+    <list default="true" id="d976f240-fc95-46ac-a213-ca6d9e7f9038" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.github/workflows/firebase-hosting-merge.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.github/workflows/firebase-hosting-pull-request.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/functions/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/functions/src/Data/AnswerData.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/functions/src/Data/FakeResearchData.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/functions/src/Data/ResearchData.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/functions/src/Data/ResearchQuestionData.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/functions/src/Data/ResearchStatus.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/functions/src/Data/UserData.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/functions/src/index.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/firestore.rules" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/utils/Data/Answers.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.firebase/hosting.cHVibGlj.cache" beforeDir="false" afterPath="$PROJECT_DIR$/.firebase/hosting.cHVibGlj.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/firebase.json" beforeDir="false" afterPath="$PROJECT_DIR$/firebase.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/firestore.rules" beforeDir="false" afterPath="$PROJECT_DIR$/firestore.rules" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/functions/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/functions/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/functions/tsconfig.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/functions/yarn.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/AnswerResearchCarousel/AnswerQuestion.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/AnswerResearchCarousel/AnswerQuestion.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/AnswerResearchCarousel/AnswerResearchCarousel.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/AnswerResearchCarousel/AnswerResearchCarousel.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/AppToolbar/AppToolbar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/AppToolbar/AppToolbar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/Chart/ChartWrapper.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/Chart/ChartWrapper.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/RegisterResearchCarousel/RegisterResearchCarousel.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/RegisterResearchCarousel/RegisterResearchCarousel.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Screen/Analysis/Analysis.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Screen/Analysis/Analysis.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Screen/AnswerResearch/AnswerResearchScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Screen/AnswerResearch/AnswerResearchScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Screen/LoginScreen/LoginScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Screen/LoginScreen/LoginScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/Actions.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/Actions.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/reducer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/reducer.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/Data/AnswerData.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/Data/AnswerData.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/Data/ResearchQuestionData.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/Data/ResearchQuestionData.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/Services/AnswerResearchManager/AnswerResearchManager.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/Services/AnswerResearchManager/AnswerResearchManager.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/Services/FirebaseManager/FirestoreManager.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/Services/FirebaseManager/FirestoreManager.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/config.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,8 +50,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="CSS File" />
-        <option value="TypeScript File" />
         <option value="TypeScript JSX File" />
+        <option value="TypeScript File" />
       </list>
     </option>
   </component>
@@ -32,20 +66,34 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/public" />
+    <property name="javascript.nodejs.core.library.configured.version" value="15.3.0" />
+    <property name="javascript.nodejs.core.library.typings.version" value="14.14.16" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/functions/src" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.standard" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.standard" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.standard" value="" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="yarn" />
-    <property name="ts.external.directory.path" value="D:\AnswerAnything\Web\answer_anything\node_modules\typescript\lib" />
+    <property name="settings.editor.selected.configurable" value="settings.typescriptcompiler" />
+    <property name="ts.external.directory.path" value="G:\Projects\Answer-Anything\functions\node_modules\typescript\lib" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\AnswerAnything\Web\answer_anything\public" />
+      <recent name="G:\Projects\Answer-Anything\functions\src" />
+      <recent name="G:\Projects\Answer-Anything\functions\lib\functions" />
+      <recent name="G:\Projects\Answer-Anything\functions\lib\src" />
+      <recent name="G:\Projects\Answer-Anything" />
+      <recent name="G:\Projects\Answer-Anything\src" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -64,7 +112,56 @@
       <workItem from="1605646905397" duration="3692000" />
       <workItem from="1605732547057" duration="356000" />
       <workItem from="1605736656961" duration="4111000" />
-      <workItem from="1605895293577" duration="1217000" />
+      <workItem from="1605895293577" duration="5040000" />
+      <workItem from="1608219262071" duration="1754000" />
+      <workItem from="1608303298386" duration="7000" />
+      <workItem from="1608579438294" duration="4008000" />
+      <workItem from="1608588667786" duration="620000" />
+      <workItem from="1608589927361" duration="869000" />
+      <workItem from="1608590855738" duration="8584000" />
+      <workItem from="1608604820238" duration="1573000" />
+      <workItem from="1608633801957" duration="4005000" />
+      <workItem from="1608656431390" duration="9767000" />
+      <workItem from="1608688344466" duration="733000" />
+      <workItem from="1608721133110" duration="5768000" />
+      <workItem from="1609012183345" duration="3508000" />
+      <workItem from="1609028462801" duration="7900000" />
+      <workItem from="1609068020598" duration="29000" />
+      <workItem from="1609068052595" duration="22000" />
+      <workItem from="1609068076563" duration="7772000" />
+      <workItem from="1609081111335" duration="1353000" />
+      <workItem from="1609086059001" duration="480000" />
+      <workItem from="1609086554153" duration="893000" />
+      <workItem from="1609087472325" duration="1693000" />
+      <workItem from="1609089351650" duration="1147000" />
+      <workItem from="1609093432926" duration="1941000" />
+      <workItem from="1609095407895" duration="1932000" />
+      <workItem from="1609099126694" duration="1825000" />
+      <workItem from="1609156917464" duration="2725000" />
+      <workItem from="1609160158373" duration="1005000" />
+      <workItem from="1609202231091" duration="804000" />
+      <workItem from="1609206592111" duration="131000" />
+      <workItem from="1609206738741" duration="647000" />
+      <workItem from="1609207406512" duration="201000" />
+      <workItem from="1609207687864" duration="1560000" />
+      <workItem from="1609209321006" duration="94000" />
+      <workItem from="1609237235321" duration="17000" />
+      <workItem from="1609237275048" duration="101000" />
+      <workItem from="1609237381510" duration="3597000" />
+      <workItem from="1609241168347" duration="2075000" />
+      <workItem from="1609257069911" duration="6000" />
+      <workItem from="1609270584377" duration="1551000" />
+      <workItem from="1609329021456" duration="2804000" />
+      <workItem from="1609590756491" duration="3000000" />
+      <workItem from="1609876931333" duration="460000" />
+      <workItem from="1609877452020" duration="1165000" />
+      <workItem from="1609879480904" duration="17726000" />
+      <workItem from="1609933334658" duration="6146000" />
+      <workItem from="1609953640807" duration="6102000" />
+      <workItem from="1610014901936" duration="740000" />
+      <workItem from="1610050295647" duration="1901000" />
+      <workItem from="1610131434888" duration="9000" />
+      <workItem from="1610364911886" duration="3000" />
     </task>
     <task id="LOCAL-00001" summary="fix project">
       <created>1605452593861</created>
@@ -129,7 +226,28 @@
       <option name="project" value="LOCAL" />
       <updated>1605895318979</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="implemented functions">
+      <created>1605898366613</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1605898366613</updated>
+    </task>
+    <task id="LOCAL-00011" summary="a">
+      <created>1605906163436</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1605906163436</updated>
+    </task>
+    <task id="LOCAL-00012" summary="ts config and package json">
+      <created>1609096449281</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1609096449281</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -145,28 +263,13 @@
     <MESSAGE value="Added option to copy and paste" />
     <MESSAGE value="add classname css" />
     <MESSAGE value="some adjustments" />
-    <option name="LAST_COMMIT_MESSAGE" value="some adjustments" />
+    <MESSAGE value="implemented functions" />
+    <MESSAGE value="a" />
+    <MESSAGE value="ts config and package json" />
+    <option name="LAST_COMMIT_MESSAGE" value="ts config and package json" />
   </component>
-  <component name="WindowStateProjectService">
-    <state x="494" y="239" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1605651133341">
-      <screen x="0" y="0" width="1440" height="860" />
-    </state>
-    <state x="494" y="239" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1440.860@0.0.1440.860" timestamp="1605651133341" />
-    <state x="347" y="2" key="CommitChangelistDialog2" timestamp="1605895314749">
-      <screen x="0" y="0" width="1440" height="860" />
-    </state>
-    <state x="347" y="2" key="CommitChangelistDialog2/0.0.1440.860@0.0.1440.860" timestamp="1605895314749" />
-    <state x="522" y="136" key="RollbackChangesDialog" timestamp="1605651572721">
-      <screen x="0" y="0" width="1440" height="860" />
-    </state>
-    <state x="522" y="136" key="RollbackChangesDialog/0.0.1440.860@0.0.1440.860" timestamp="1605651572721" />
-    <state x="312" y="165" key="Vcs.Push.Dialog.v2" timestamp="1605895321680">
-      <screen x="0" y="0" width="1440" height="860" />
-    </state>
-    <state x="312" y="165" key="Vcs.Push.Dialog.v2/0.0.1440.860@0.0.1440.860" timestamp="1605895321680" />
-    <state x="376" y="195" key="run.anything.popup" timestamp="1605559718719">
-      <screen x="0" y="0" width="1440" height="860" />
-    </state>
-    <state x="376" y="195" key="run.anything.popup/0.0.1440.860@0.0.1440.860" timestamp="1605559718719" />
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

@@ -13,19 +13,19 @@ const prodConfig = {
 };
 
 const devConfig = {
-    apiKey: "AIzaSyDBobOssi0rAN6EIz6lroG5_nWXG6SCu4Q",
-    authDomain: "answeranything-ce6e4.firebaseapp.com",
-    databaseURL: "https://answeranything-ce6e4.firebaseio.com",
-    projectId: "answeranything-ce6e4",
-    storageBucket: "answeranything-ce6e4.appspot.com",
-    messagingSenderId: "22067167918",
-    appId: "1:22067167918:web:d0c72a3591c9cbd3ebe33f",
-    measurementId: "G-65DDE6TH25"
+    apiKey: "AIzaSyCDii-6q6qaZxelX10HWu-Uj7BY8y5YX0Q",
+    authDomain: "answer-anything-dev.firebaseapp.com",
+    projectId: "answer-anything-dev",
+    storageBucket: "answer-anything-dev.appspot.com",
+    messagingSenderId: "188845554984",
+    appId: "1:188845554984:web:c2b96275ff0f646f9ba41d",
+    measurementId: "G-8NQ4PY4M8J"
 };
 
 
 
 export const getEnvironment = () => {
-    return (!process.env.NODE_ENV || process.env.NODE_ENV === 'development' ) ? devConfig : prodConfig;
+    return prodConfig;
+    // return (!process.env.NODE_ENV || process.env.NODE_ENV === 'development' ) ? devConfig : prodConfig;
 }
 

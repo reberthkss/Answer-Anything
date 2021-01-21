@@ -1,6 +1,5 @@
 import React, {useEffect, useRef, useState} from "react";
 import "./LoginScreen.css"
-import BackgroundLogin from "../../resources/LoginBackground.jpg"
 import {makeStyles} from "@material-ui/core/styles";
 import {Grid, Card} from "@material-ui/core";
 import GoogleButton from 'react-google-button'
@@ -59,7 +58,7 @@ const useStyles = makeStyles({
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundImage: `url(${BackgroundLogin})`,
+        backgroundImage: `url(${require("../../resources/LoginBackground.jpg")})`,
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
     },

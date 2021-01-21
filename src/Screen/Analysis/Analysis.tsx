@@ -6,6 +6,7 @@ import {AnswerResearchProps, ReduxState, ResearchProps} from "../../redux/reduce
 import {AnswerResearchManager} from "../../utils/Services/AnswerResearchManager/AnswerResearchManager";
 import {ChartWrapper} from "../../Components/Chart/ChartWrapper";
 import { CircularProgress } from "@material-ui/core";
+import {Answers} from "../../utils/Data/Answers";
 const randomColor = require('randomcolor');
 
 interface DatasetProps {
@@ -22,47 +23,27 @@ export const Analysis = () => {
         state.researchs.find((research) => research.id === id) || null,
         state.answersOfResearch as AnswerResearchProps
     ]);
+    const answerResearchManager = new AnswerResearchManager();
     const [loading, setLoading] = useState(true);
 
-
-    function computeAnswers(answers: AnswerResearchProps) {
+    function computeAnswers(answerResearchProps: AnswerResearchProps) {
         const dataSetProps: DatasetProps[] = [];
-
-        answers.answers.forEach((answer) => {
-            answer.answeredQuestions.forEach((question) => {
-                const questionData = dataSetProps.find((questionDataset) => questionDataset.questionId === question["question"]);
-                if (questionData) {
-                    const questionIndex = dataSetProps.indexOf(questionData);
-                    const optionData = dataSetProps[questionIndex].data.find((currentQuestion) => currentQuestion.option === question["selectedOption"] );
-                    if (optionData) {
-                        const optionIndex = dataSetProps[questionIndex].data.indexOf(optionData);
-                        dataSetProps[questionIndex].data[optionIndex].count++;
-                    } else {
-                        dataSetProps[questionIndex].data.push({
-                            option: question["selectedOption"],
-                            count: 1
-                        })
-                    }
-                } else {
-                    dataSetProps.push(
-                        {
-                            questionId: question["question"],
-                            data: [
-                                {
-                                    option: question["selectedOption"],
-                                    count: 1
-                                }
-                            ]
+        answerResearchProps.answers.questions
+            .forEach((question) => {
+                dataSetProps.push({
+                    questionId: question.questionId,
+                    data: question.option.map((option, index) => {
+                        return {
+                            option: index,
+                            count: option[index]
                         }
-                    )
-                }
-            })
-        })
+                    }),
+                });
+            });
         return dataSetProps;
     }
 
     async function loadAnswer(researchId: string) {
-        const answerResearchManager = new AnswerResearchManager();
         const response = await answerResearchManager.loadAnswersByResearch(researchId);
 
         if (response.result) {
@@ -141,9 +122,10 @@ export const Analysis = () => {
 
     useEffect(() => {
         setDataset({researchId: id, dataSet: computeAnswers(answers as AnswerResearchProps)});
-    }, [answers])
+    }, [answers]);
 
     useEffect(() => {
+        answerResearchManager.unsubscribeToUpdatedAnswers();
         loadAnswer(id)
             .then(() => {
                 setLoading(false);
@@ -152,8 +134,6 @@ export const Analysis = () => {
                 setLoading(false);
             })
     }, [id])
-
-
 
     return (
         <div className={"analysisRoot"}>

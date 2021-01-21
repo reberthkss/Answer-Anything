@@ -6,6 +6,8 @@ import {Store} from "redux";
 import {store} from "../../../redux/ConfigureStore";
 import {saveAnswerResearchPayload, saveResearch, saveResearchs} from "../../../redux/Actions";
 import {AnswerData} from "../../Data/AnswerData";
+import ReactDOM from "react-dom";
+import {app} from "../../../index";
 
 interface FirestoreManagerResponse {
     result: boolean,
@@ -15,12 +17,13 @@ interface FirestoreManagerResponse {
 export class FirestoreManager {
     static COLLECTIONS = {
         RESEARCH: "researchs",
-        ANSWERED_QUESTIONS: "answeredQuestions"
+        ANSWERED_QUESTIONS: "answeredQuestions",
+        ANSWERS: "answers",
     }
     private TAG = "[FIRESTOREMANAGER]";
 
     constructor() {
-        this.firestore = firebase.firestore();
+        this.firestore = app.firestore();
         this.store = store;
     }
 
@@ -57,17 +60,16 @@ export class FirestoreManager {
         try {
             const researchSaved = await this.firestore
                 .collection(FirestoreManager.COLLECTIONS.RESEARCH)
-                .add(research.parseFirebase())
-
+                .add(research.parseFirebase());
             this.store.dispatch(saveAnswerResearchPayload({
                 answerResearchId: "",
                 researchId: researchSaved.id
             }));
-
             console.log(this.TAG, "Successful saved research!");
             return {result: true, error: null};
         } catch (e) {
             /* TODO - SHOW ERROR */
+            console.log(`error => ${e.message}`);
             return {result: false, error: e.message};
         }
     }

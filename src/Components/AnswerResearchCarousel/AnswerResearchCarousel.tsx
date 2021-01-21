@@ -18,7 +18,7 @@ import {ShareManager} from "../../utils/Services/ShareManager/ShareManager";
 interface AnswerResearchCarouselProps {
     researchId: string,
     research: Research,
-    onGetSelectedOption: (question: ResearchQuestionData, selectedOption: number) => void
+    onGetSelectedOption: (question: ResearchQuestionData, selectedOption: number) => Promise<void>
 }
 
 export interface UserData {email: string, name: string}
@@ -31,8 +31,10 @@ export const AnswerResearchCarousel = ({ researchId, research, onGetSelectedOpti
         const answerResearchPayload = getStore().getState().answerResearchPayload;
         const answerResearchManager = new AnswerResearchManager();
         const resFromFirebase = await answerResearchManager.endQuestionnaire({
-            researchId: answerResearchPayload?.researchId || null,
-            answerResearchId: answerResearchPayload?.answerResearchId || null
+            identifiers: {
+                researchId: answerResearchPayload?.researchId || null,
+                answerResearchId: answerResearchPayload?.answerResearchId || null
+            }
         });
 
         if (resFromFirebase.result) {
@@ -40,10 +42,8 @@ export const AnswerResearchCarousel = ({ researchId, research, onGetSelectedOpti
         } else {
             console.log("Error => ", resFromFirebase.error);
         }
-
-
-
     }
+
 
     const GetContent = () => {
         const answerResearchManager = new AnswerResearchManager();
@@ -85,11 +85,33 @@ export const AnswerResearchCarousel = ({ researchId, research, onGetSelectedOpti
         }
     }
 
+    const _handleGoBack = async () => {
+        const answerResearchPayload = getStore().getState().answerResearchPayload;
+        const answerResearchManager = new AnswerResearchManager();
+        const resFromFirebase = await answerResearchManager.setAsInProgress({
+            identifiers: {
+                researchId: answerResearchPayload?.researchId || null,
+                answerResearchId: answerResearchPayload?.answerResearchId || null
+            }
+        });
+
+        console.log("go back called");
+        console.log("res => ", resFromFirebase)
+        if (resFromFirebase.result) {
+            /*TODO*/
+        } else {
+            console.log("Error => ", resFromFirebase.error);
+        }
+    }
+
     const GetBackArrow = () => {
         if (currentStep === STEPS.ONE) return null;
 
         return (
-            <div className={"backStepOption"} onClick={() => setStep(currentStep-1)}>
+            <div className={"backStepOption"} onClick={async () => {
+                await _handleGoBack();
+                setStep(currentStep-1);
+            }}>
                 <ChevronLeftIcon fontSize={"large"}/>
                 Voltar {/*TODO - i18n*/}
             </div>

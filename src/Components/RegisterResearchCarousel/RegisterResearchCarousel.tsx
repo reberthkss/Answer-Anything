@@ -171,6 +171,7 @@ export const RegisterCarousel = () => {
         return response.result;
     }
 
+
     const _increaseStep = () => {
         setError(false);
         switch (actualStep) {
@@ -183,8 +184,11 @@ export const RegisterCarousel = () => {
                 break;
             case STEPS.TWO:
                 if (_stepTwoFieldsAreValid(questions!!)) {
-                    setStep(actualStep+1);
-                    _handleSavingQuestion(research);
+                    _handleSavingQuestion(research).then((res) => {
+                        if (res) {
+                            setStep(actualStep+1);
+                        }
+                    })
                 } else {
                     setError(true);
                 }
@@ -236,6 +240,7 @@ export const RegisterCarousel = () => {
             /* On end animation show try again  component */
             setLoading({loading: false, result: false});
         }
+        return success;
     }
 
     return (

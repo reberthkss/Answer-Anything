@@ -52,10 +52,10 @@ export const AppToolbar = () => {
                     <Grid className={"userInfoGridItem"} item onClick={handleClick}>
                         <Paper className={"userInfoPaperContainer"}>
                             <div className={"userAvatar"}>
-                                <Avatar src={user != null ? user?.user.avatarUrl : ""}/>
+                                <Avatar src={user?.user.avatarUrl || ""}/>
                             </div>
                             <div className={"userName"}>
-                                Reberth {/*TODO - Get authenticated user*/}
+                                {user?.user.firstName}
                             </div>
                             <div className={"arrowBot"}>
                                 <ArrowDropDownIcon/>

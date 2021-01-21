@@ -15,7 +15,7 @@ import {isDevEnv} from "../../utils/utils";
 
 export const AnswerResearchScreen = () => {
     const [loading, setLoading] = useState<boolean>(false);
-    const {research} = useSelector((state:ReduxState) => state);
+    const research: Research | null = useSelector((state:ReduxState) => state).research;
     const {answerResearchPayload} = useSelector((state: ReduxState) => state);
     const history = useHistory();
     const params: any = useParams();
@@ -41,13 +41,17 @@ export const AnswerResearchScreen = () => {
         const questionPosition = research
             .questions
             .indexOf(question);
-        research.questions[questionPosition].selectedOption = selectedOption;
+        const prevSelectedOption = question.selectedOption;
+        question.selectedOption = selectedOption;
         const newResearch = new Research(research.title, research.subtitle, research.description, research.questions, research.status, research.roles);
+        console.log("prev => ", question.prevSelectedOption);
+        console.log("actual => ",question.selectedOption);
         const responseOnSave = await answerResearchManager.saveAnsweredQuestion({
             researchId: answerResearchPayload?.researchId || null,
             answerResearchId: answerResearchPayload?.answerResearchId || null,
             answeredQuestionId: question.id,
-            selectedOption: selectedOption
+            selectedOption,
+            prevSelectedOption
         });
 
         if (responseOnSave.result) {
@@ -80,6 +84,8 @@ export const AnswerResearchScreen = () => {
                     />
                 </div>
             )
+        } else {
+            return null
         }
     }
 

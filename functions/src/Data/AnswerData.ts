@@ -1,5 +1,5 @@
 import firebase from "firebase";
-import {UserData} from "../../Components/AnswerResearchCarousel/AnswerResearchCarousel";
+export interface UserData {email: string, name: string}
 
 interface AnsweredQuestions {
     question: number,
@@ -39,6 +39,7 @@ export class AnswerData {
     }
 
     static from(id: string, data:  firebase.firestore.DocumentData): AnswerData {
+        // console.log(data["answeredQuestion"])
         return new AnswerData(
             {email: data["userData"].email, name: data["userData"].name},
             data["answeredQuestions"].map((answeredQuestion: any) => (
@@ -47,7 +48,7 @@ export class AnswerData {
                     selectedOption: answeredQuestion["selectedOption"],
                     prevSelectedOption: answeredQuestion["prevSelectedOption"],
                 }
-                )),
+            )),
             data["status"]
         )
     }

@@ -12,37 +12,43 @@ interface ChartProps {
 
 export function ChartWrapper({type, title, labels, backgroundColors, data, props}: ChartProps) {
     const chartRef = useRef<HTMLCanvasElement | null>(null);
-
+    let chart: Chart | null = null;
     useEffect(() => {
+        console.log("chart ref => ", chartRef.current)
         if (chartRef.current) {
-            new Chart(chartRef.current, {
-                type,
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: '# of Votes',
-                        data: data,
-                        backgroundColor: backgroundColors,
-                        borderColor: "rgba(0, 0, 0, 1)",
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    title: {
-                        text: title,
-                        display: true
-                    },
-                    scales: {
-                        yAxes: [{
-                            ticks: {
-                                beginAtZero: true
-                            }
+            if (chart != null) {
+                chart.data = data;
+                chart.update();
+            } else {
+                chart = new Chart(chartRef.current, {
+                    type,
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: '# of Votes',
+                            data: data,
+                            backgroundColor: backgroundColors,
+                            borderColor: "rgba(0, 0, 0, 1)",
+                            borderWidth: 1
                         }]
+                    },
+                    options: {
+                        title: {
+                            text: title,
+                            display: true
+                        },
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }]
+                        }
                     }
-                }
-            });
+                });
+            }
         }
-    }, [])
+    }, [data])
     return (
         <canvas ref={chartRef}/>
     )

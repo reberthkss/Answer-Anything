@@ -2,6 +2,7 @@ import {ActionsTypes} from "./ActionTypes";
 import {UserData} from "../utils/Data/UserData";
 import {Research} from "../utils/Data/ResearchData";
 import {AnswerData} from "../utils/Data/AnswerData";
+import {Answers} from "../utils/Data/Answers";
 
 
 /*Mudar estrutura do redux para separar:
@@ -16,7 +17,7 @@ import {AnswerData} from "../utils/Data/AnswerData";
 
  */
 
-export interface AnswerResearchProps {researchId: string, answers: AnswerData[]}
+export interface AnswerResearchProps {researchId: string, answers: Answers}
 export interface ResearchProps {id: string, research: Research}
 export interface ReduxState {
     user: UserData | null,

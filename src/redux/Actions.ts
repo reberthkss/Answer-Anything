@@ -3,6 +3,7 @@ import {ActionsTypes} from "./ActionTypes";
 import {UserData} from "../utils/Data/UserData";
 import {Research} from "../utils/Data/ResearchData";
 import {AnswerData} from "../utils/Data/AnswerData";
+import {Answers} from "../utils/Data/Answers";
 
 
 export const saveAuthenticatedUser = (userInfo: UserData): ReduxAction => {
@@ -25,6 +26,6 @@ export const saveAnswerResearchPayload = (researchPayload: AnswerResearchPayload
     return {payload: researchPayload, type: ActionsTypes.SAVE_ANSWER_RESEARCH_PAYLOAD};
 }
 
-export const saveAnswersOfResearch = (answersResearch: {researchId: string, answers: AnswerData[]}): ReduxAction => {
+export const saveAnswersOfResearch = (answersResearch: {researchId: string, answers: Answers}): ReduxAction => {
     return {payload: answersResearch, type: ActionsTypes.SAVE_ANSWERS_OF_RESEARCH }
 }

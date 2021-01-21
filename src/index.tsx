@@ -9,7 +9,36 @@ import {store, persistor} from "./redux/ConfigureStore";
 import {getEnvironment} from "./utils/config";
 import firebase from "firebase";
 
-firebase.initializeApp(getEnvironment())
+export const app = firebase.initializeApp(getEnvironment());
+
+
+async function mockDataFirestore() {
+    try {
+        const document = await app
+            .firestore()
+            .collection("test")
+            .add({
+                "value": 1
+            });
+        await document
+            .collection("value")
+            .add({
+                "value": 2
+            });
+    } catch (e) {
+        console.log(`Error => ${e.message}`);
+    }
+}
+if (window.location.hostname == "localhost") {
+    app.firestore().settings({
+        host: "localhost:8080", ssl: false
+    })
+    /*mockDataFirestore().then(() => {
+        console.log("Finnaly mocked data!");
+    })*/
+
+}
+
 ReactDOM.render(
   <React.StrictMode>
       <Provider store={store}>
