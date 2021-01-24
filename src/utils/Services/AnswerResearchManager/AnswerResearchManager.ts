@@ -140,15 +140,12 @@ export class AnswerResearchManager {
 
     async loadAnswersByResearch(researchId: string): Promise<AnswerResearchManagerResponse> {
         try {
-
-            const answersDoc:  firebase.firestore.DocumentReference<firebase.firestore.DocumentData> = (await this
+            const answersRef = (await this
                 .firestore
                 .collection(FirestoreManager.COLLECTIONS.ANSWERS)
                 .where("researchId", "==", researchId)
-                .get())
-                .docs[0]
-                .ref;
-
+                .get());
+            const answersDoc:  firebase.firestore.DocumentReference<firebase.firestore.DocumentData> | null= answersRef.docs.length > 0 ? answersRef.docs[0].ref : null;
             if (answersDoc == null) return {result: false, error: "Answer Not Found!"};
             const answers: Answers = Answers.from((await answersDoc.get()).data() as AnswersSnapshotData);
             const answersOfResearch: {

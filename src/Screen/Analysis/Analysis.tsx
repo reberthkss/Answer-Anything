@@ -60,7 +60,7 @@ export const Analysis = () => {
 
     function renderOptionsChart(research: ResearchProps, dataSet: {researchId: string, dataSet: DatasetProps[]}) {
         if ((answers as AnswerResearchProps).researchId !== research.id || research.id !== dataSet.researchId) {
-            return [];
+            return renderNoDataAvailable();
         } else {
             return dataSet.dataSet.map(({data, questionId}) => {
                 const questionFromResearch = research.research.questions.find((question) => question.id === questionId.toString());
@@ -77,27 +77,19 @@ export const Analysis = () => {
                 const title = questionFromResearch.question
                 if (!title) throw new Error("Title is empty!");
                 return (
-                    <ChartWrapper data={optionsData} backgroundColors={backgroundColors} labels={labels}
-                                  title={title} type={"bar"}/>
+                    <div className={"chart"}>
+                        <ChartWrapper data={optionsData} backgroundColors={backgroundColors} labels={labels}
+                                      title={title} type={"bar"}/>
+                    </div>
                 )
             })
         }
     }
 
-    function renderCharts(dataSet: {researchId: string, dataSet: DatasetProps[]} | null) {
-        if (dataSet != null && dataSet.dataSet.length !== 0) {
-            return (
-                <div className={"chart"}>
-                    {renderOptionsChart(research as ResearchProps, dataSet)}
-                </div>
-            )
-        } else {
-            return (<div className={"noDataAvailableContainer"}>
-                <div className={"noDataAvailableText"}>
-                    No data available
-                </div>
-            </div>)
-        }
+    function renderCharts(dataSet: { researchId: string, dataSet: DatasetProps[] }) {
+        return (
+            renderOptionsChart(research as ResearchProps, dataSet)
+        )
     }
 
     function renderLoading() {
@@ -106,17 +98,27 @@ export const Analysis = () => {
         )
     }
 
+    function renderNoDataAvailable() {
+        return (<div className={"noDataAvailableContainer"}>
+            <div className={"noDataAvailableText"}>
+                No data available
+            </div>
+        </div>);
+    }
+
     function renderContent(content: {researchId: string, dataSet: DatasetProps[]} | null) {
         if (loading) {
             return (<div className={"loadingContainer"}>
                 {renderLoading()}
             </div>)
-        } else {
+        } else if (content != null && content.dataSet.length > 0) {
             return (
                 <div className={"chartContainer"}>
                     {renderCharts(content)}
                 </div>
             )
+        } else {
+            return renderNoDataAvailable();
         }
     }
 
