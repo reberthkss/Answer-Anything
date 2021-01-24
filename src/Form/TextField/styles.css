@@ -1,0 +1,15 @@
+
+.textField {
+    width: 100%;
+}
+
+
+.spanErrorContainer {
+    width: 100%
+}
+
+.spanError {
+    color: red;
+    font-weight: bold;
+    font-size: 12px;
+}

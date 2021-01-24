@@ -12,7 +12,8 @@ import {store} from "../../redux/ConfigureStore";
 import {ResearchStatus} from "../../utils/Data/ResearchStatus";
 import {FirestoreManager} from "../../utils/Services/FirebaseManager/FirestoreManager";
 import {ShareResearch} from "./ShareResearch";
-import { Loading } from "../AnimatedComponents/Loading/Loading";
+import {Loading} from "../AnimatedComponents/Loading/Loading";
+import {FormTextField} from "../../Form/TextField/FormTextField";
 
 interface LoadingState {
     loading: boolean,
@@ -39,15 +40,24 @@ export const RegisterCarousel = () => {
     const [actualStep, setStep] = useState(STEPS.ONE);
     const [questions, saveQuestions] = useState<QuestionsState[] | null>(null);
     const [error, setError] = useState<boolean>(false);
+    const titleRef = useRef<HTMLDivElement | null>(null);
+    const [titleError, setTitleError] = useState(false);
+    const subTitleRef = useRef<HTMLDivElement | null>(null);
+    const [subTitleError, setSubtitleError] = useState(false);
+    const desRef = useRef<HTMLDivElement | null>(null);
+    const [desError, setDesError] = useState(false);
+    const nextRef = useRef<HTMLDivElement | null>(null);
     const research: Research = useRef(new Research()).current;
     const firestoreManager = new FirestoreManager();
 
-    const _decreaseStep = () => setStep(actualStep-1);
+
+
+    const _decreaseStep = () => setStep(actualStep - 1);
 
     const _renderBackStep = () => {
         if (actualStep === STEPS.ONE || loading.loading) {
             return (
-                <div />
+                <div/>
             )
         } else {
             return (
@@ -59,24 +69,31 @@ export const RegisterCarousel = () => {
         }
     }
 
-    const _renderErrorByEmptyTextField = (message: string, field: string | null) => {
-        if (error && (field === null || field === "")) {
-            return (
-                <div className={"spanErrorContainer"}>
-                    <span className={"spanError"}>
-                        Erro: O campo referente ao {message} deve estar preenchido. {/*TODO - i18n*/}
-                    </span>
-                </div>
-            )
-        } else {
-            return (<div/>)
+    const _fieldsAreValid = (): boolean => {
+        if (research.title?.length == 0 || research.subtitle == null) {
+            setTitleError(true);
         }
-    }
+        if (research.subtitle?.length == 0 || research.subtitle == null) {
+            setSubtitleError(true)
+        }
+        if (research.description?.length == 0 || research.description == null) {
+            setDesError(true);
+        }
+        console.log("ok0 ");
 
-    const _fieldsAreValid = (fields: (string | null)[]): boolean => {
-        let isValid = true;
-        fields.forEach((field) => field == null || field === "" ? isValid = false : null)
-        return isValid;
+        if (research.title?.length == 0 || research.title == null) {
+            return false;
+        }
+        console.log("ok1 ");
+        if (research.subtitle?.length == 0) {
+            return false;
+        }
+        console.log("ok2 ");
+        if (research.description?.length == 0 || research.description == null) {
+            return false;
+        }
+        console.log("ok3 ");
+        return true;
     }
 
     const _stepTwoFieldsAreValid = (questions: QuestionsState[]): boolean => {
@@ -101,45 +118,64 @@ export const RegisterCarousel = () => {
             )
         } else {
             return (
-                <div className={"nextStep"} onClick={_increaseStep} >
-                    Next {/*TODO - i18n*/}
+                <div ref={nextRef} onKeyPress={() => {
+                    _increaseStep()
+                }} tabIndex={0} className={"nextStep"} onClick={_increaseStep}>
+                   <span className={"nextStepText"}> Next {/*TODO - i18n*/}</span>
                     <ChevronRightIcon fontSize={"large"}/>
                 </div>
             )
         }
     }
-
     const _renderStepOne = () => {
         return (<div className={"stepOneDiv"}>
-            <div className={"textField"}>
-                <TextField
-                    placeholder={"Titulo"}
-                    fullWidth
-                    onChange={(event) => research.title = event.target.value}
-                    defaultValue={research.title}
-                />
-                {_renderErrorByEmptyTextField("titulo", research.title)}
-            </div>
-            <div className={"textField"}>
-                <TextField
-                    placeholder={"Sub-titulo"}
-                    fullWidth
-                    onChange={(event) => research.subtitle = event.target.value}
-                    defaultValue={research.subtitle}
-                />
-                {_renderErrorByEmptyTextField("sub-titulo", research.subtitle)}
-            </div>
-            <div className={"textField"}>
-                <TextField
-                    placeholder={"Descrição"}
-                    fullWidth
-                    multiline={true}
-                    rows={4}
-                    onChange={(event) => research.description = event.target.value}
-                    defaultValue={research.description}
-                />
-                {_renderErrorByEmptyTextField("descrição", research.description)}
-            </div>
+            <FormTextField
+                getRef={() => titleRef}
+                errorInField={titleError}
+                field={"titulo"}
+                title={"Titulo"}
+                onChangeCallback={(title) => {
+                    research.title = title;
+                }}
+                onKeyPressCallback={(keyPressed) => {
+                    if (keyPressed == "Enter") {
+                        if (subTitleRef != null) {
+                            subTitleRef.current?.focus()
+                        }
+                    }
+                }}
+                isTextValidCallback={(text) => text != null && text.length >= 0}
+            />
+            <FormTextField
+                getRef={() => subTitleRef}
+                errorInField={subTitleError}
+                field={"sub-titulo"}
+                title={"Sub-titulo"}
+                onChangeCallback={(title) => {
+                    research.subtitle = title;
+                }}
+                onKeyPressCallback={(keyPressed) => {
+                    if (keyPressed == "Enter") {
+                        desRef.current?.focus()
+                    }
+                }}
+                isTextValidCallback={(text) => text != null && text.length != 0}
+            />
+            <FormTextField
+                getRef={() => desRef}
+                errorInField={desError}
+                field={"descrição"}
+                title={"Descrição"}
+                onChangeCallback={(title) => {
+                    research.description = title;
+                }}
+                onKeyPressCallback={(keyPressed) => {
+                    if (keyPressed == "Enter") {
+                        nextRef.current?.focus();
+                    }
+                }}
+                isTextValidCallback={(text) => text != null && text.length != 0}
+            />
         </div>)
     }
 
@@ -176,8 +212,8 @@ export const RegisterCarousel = () => {
         setError(false);
         switch (actualStep) {
             case STEPS.ONE:
-                if (_fieldsAreValid([research.title, research.subtitle, research.description])) {
-                    setStep(actualStep+1);
+                if (_fieldsAreValid()) {
+                    setStep(actualStep + 1);
                 } else {
                     setError(true)
                 }
@@ -186,7 +222,7 @@ export const RegisterCarousel = () => {
                 if (_stepTwoFieldsAreValid(questions!!)) {
                     _handleSavingQuestion(research).then((res) => {
                         if (res) {
-                            setStep(actualStep+1);
+                            setStep(actualStep + 1);
                         }
                     })
                 } else {
@@ -245,7 +281,7 @@ export const RegisterCarousel = () => {
 
     return (
         <div className={"registerCarouselCard"}>
-            <Card className={"card"} elevation={5} raised={true} >
+            <Card className={"card"} elevation={5} raised={true}>
                 <div className={"header"}>
                     Informações {/*TODO - i18n*/}
                 </div>

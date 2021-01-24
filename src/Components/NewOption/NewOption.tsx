@@ -5,11 +5,12 @@ import {Tooltip} from "@material-ui/core";
 import IconButton from "@material-ui/core/IconButton";
 
 interface NewOptionProps {
+    id: string,
     onDeleteOption: () => void,
     onUpdateValue: (option: string) => void,
     value: string | null,
 }
-export const NewOption = ({onDeleteOption, onUpdateValue, value = null, }: NewOptionProps) => {
+export const NewOption = ({onDeleteOption, onUpdateValue, value = null, id }: NewOptionProps) => {
     const [disabled, setDisabled] = useState(value != null);
     const [error, setError] = useState(false);
     const [optionValue, setOption] = useState<string>(value != null ? value : "");
@@ -67,6 +68,7 @@ export const NewOption = ({onDeleteOption, onUpdateValue, value = null, }: NewOp
             return (
                 <div className={"optionQuestionEnabledContainer"}>
                     <input
+                        id={id}
                         type={"text"}
                         defaultValue={optionValue}
                         className={"optionQuestionEnabled"}
