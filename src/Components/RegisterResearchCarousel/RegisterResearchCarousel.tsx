@@ -7,7 +7,7 @@ import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import TextField from "@material-ui/core/TextField";
 import {Research} from "../../utils/Data/ResearchData";
 import {ResearchQuestionData} from "../../utils/Data/ResearchQuestionData";
-import {OptionState, QuestionsState, StepTwo} from "./StepTwo";
+import {generateInitialOptions, OptionState, QuestionsState, StepTwo} from "./StepTwo";
 import {store} from "../../redux/ConfigureStore";
 import {ResearchStatus} from "../../utils/Data/ResearchStatus";
 import {FirestoreManager} from "../../utils/Services/FirebaseManager/FirestoreManager";
@@ -19,6 +19,10 @@ interface LoadingState {
     loading: boolean,
     result: boolean
 }
+
+const initialQuestionsState = [
+    {index: 0, question: null, options: generateInitialOptions(0)}
+]
 
 const mapOptions = (options: OptionState[]): Map<number, string> => {
     const optionsMap = new Map<number, string>();
@@ -79,20 +83,15 @@ export const RegisterCarousel = () => {
         if (research.description?.length == 0 || research.description == null) {
             setDesError(true);
         }
-        console.log("ok0 ");
-
         if (research.title?.length == 0 || research.title == null) {
             return false;
         }
-        console.log("ok1 ");
         if (research.subtitle?.length == 0) {
             return false;
         }
-        console.log("ok2 ");
         if (research.description?.length == 0 || research.description == null) {
             return false;
         }
-        console.log("ok3 ");
         return true;
     }
 
@@ -145,6 +144,7 @@ export const RegisterCarousel = () => {
                     }
                 }}
                 isTextValidCallback={(text) => text != null && text.length >= 0}
+                initialValue={research.title || ""}
             />
             <FormTextField
                 getRef={() => subTitleRef}
@@ -160,6 +160,7 @@ export const RegisterCarousel = () => {
                     }
                 }}
                 isTextValidCallback={(text) => text != null && text.length != 0}
+                initialValue={research.subtitle || ""}
             />
             <FormTextField
                 getRef={() => desRef}
@@ -175,13 +176,19 @@ export const RegisterCarousel = () => {
                     }
                 }}
                 isTextValidCallback={(text) => text != null && text.length != 0}
+                initialValue={research.description || ""}
             />
         </div>)
     }
 
     const _renderStepTwo = () => {
         return (
-            <StepTwo error={error} onGetQuestions={(questions) => saveQuestions(questions)} savedQuestions={questions}/>
+            <StepTwo
+                error={error}
+                onGetQuestions={(questions) => saveQuestions(questions)}
+                savedQuestions={questions || initialQuestionsState}
+                nextButtonRef={nextRef}
+            />
         )
     }
 

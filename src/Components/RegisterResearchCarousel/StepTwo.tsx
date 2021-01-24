@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {MutableRefObject, useEffect, useRef, useState} from "react";
 import {IconButton} from "@material-ui/core";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import DeleteIcon from "@material-ui/icons/Delete";
@@ -10,24 +10,22 @@ import Tooltip from "@material-ui/core/Tooltip";
 import {NewOption} from "../NewOption/NewOption";
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import Scrollbar from "react-scrollbars-custom";
+import {FormTextField} from "../../Form/TextField/FormTextField";
 
 interface StepTwoProps {
     error: boolean,
     onGetQuestions: (questions: QuestionsState[] | null) => void,
-    savedQuestions: QuestionsState[] | null
+    nextButtonRef: MutableRefObject<HTMLDivElement | null>
+    readonly savedQuestions: QuestionsState[]
 }
 
-export interface OptionState {index: number, payload: string | null}
+export interface OptionState {id: string, index: number, payload: string | null}
 export interface QuestionsState {
     index: number,
     question: string | null,
     options: OptionState[]
 }
-const generateInitialOptions = () => Array.from({length: 4}, (_, index) => ({index, payload: null}));
-
-const initialQuestionsState = [
-    {index: 0, question: null, options: generateInitialOptions()}
-]
+export const generateInitialOptions = (question: number) => Array.from({length: 4}, (_, index) => ({id: `question-${question}-option-${index}`, index, payload: null}));
 
 /* Considerações:
 *
@@ -37,18 +35,34 @@ const initialQuestionsState = [
 * */
 
 
-export const StepTwo = ({error, onGetQuestions, savedQuestions}: StepTwoProps) => {
+export const StepTwo = ({error, onGetQuestions, savedQuestions, nextButtonRef}: StepTwoProps) => {
     const [currentQuestion, setCurrentQuestion] = useState(0);
-    const [questions, setQuestions] = useState<QuestionsState[]>(savedQuestions ?? initialQuestionsState);
+    const [hasErrorInQuestionTitle, setErrorInQuestionTitle] = useState(false);
+    const [questionOptionsId, setQuestionOptionsId] = useState<string[]>([]);
+    const [question, setQuestion] = useState<QuestionsState | null>(null);
+    const [goBackButtonIsDisabled, setGoBackButtonVisibility] = useState<boolean>(true);
+    const [deleteQuestionButtonIsDisabled, setDeleteButtonVisibility] = useState<boolean>(true);
+    const [questionOptions, setQuestionOptions] = useState<OptionState[]>([]);
+    const textFieldRef = useRef<HTMLDivElement | null>(null);
 
-    const textFieldRef = useRef(null);
-    const _goBackButtonIsDisabled = (): boolean => {
-        if (currentQuestion === 0) {
-            return true;
+
+    useEffect(() => {
+        setQuestion(savedQuestions[currentQuestion]);
+        setErrorInQuestionTitle(false);
+        if (currentQuestion == 0) {
+            setGoBackButtonVisibility(true);
+            setDeleteButtonVisibility(true);
         } else {
-            return false;
+            setGoBackButtonVisibility(false);
+            setDeleteButtonVisibility(false);
         }
-    }
+    }, [currentQuestion]);
+
+    useEffect(() => {
+        if (question != null) {
+            setQuestionOptions(question.options);
+        }
+    }, [question])
 
     const _goBackToPreviousQuestion = () => {
         setCurrentQuestion(currentQuestion - 1);
@@ -57,7 +71,7 @@ export const StepTwo = ({error, onGetQuestions, savedQuestions}: StepTwoProps) =
     const _renderGoBackToPreviousQuestionButton = () => {
         return (
             <div>
-                <IconButton aria-label="goBack"  onClick={_goBackToPreviousQuestion} disabled={_goBackButtonIsDisabled()}>
+                <IconButton aria-label="goBack"  onClick={_goBackToPreviousQuestion} disabled={goBackButtonIsDisabled}>
                     <ChevronLeftIcon fontSize={"large"}/>
                 </IconButton>
             </div>
@@ -80,19 +94,12 @@ export const StepTwo = ({error, onGetQuestions, savedQuestions}: StepTwoProps) =
         }
     }
 
-    const _deleteButtonIsDisabled = (): boolean => {
-        if (questions.length === 1 || currentQuestion === 0) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
     const _removeQuestion = (cQuestion: number) => {
         if (cQuestion !== 0) {
-            questions.splice(cQuestion, 1);
+            const newQuestions = [...savedQuestions];
+            newQuestions.splice(currentQuestion, 1);
             setCurrentQuestion(cQuestion-1);
-            setQuestions(questions);
+            onGetQuestions(newQuestions);
         }
     }
 
@@ -102,7 +109,7 @@ export const StepTwo = ({error, onGetQuestions, savedQuestions}: StepTwoProps) =
                 <IconButton
                     aria-label={"delete"}
                     onClick={() => _removeQuestion(currentQuestion)}
-                    disabled={_deleteButtonIsDisabled()}>
+                    disabled={deleteQuestionButtonIsDisabled}>
                     <DeleteIcon fontSize={"default"}/>
                 </IconButton>
             </div>
@@ -118,31 +125,63 @@ export const StepTwo = ({error, onGetQuestions, savedQuestions}: StepTwoProps) =
     }
 
     const _updateOptionValue = (questionIndex: number, value: string, index: number) => {
-        questions[questionIndex].options[index].payload = value;
-        setQuestions(questions);
+       questionOptions[index].payload = value;
     }
 
-    const _deleteOption = (currentQuestion: number, currentOption: number) => {
-        const newQuestions = [...questions];
-        const question = newQuestions.splice(currentQuestion, 1);
-        question[0].options.splice(currentOption, 1);
-        setQuestions([...newQuestions, question[0]]);
+    const _deleteOption = (id: string) => {
+        setQuestionOptions(questionOptions.filter((option) => option.id != id));
     }
 
-    const _renderOptions = (currentQuestion: number) => {
-        const question = questions[currentQuestion];
+    const renderQuestionOptions = () => {
+        if (questionOptions.length > 0) {
+            return (
+                questionOptions.map((option) => {
+                        return (
+                            <div>
+                                <NewOption
+                                    id={option.id}
+                                    value={option.payload}
+                                    onDeleteOption={() => _deleteOption(option.id)}
+                                    onUpdateValue={(value) => _updateOptionValue(currentQuestion, value, option.index)}
+                                    onKeyPressed={(id, key) => {
+                                        if (key == "Enter") {
+                                            const indexOfCurrentField = questionOptions.findIndex((option) => option.id == id);
+                                            if (indexOfCurrentField != -1) {
+                                                const indexOfNextField = indexOfCurrentField+1;
+                                                if (indexOfNextField < questionOptions.length) {
+                                                    const nodeReference = document.getElementById(questionOptions[indexOfNextField].id);
+                                                    if(nodeReference != null) {
+                                                        nodeReference.focus();
+                                                    }
+                                                } else {
+                                                    const indexOfTargetQuestion = savedQuestions.findIndex((savedQuestion) => savedQuestion.index == question?.index);
+                                                    if (indexOfTargetQuestion != -1) {
+                                                        savedQuestions[indexOfTargetQuestion].options = question!!.options;
+                                                        savedQuestions[indexOfTargetQuestion].question = question!!.question;
+                                                    }
+                                                    nextButtonRef.current?.focus();
+                                                    onGetQuestions(savedQuestions);
+                                                }
+                                            }
+                                        }
+                                    }}
+                                />
+                                {_renderErrorSpanByEmptyField("opção", option.payload)}
+                            </div>
+                        )
+                    }
+                )
+            )
+        } else {
+            return null;
+        }
+    }
+
+    const _renderOptions = () => {
         return (
             <div className={"questionOptionsDiv"}>
-                <Scrollbar className={"scrollBar"}>
-                    {question.options.map((option, index) =>
-                        <div>
-                            <NewOption
-                                key={`question-${currentQuestion}-option-${option.index}`}
-                                value={questions[currentQuestion].options[index].payload}
-                                onDeleteOption={() => _deleteOption(currentQuestion, index)}
-                                onUpdateValue={(value) => _updateOptionValue(currentQuestion, value, index)}/>
-                            {_renderErrorSpanByEmptyField("opção", questions[currentQuestion].options[index].payload)}
-                        </div>)}
+                <Scrollbar id={"scrollbar-options"} className={"scrollBar"}>
+                    {renderQuestionOptions()}
                 </Scrollbar>
             </div>
         )
@@ -150,13 +189,13 @@ export const StepTwo = ({error, onGetQuestions, savedQuestions}: StepTwoProps) =
 
     const _addNewOption = (question: QuestionsState) => {
         const lastQuestion = question.options.reduce((optionA, optionB) => optionA.index > optionB.index ? optionA : optionB);
-        const newQuestionState: QuestionsState[] = questions.filter((question) => question.index !== currentQuestion);
-        const newOption = {index: lastQuestion.index + 1, payload: null};
-        setQuestions([...newQuestionState, {...question, options: [...question.options, newOption]}]);
+        const index = lastQuestion.index + 1;
+        const newOption = {id: `question-${question.index}-option-${index}`, index , payload: null};
+        setQuestionOptions([...questionOptions, newOption]);
     }
 
     const _renderAddNewOption = (currentQuestion: number) => {
-        const question: QuestionsState = questions[currentQuestion];
+        const question: QuestionsState = savedQuestions[currentQuestion];
         return (
             <div className={"addNewOptionDiv"}>
                 <div className={"addNewOption"} onClick={() => _addNewOption(question)}>
@@ -175,16 +214,36 @@ export const StepTwo = ({error, onGetQuestions, savedQuestions}: StepTwoProps) =
                         Questão {currentQuestion+1} {/*TODO - i18n*/}
                     </div>
                     <div className={"questionTitle"}>
-                        <TextField
-                            fullWidth
-                            inputRef={textFieldRef}
-                            defaultValue={questions[currentQuestion].question}
-                            onChange={(event) => questions[currentQuestion].question = event.target.value}
-                            label={"Qual a pergunta?"}  />
-                        {_renderErrorSpanByEmptyField("pergunta", questions[currentQuestion].question)}
+                        <FormTextField
+                            field={"a pergunta"}
+                            title={"Qual a pergunta?"}
+                            onChangeCallback={(text) => {
+                                if (question != null) {
+                                    question.question = text;
+
+                                }
+                                if (text.length > 0) {
+                                    setErrorInQuestionTitle(false);
+                                } else {
+                                    setErrorInQuestionTitle(true);
+                                }
+                            }}
+                            onKeyPressCallback={(keyPressed) => {
+                                if (keyPressed == "Enter") {
+                                    const optionNodeReference = document.getElementById(questionOptions[0].id);
+                                    if (optionNodeReference != null) {
+                                        optionNodeReference.focus();
+                                    }
+                                }
+                            }}
+                            isTextValidCallback={(text) => text != null && text.length > 0}
+                            getRef={() => textFieldRef}
+                            errorInField={hasErrorInQuestionTitle}
+                            initialValue={question?.question || ""}
+                        />
                     </div>
                     <div className={"questionOptions"}>
-                        {_renderOptions(currentQuestion)}
+                        {_renderOptions()}
                         <div>
                             {_renderAddNewOption(currentQuestion)}
                         </div>
@@ -205,11 +264,16 @@ export const StepTwo = ({error, onGetQuestions, savedQuestions}: StepTwoProps) =
     }
 
     const _showNextQuestion = () => {
+        const indexOfQuestion = savedQuestions.findIndex((savedQuestion) => savedQuestion.index == question?.index);
+        if (indexOfQuestion != -1) {
+            savedQuestions[indexOfQuestion].question = question!!.question;
+            savedQuestions[indexOfQuestion].options = question!!.options;
+        }
         setCurrentQuestion(currentQuestion + 1);
     }
 
     const _nextButtonIsDisabled = (): boolean => {
-        if (currentQuestion === (questions.length-1)) {
+        if (currentQuestion === (savedQuestions.length-1)) {
             return true;
         } else {
             return false;
@@ -217,16 +281,25 @@ export const StepTwo = ({error, onGetQuestions, savedQuestions}: StepTwoProps) =
     }
 
     const _generateNewQuestion = () => {
-        // @ts-ignore
-        textFieldRef.current != null && (textFieldRef.current!!.value = null);
-        setCurrentQuestion(questions.length);
-        setQuestions([...questions,
-            {
-                index:questions.length,
-                question: "",
-                options: generateInitialOptions()
+        if (textFieldRef.current != null) {
+            const length = savedQuestions.length;
+            const targetQuestion = savedQuestions.findIndex((savedQuestion) => savedQuestion.index == question?.index);
+
+            if(targetQuestion != -1) {
+                savedQuestions[targetQuestion].question = question!!.question;
+                savedQuestions[targetQuestion].options = question!!.options;
             }
-        ]);
+            onGetQuestions([...savedQuestions,
+                {
+                    index: length,
+                    question: null,
+                    options: generateInitialOptions(length)
+                }
+            ]);
+            setCurrentQuestion(length);
+        } else {
+            /* Show error */
+        }
     }
 
     const _renderNewQuestion = () => {
@@ -246,9 +319,7 @@ export const StepTwo = ({error, onGetQuestions, savedQuestions}: StepTwoProps) =
         )
     }
 
-    useEffect(() => {
-        onGetQuestions(questions);
-    }, [onGetQuestions, questions])
+
     return (
         <div className={"stepTwoDiv"}>
             <div className={"columnOptions"}>

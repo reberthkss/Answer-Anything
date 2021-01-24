@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import "./NewOption.css"
 import DeleteIcon from '@material-ui/icons/Delete';
 import {Tooltip} from "@material-ui/core";
@@ -8,12 +8,17 @@ interface NewOptionProps {
     id: string,
     onDeleteOption: () => void,
     onUpdateValue: (option: string) => void,
+    onKeyPressed: (id: string, keyPressed: string) => void,
     value: string | null,
 }
-export const NewOption = ({onDeleteOption, onUpdateValue, value = null, id }: NewOptionProps) => {
+export const NewOption = ({onDeleteOption, onUpdateValue, value = null, id, onKeyPressed }: NewOptionProps) => {
     const [disabled, setDisabled] = useState(value != null);
     const [error, setError] = useState(false);
-    const [optionValue, setOption] = useState<string>(value != null ? value : "");
+    const [optionValue, setOption] = useState<string | null>( null);
+
+    useEffect(() => {
+        setOption(value);
+    }, [value]);
     const _fieldAreInvalid = (value: string) => {
         if (value === "" || value == null) {
             return true;
@@ -23,14 +28,14 @@ export const NewOption = ({onDeleteOption, onUpdateValue, value = null, id }: Ne
     }
 
     const _handleKey = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        onKeyPressed(id, event.key);
         if (event.key === "Enter") {
             if (_fieldAreInvalid(event.currentTarget.value)) {
                 setError(true);
                 return;
             } else {
-                setOption(event.currentTarget.value);
                 setDisabled(!disabled);
-                onUpdateValue(optionValue!!);
+                onUpdateValue(optionValue || "");
             }
         }
     }
@@ -49,7 +54,7 @@ export const NewOption = ({onDeleteOption, onUpdateValue, value = null, id }: Ne
 
     const _renderOptionField = () => {
         if (disabled) {
-            return <div className={"optionQuestionDisabledDiv"}>
+            return <div className={"optionQuestionDisabledDiv"} id={id}>
                 <div className={"optionQuestionDisabled"} onClick={() => {
                     setDisabled(!disabled);
                 }}>
@@ -70,7 +75,7 @@ export const NewOption = ({onDeleteOption, onUpdateValue, value = null, id }: Ne
                     <input
                         id={id}
                         type={"text"}
-                        defaultValue={optionValue}
+                        defaultValue={optionValue || ""}
                         className={"optionQuestionEnabled"}
                         autoFocus={true}
                         onKeyDown={_handleKey}

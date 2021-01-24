@@ -9,12 +9,17 @@ interface Props {
     onKeyPressCallback: (keyPressed: string) => void,
     isTextValidCallback: (text: string | null) => boolean,
     getRef: () => MutableRefObject<HTMLDivElement | null>,
-    errorInField: boolean
+    errorInField: boolean,
+    initialValue: string
 }
-export function FormTextField ({field, title, onChangeCallback, onKeyPressCallback, isTextValidCallback, getRef, errorInField}: Props) {
-    const [text, setText] = useState<string | null>(null);
+export function FormTextField ({field, title, onChangeCallback, onKeyPressCallback, isTextValidCallback, getRef, errorInField, initialValue=""}: Props) {
+    const [text, setText] = useState<string>(initialValue);
     const [hasError, setError] = useState<boolean>(false);
 
+    useEffect(() => {
+        setText(initialValue);
+        setError(false);
+        }, [initialValue]);
     function renderTextField() {
         return (
             <TextField
@@ -23,16 +28,12 @@ export function FormTextField ({field, title, onChangeCallback, onKeyPressCallba
                 fullWidth
                 onChange={(event) => {
                     setText(event.target.value);
-                    if (isTextValidCallback(event.target.value)) {
-                        onChangeCallback(event.target.value);
-                    } else {
-                        setError(true);
-                    }
+                    onChangeCallback(event.target.value);
                 }}
                 onKeyPress={(event) => {
                     onKeyPressCallback(event.key);
                 }}
-                defaultValue={text}
+                value={text}
             />
         )
     }
