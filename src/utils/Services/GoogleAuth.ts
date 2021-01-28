@@ -9,36 +9,33 @@ import {clearAuthenticatedUser, saveAuthenticatedUser} from "../../redux/Actions
 
 export class GoogleAuth {
     constructor() {
-        firebase.auth().languageCode = 'pt';
+        firebase.auth().useDeviceLanguage();
         this.provider = new firebase.auth.GoogleAuthProvider();
         this.store = store;
     }
     provider: firebase.auth.GoogleAuthProvider;
     store: Store<ReduxState & PersistPartial, ReduxAction>;
 
-    // @ts-ignore
     async doLogin(): Promise<RepositoryResponse> {
         try {
             const response = await firebase.auth().signInWithPopup(this.provider);
             const userData = new UserData(response);
             this.store.dispatch(saveAuthenticatedUser(userData))
-            returnRepositoryResponse(true, null);
+            return returnRepositoryResponse(true, null);
         } catch (e) {
-            console.log("error => ", e);
-            returnRepositoryResponse(false, e);
+            /* TODO - Print message Error */
+            return returnRepositoryResponse(false, e);
         }
     }
 
-    // @ts-ignore
     async doLogout(): Promise<RepositoryResponse> {
         try {
             const response = await firebase.auth().signOut();
             this.store.dispatch(clearAuthenticatedUser());
-            returnRepositoryResponse(true, null);
+            return returnRepositoryResponse(true, null);
         } catch (e) {
             /* TODO - Print message Error */
-            console.log(e);
-            returnRepositoryResponse(false, e);
+            return returnRepositoryResponse(false, e);
         }
     }
 }

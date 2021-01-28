@@ -4,6 +4,7 @@ import {TextField} from "@material-ui/core";
 import {Validators} from "../../utils/Validators/Validators";
 import {UserData} from "./AnswerResearchCarousel";
 import {isDevEnv} from "../../utils/utils";
+import {useTranslation} from "react-i18next";
 
 
 interface Status {
@@ -28,6 +29,7 @@ export const Greeting = ({title, description, onStartQuestionnaire}: GreetingPro
         email: {error: false, message: ""},
         name: {error: false, message: ""}
     });
+    const {t} = useTranslation();
     const [userData, setUserData] = useState<{ email: string, name: string }>({email: isDevEnv() ? "reberthkss@outlook.com" : "", name: isDevEnv() ? "reberth": ""});
 
     const onBlurEmail = (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
@@ -101,7 +103,7 @@ export const Greeting = ({title, description, onStartQuestionnaire}: GreetingPro
             </div>
             <div className={"greetingNextSectionContainer"}>
                 <div className={"startAnswerButton"} style={{borderRadius: 5}} onClick={handleStartEvent}>
-                    COMEÇAR {/*TODO - i18n*/}
+                    {t("start")}
                 </div>
             </div>
         </div>

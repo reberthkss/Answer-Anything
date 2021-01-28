@@ -7,6 +7,7 @@ import {AnswerResearchManager} from "../../utils/Services/AnswerResearchManager/
 import {ChartWrapper} from "../../Components/Chart/ChartWrapper";
 import { CircularProgress } from "@material-ui/core";
 import {Answers} from "../../utils/Data/Answers";
+import {useTranslation} from "react-i18next";
 const randomColor = require('randomcolor');
 
 interface DatasetProps {
@@ -25,7 +26,7 @@ export const Analysis = () => {
     ]);
     const answerResearchManager = new AnswerResearchManager();
     const [loading, setLoading] = useState(true);
-
+    const {t} = useTranslation();
     function computeAnswers(answerResearchProps: AnswerResearchProps) {
         const dataSetProps: DatasetProps[] = [];
         answerResearchProps.answers.questions
@@ -101,7 +102,7 @@ export const Analysis = () => {
     function renderNoDataAvailable() {
         return (<div className={"noDataAvailableContainer"}>
             <div className={"noDataAvailableText"}>
-                No data available
+                {t("no_data_available")}
             </div>
         </div>);
     }

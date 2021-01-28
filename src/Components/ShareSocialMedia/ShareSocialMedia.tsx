@@ -12,27 +12,29 @@ import "./ShareSocialMedia.css";
 import React from "react";
 import {FacebookShareButton, FacebookMessengerShareButton, LinkedinShareButton, TelegramShareButton, WhatsappShareButton} from "react-share";
 import Clipboard from 'react-clipboard.js';
+import {useTranslation} from "react-i18next";
 export interface ShareSocialMediaProps {
     url: string,
     message: string | null
 }
 export const ShareSocialMedia = ({url, message}: ShareSocialMediaProps ) => {
+    const {t} = useTranslation();
     return (
         <div className={"shareOptionsContainer"}>
             <div className={"urlShareOptionContainer"}>
                 <div className={"shareWithFriendsText"}>
-                    Share with your friends with that url below:
+                    {t("share")}
                 </div>
                 <div className={"copyAndPasteContainer"}>
                     <div className={"urlContainer"}>
                         {url}
                     </div>
                     <Clipboard className={"copyAndPasteBtn"} data-clipboard-text={url} button-title="Copie" >
-                        Copiar
+                        {t("copy")}
                     </Clipboard>
                 </div>
                 <div className={"orShareOnSocialMediaText"}>
-                    Or share on your social media:
+                    {t("or_share_in_social_media")}
                 </div>
             </div>
             <div className={"socialMedia"}>

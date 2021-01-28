@@ -14,6 +14,7 @@ import {FirestoreManager} from "../../utils/Services/FirebaseManager/FirestoreMa
 import {ShareResearch} from "./ShareResearch";
 import {Loading} from "../AnimatedComponents/Loading/Loading";
 import {FormTextField} from "../../Form/TextField/FormTextField";
+import {useTranslation} from "react-i18next";
 
 interface LoadingState {
     loading: boolean,
@@ -53,6 +54,7 @@ export const RegisterCarousel = () => {
     const nextRef = useRef<HTMLDivElement | null>(null);
     const research: Research = useRef(new Research()).current;
     const firestoreManager = new FirestoreManager();
+    const {t} = useTranslation();
 
 
 
@@ -67,7 +69,7 @@ export const RegisterCarousel = () => {
             return (
                 <div className={"previousStep"} onClick={_decreaseStep}>
                     <ChevronLeftIcon fontSize={"large"}/>
-                    Back {/*TODO - i18n*/}
+                    {t("go_back")}
                 </div>
             )
         }
@@ -95,18 +97,23 @@ export const RegisterCarousel = () => {
         return true;
     }
 
-    const _stepTwoFieldsAreValid = (questions: QuestionsState[]): boolean => {
+    const _stepTwoFieldsAreValid = (questions: QuestionsState[] | null): boolean => {
         let isValid = true;
-        questions.forEach((question) => {
-            if (question.question == null || question.question === "") {
-                isValid = false;
-            }
-            question.options.forEach((option) => {
-                if (option.payload == null) {
+        if (questions) {
+            questions.forEach((question) => {
+                if (question.question == null || question.question === "") {
                     isValid = false;
                 }
+                question.options.forEach((option) => {
+                    if (option.payload == null) {
+                        isValid = false;
+                    }
+                })
             })
-        })
+        } else {
+            isValid = false;
+        }
+
         return isValid;
     }
 
@@ -120,7 +127,7 @@ export const RegisterCarousel = () => {
                 <div ref={nextRef} onKeyPress={() => {
                     _increaseStep()
                 }} tabIndex={0} className={"nextStep"} onClick={_increaseStep}>
-                   <span className={"nextStepText"}> Next {/*TODO - i18n*/}</span>
+                   <span className={"nextStepText"}> {t("go_next")}</span>
                     <ChevronRightIcon fontSize={"large"}/>
                 </div>
             )
@@ -226,7 +233,7 @@ export const RegisterCarousel = () => {
                 }
                 break;
             case STEPS.TWO:
-                if (_stepTwoFieldsAreValid(questions!!)) {
+                if (_stepTwoFieldsAreValid(questions)) {
                     _handleSavingQuestion(research).then((res) => {
                         if (res) {
                             setStep(actualStep + 1);
@@ -290,7 +297,7 @@ export const RegisterCarousel = () => {
         <div className={"registerCarouselCard"}>
             <Card className={"card"} elevation={5} raised={true}>
                 <div className={"header"}>
-                    Informações {/*TODO - i18n*/}
+                    {t("information")}
                 </div>
                 <div className={"contentDiv"}>
                     {_renderAsFromStep()}

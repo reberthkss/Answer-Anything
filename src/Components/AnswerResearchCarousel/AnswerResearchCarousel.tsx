@@ -14,6 +14,7 @@ import {AnswerResearchManager} from "../../utils/Services/AnswerResearchManager/
 import {getStore} from "../../redux/ConfigureStore";
 import { useLocation } from "react-router-dom";
 import {ShareManager} from "../../utils/Services/ShareManager/ShareManager";
+import {useTranslation} from "react-i18next";
 
 interface AnswerResearchCarouselProps {
     researchId: string,
@@ -26,6 +27,7 @@ export interface UserData {email: string, name: string}
 export const AnswerResearchCarousel = ({ researchId, research, onGetSelectedOption}: AnswerResearchCarouselProps) => {
     const [currentStep, setStep] = useState<number>(STEPS.ONE);
     const [answerData, setAnswerData] = useState<AnswerData | null>(null);
+    const {t} = useTranslation();
 
     const _handleEndOfResearch = async () => {
         const answerResearchPayload = getStore().getState().answerResearchPayload;
@@ -78,7 +80,7 @@ export const AnswerResearchCarousel = ({ researchId, research, onGetSelectedOpti
             case STEPS.THREE:
                 const answerResearchPayload = getStore().getState().answerResearchPayload;
                 return (
-                    <Conclusion researchUrl={ShareManager.shareResearch(answerResearchPayload?.researchId || null)}/>
+                    <Conclusion researchUrl={ShareManager.shareResearch(answerResearchPayload?.researchId || null)} finishMessage={t("privacy_text_information")}/>
                 )
             default:
                 throw new Error("Step not found");
@@ -113,7 +115,7 @@ export const AnswerResearchCarousel = ({ researchId, research, onGetSelectedOpti
                 setStep(currentStep-1);
             }}>
                 <ChevronLeftIcon fontSize={"large"}/>
-                Voltar {/*TODO - i18n*/}
+                {t("go_back")}
             </div>
         )
     }
@@ -130,7 +132,7 @@ export const AnswerResearchCarousel = ({ researchId, research, onGetSelectedOpti
 
         return (
             <div className={"nextStepOption"} onClick={() => setStep(currentStep+1)}>
-                Próximo {/*TODO - i18n*/}
+                {t("go_next")}
                 <ChevronRightIcon fontSize={"large"}/>
             </div>
         )

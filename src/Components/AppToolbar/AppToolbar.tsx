@@ -10,6 +10,7 @@ import React, {useState} from "react";
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import "./AppToolbar.css"
 import {GoogleAuth} from "../../utils/Services/GoogleAuth";
+import {useTranslation} from "react-i18next";
 
 const AppPopOver = ({id, open, anchorElement, handleClose, children}: {id: string | undefined, open: boolean, anchorElement: any, handleClose: () => void, children: any}) => {
     return (
@@ -35,6 +36,7 @@ const AppPopOver = ({id, open, anchorElement, handleClose, children}: {id: strin
 export const AppToolbar = () => {
     const googleAuth = new GoogleAuth();
     const [anchorEl, setAnchorEl] = useState(null);
+    const {t} = useTranslation();
     const handleClick = (event: any) => {
         setAnchorEl(event.currentTarget);
     };
@@ -72,7 +74,7 @@ export const AppToolbar = () => {
           <div className={"registerNewResearchDiv"}>
               <Link className={"link"} to={`${url}/register-research`}>
                   <div className={"registerNewResearchText"} >
-                      Registrar nova pesquisa {/*TODO - i18n*/}
+                      {t("register_new_research")}
                   </div>
               </Link>
           </div>
@@ -84,7 +86,7 @@ export const AppToolbar = () => {
                 <Toolbar className={"toolbar"}>
                     <Link to={url} className={"link"}>
                         <Typography variant="h6">
-                            Home {/*TODO - i18n*/}
+                            {t("home")}
                         </Typography>
                     </Link>
                     <div className={"rightToolbarOptions"}>
@@ -98,7 +100,7 @@ export const AppToolbar = () => {
                     <div className={"signOut"} onClick={() => googleAuth.doLogout()}>
                         <ExitToAppIcon/>
                         <Typography>
-                            Sign Out {/*TODO - i18n*/}
+                            {t("sign_out")}
                         </Typography>
                     </div>
                 </div>

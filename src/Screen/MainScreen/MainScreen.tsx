@@ -26,8 +26,6 @@ export const MainScreen = () => {
             history.push("/login");
         }
     }, [user])
-    console.log("path => ", path);
-    console.log("url => ", url);
     return (
         <div>
             <AppToolbar/>

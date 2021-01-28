@@ -12,19 +12,27 @@ export interface UserDataModel {
 }
 
 export class UserData {
-    constructor(data: firebase.auth.UserCredential) {
-        const profile = data.additionalUserInfo!!.profile;
-        const userId = data["user"]!!.uid;
-        this.user = {
-            id: userId,
+    constructor(data: firebase.auth.UserCredential | ProfileData) {
+
+        // @ts-ignore
+        if (data["user"]) {
             // @ts-ignore
-            email: profile["email"],
+            const profile = data.additionalUserInfo!!.profile;
             // @ts-ignore
-            firstName: profile["given_name"],
-            // @ts-ignore
-            lastName: profile["family_name"],
-            // @ts-ignore
-            avatarUrl: profile["picture"]
+            const userId = data["user"]!!.uid;
+            this.user = {
+                id: userId,
+                // @ts-ignore
+                email: profile["email"],
+                // @ts-ignore
+                firstName: profile["given_name"],
+                // @ts-ignore
+                lastName: profile["family_name"],
+                // @ts-ignore
+                avatarUrl: profile["picture"]
+            }
+        } else {
+            this.user = data as ProfileData;
         }
     }
     user: ProfileData;

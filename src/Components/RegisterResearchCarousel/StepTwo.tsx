@@ -11,6 +11,7 @@ import {NewOption} from "../NewOption/NewOption";
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import Scrollbar from "react-scrollbars-custom";
 import {FormTextField} from "../../Form/TextField/FormTextField";
+import {useTranslation} from "react-i18next";
 
 interface StepTwoProps {
     error: boolean,
@@ -44,7 +45,7 @@ export const StepTwo = ({error, onGetQuestions, savedQuestions, nextButtonRef}: 
     const [deleteQuestionButtonIsDisabled, setDeleteButtonVisibility] = useState<boolean>(true);
     const [questionOptions, setQuestionOptions] = useState<OptionState[]>([]);
     const textFieldRef = useRef<HTMLDivElement | null>(null);
-
+    const {t} = useTranslation();
 
     useEffect(() => {
         setQuestion(savedQuestions[currentQuestion]);
@@ -200,7 +201,7 @@ export const StepTwo = ({error, onGetQuestions, savedQuestions, nextButtonRef}: 
             <div className={"addNewOptionDiv"}>
                 <div className={"addNewOption"} onClick={() => _addNewOption(question)}>
                     <AddCircleOutlineIcon/>
-                    Nova opção {/*TODO - i18n*/}
+                    {t("new_option")}
                 </div>
             </div>
         )
@@ -215,8 +216,8 @@ export const StepTwo = ({error, onGetQuestions, savedQuestions, nextButtonRef}: 
                     </div>
                     <div className={"questionTitle"}>
                         <FormTextField
-                            field={"a pergunta"}
-                            title={"Qual a pergunta?"}
+                            field={t("the_question")}
+                            title={t("which_question")}
                             onChangeCallback={(text) => {
                                 if (question != null) {
                                     question.question = text;
@@ -305,8 +306,7 @@ export const StepTwo = ({error, onGetQuestions, savedQuestions, nextButtonRef}: 
     const _renderNewQuestion = () => {
         return (
             <div>
-                {/*I18N*/}
-                <Tooltip title={"Nova questão"}>
+                <Tooltip title={t("new_question").toString()}>
                     <IconButton
                         aria-label={"newQuestions"}
                         onClick={_generateNewQuestion}

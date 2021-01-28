@@ -3,6 +3,7 @@ import "./NewOption.css"
 import DeleteIcon from '@material-ui/icons/Delete';
 import {Tooltip} from "@material-ui/core";
 import IconButton from "@material-ui/core/IconButton";
+import {useTranslation} from "react-i18next";
 
 interface NewOptionProps {
     id: string,
@@ -15,6 +16,7 @@ export const NewOption = ({onDeleteOption, onUpdateValue, value = null, id, onKe
     const [disabled, setDisabled] = useState(value != null);
     const [error, setError] = useState(false);
     const [optionValue, setOption] = useState<string | null>( null);
+    const {t} = useTranslation();
 
     useEffect(() => {
         setOption(value);
@@ -42,7 +44,7 @@ export const NewOption = ({onDeleteOption, onUpdateValue, value = null, id, onKe
 
     const _renderErrorMessage = () => {
         if (error) {
-            return ("O campo deve estar preenchido"); {/*TODO - i18n*/}
+            return t("field_must_be_filled");
         } else {
             return "";
         }
@@ -61,8 +63,7 @@ export const NewOption = ({onDeleteOption, onUpdateValue, value = null, id, onKe
                     {optionValue}
                 </div>
                 <div className={"deleteOptionButton"}>
-                    {/*TODO - i18n*/}
-                    <Tooltip title={"Deletar esta opção"}>
+                    <Tooltip title={(t("delete_this_option")).toString()}>
                         <IconButton>
                             <DeleteIcon onClick={_deleteOption}/>
                         </IconButton>
@@ -80,9 +81,9 @@ export const NewOption = ({onDeleteOption, onUpdateValue, value = null, id, onKe
                         autoFocus={true}
                         onKeyDown={_handleKey}
                         onChange={(event) => setOption(event.target.value)}
-                        placeholder={"Digite aqui uma possivel resposta"}
+                        placeholder={t("tip_a_option")}
                         onBlur={() => setError(false)}
-                    />{/*TODO - i18n*/}
+                    />
                     <span className={"spanError"}>
                         {_renderErrorMessage()}
                     </span>

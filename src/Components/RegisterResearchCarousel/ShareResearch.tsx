@@ -5,19 +5,21 @@ import {ShareSocialMedia} from "../ShareSocialMedia/ShareSocialMedia";
 import {useSelector} from "react-redux";
 import {ReduxState} from "../../redux/reducer";
 import {ShareManager} from "../../utils/Services/ShareManager/ShareManager";
+import {useTranslation} from "react-i18next";
 
 export const ShareResearch = () => {
     /*
     * TODO - Generate deep links
     *  */
 
+    const {t} = useTranslation();
     const researchId = useSelector((state: ReduxState) => state.answerResearchPayload?.researchId || null);
 
     return (
         <div className={"shareResearchContainer"}>
             <div className={"shareMessageContainer"}>
                <div className={"shareMessageText"}>
-                   Digite uma mensagem para ser compartilhada junto ao link {/*TODO - i18n*/}
+                   {t("type_some_message_to_share_with_link")}
                </div>
                 <div className={"shareMessageTextFieldContainer"}>
                     <TextField
