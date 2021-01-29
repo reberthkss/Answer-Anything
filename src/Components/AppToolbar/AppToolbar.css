@@ -1,3 +1,69 @@
+@media(min-width: 0) {
+    .userName {
+        display: none;
+    }
+
+    .userAvatar {
+
+    }
+
+    .userInfoPaperContainer {
+        width: 100px;
+    }
+
+    .userInfoGridItem {
+        width: 100px;
+    }
+
+    .registerNewResearchDiv {
+
+    }
+
+    .link {
+
+    }
+
+    .registerNewResearchText {
+        width: 105px;
+        height: 20px;
+    }
+}
+
+@media(min-width: 600px) {
+    .userName {
+        display: block;
+    }
+
+    .userAvatar {
+
+    }
+
+    .userInfoPaperContainer {
+        width: 200px;
+    }
+
+    .userInfoGridItem {
+        width: 200px;
+    }
+
+    .registerNewResearchDiv {
+
+    }
+
+    .link {
+
+    }
+
+    .registerNewResearchText {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: 200px;
+        height: 20px;
+
+    }
+}
+
 .popOver {
     display: flex;
     flex-direction: row;
@@ -44,3 +110,5 @@
 .link {
     text-decoration: none;
 }
+
+

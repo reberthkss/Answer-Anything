@@ -1,8 +1,29 @@
+@media(min-width: 0px) {
+    .registerScreenDiv {
+        width: 100%;
+    }
+}
+
+@media(min-width: 768px) {
+    .registerScreenDiv {
+        width: 90%;
+    }
+}
+
+@media(min-width: 768px) {
+    .registerScreenDiv {
+        width: 100%;
+    }
+}
+
 .registerScreenDiv {
     height: 90vh;
-    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+.registerCarouselCard {
+
 }

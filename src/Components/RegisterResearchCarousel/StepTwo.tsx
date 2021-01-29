@@ -245,9 +245,9 @@ export const StepTwo = ({error, onGetQuestions, savedQuestions, nextButtonRef}: 
                     </div>
                     <div className={"questionOptions"}>
                         {_renderOptions()}
-                        <div>
-                            {_renderAddNewOption(currentQuestion)}
-                        </div>
+                    </div>
+                    <div>
+                        {_renderAddNewOption(currentQuestion)}
                     </div>
                 </div>
             </div>

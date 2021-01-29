@@ -1,4 +1,5 @@
 .shareResearchContainer {
+    overflow: auto;
     height: 100%;
     width: 100%;
     display: flex;
@@ -6,8 +7,6 @@
 }
 
 .shareMessageContainer {
-    height: 100%;
-    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
@@ -17,4 +16,12 @@
     width: 100%;
     text-align: center;
     padding: 20px 0;
+}
+
+.shareMessageTextFieldContainer {
+
+}
+
+.shareMessageTextField {
+
 }

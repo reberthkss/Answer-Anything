@@ -1,8 +1,41 @@
-.mainGridContainer {
-    height: 100%;
+@media(min-width: 0px) {
+    .mainGridContainer {
+        width: 100px;
+    }
 }
 
+@media(min-width: 0px) {
+    .mainGridContainer {
+        width: 150px;
+    }
+}
+
+.mainGridContainer {
+    height: 94%;
+    background-color: #3F51B5;
+}
+
+.research_text_container {
+    padding: 10px;
+    background-color: #3F51B5;
+    border-bottom: .5px solid white;
+}
+
+.research_text {
+    color: white;
+    font-family: Arial, serif;
+    font-weight: bold;
+}
+
+.scrollbar-container {
+    width: 100%;
+}
+
+
 .linkContainer {
+    background-color: green;
+    width: 100%;
+    display: flex;
     text-decoration: none;
 }
 
@@ -10,12 +43,24 @@
     width: 100%;
 }
 
+.span_text_wrap {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 5px;
+}
+
 .mainContainerOfTheItem {
+    display: flex;
+    height: 100%;
+    flex-wrap: wrap;
+    width: 100%;
+    flex-direction: column;
     background-color: #3F51B5;
     color: white;
     font-family: Arial, serif;
     font-weight: bold;
-    padding: 10px;
+    word-wrap: anywhere;
 }
 
 .mainContainerOfTheItem:hover {
