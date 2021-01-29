@@ -1,6 +1,7 @@
 @media(min-width: 0px) {
     .mainGridContainer {
         width: 100px;
+
     }
 }
 
@@ -11,7 +12,6 @@
 }
 
 .mainGridContainer {
-    height: 94%;
     background-color: #3F51B5;
 }
 

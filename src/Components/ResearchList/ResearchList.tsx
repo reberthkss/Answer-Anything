@@ -32,7 +32,7 @@ export const ResearchList = () => {
                     Pesquisas
                 </span>
             </div>
-            <Scrollbar>
+            <Scrollbar style={{height: "10px"}}>
                 <List data={researchData} renderItem={_renderItem}/>
             </Scrollbar>
         </div>
