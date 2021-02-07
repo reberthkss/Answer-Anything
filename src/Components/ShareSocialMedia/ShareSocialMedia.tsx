@@ -29,7 +29,7 @@ export const ShareSocialMedia = ({url, message}: ShareSocialMediaProps ) => {
                     <div className={"urlContainer"}>
                         {url}
                     </div>
-                    <Clipboard className={"copyAndPasteBtn"} data-clipboard-text={url} button-title="Copie" >
+                    <Clipboard className={"copyAndPasteBtn"} data-clipboard-text={url} button-title="Copy" >
                         {t("copy")}
                     </Clipboard>
                 </div>

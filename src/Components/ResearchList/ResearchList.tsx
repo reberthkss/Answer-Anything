@@ -7,18 +7,33 @@ import {useSelector} from "react-redux";
 import {ReduxState} from "../../redux/reducer";
 import {Research} from "../../utils/Data/ResearchData";
 import Scrollbar from "react-scrollbars-custom";
-
+import FileCopyIcon from '@material-ui/icons/FileCopy';
+import Clipboard from 'react-clipboard.js';
+import ChevronRightIcon from "@material-ui/icons/ChevronRight";
+import {IconButton, Tooltip} from "@material-ui/core";
+import {ShareManager} from "../../utils/Services/ShareManager/ShareManager";
 export const ResearchList = () => {
     let { url } = useRouteMatch();
     const _renderItem = (item: {id: string, research: Research}) => {
         return (
-            <Link className={"linkContainer"} to={`${url}/research/${item.id}`}>
-                <div className={"rootContainerOfTheList"}>
-                    <div className={"mainContainerOfTheItem"}>
-                        <span className={"span_text_wrap"}> {item.research.title}</span>
-                    </div>
-                </div>
-            </Link>
+           <div className={"research-item-container"}>
+               <Link className={"linkContainer"} to={`${url}/research/${item.id}`}>
+                   <div className={"rootContainerOfTheList"}>
+                       <div className={"mainContainerOfTheItem"}>
+                           <span className={"span_text_wrap"}> {item.research.title}</span>
+                       </div>
+                   </div>
+               </Link>
+               <div className={"icon-container"}>
+                   <Tooltip title={"Copie o link da pesquisa"}>
+                       <IconButton size={"small"}>
+                           <Clipboard className={"copy-and-paste-component"} data-clipboard-text={ShareManager.shareResearch(item.id)}>
+                               <FileCopyIcon fontSize={"small"}/>
+                           </Clipboard>
+                       </IconButton>
+                   </Tooltip>
+               </div>
+           </div>
         )
     }
     const researchData = useSelector((state: ReduxState) => state.researchs);

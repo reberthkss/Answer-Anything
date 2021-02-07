@@ -1,16 +1,24 @@
 @media(min-width: 0px) {
     .mainGridContainer {
-        width: 100px;
-
-    }
-}
-
-@media(min-width: 0px) {
-    .mainGridContainer {
         width: 150px;
+
+    }
+    .icon-container {
+        margin-left: 75px;
     }
 }
 
+@media(min-width: 640px) {
+    .icon-container {
+        margin-left: 90px;
+    }
+}
+
+
+.research-item-container {
+    display: flex;
+    flex-direction: row;
+}
 .mainGridContainer {
     height: 86.5vh;
     background-color: #3F51B5;
@@ -74,3 +82,26 @@
     color: black;
     cursor: pointer;
 }
+
+.icon-container {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.icon-container:hover {
+    opacity: 0.7;
+    color: black;
+    cursor: pointer;
+}
+
+.copy-and-paste-component {
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    color: #fff;
+}
+
+
