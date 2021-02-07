@@ -1,13 +1,10 @@
 import React, {useEffect} from "react";
 import { Route, Switch, useHistory, useRouteMatch} from "react-router-dom";
 import "./MainScreen.css"
-import {ConfigurationScreen} from "../ConfigurationScreen/ConfigurationScreen";
 import {AppToolbar} from "../../Components/AppToolbar/AppToolbar";
 import {ReduxState} from "../../redux/reducer";
 import {useSelector} from "react-redux";
 import {DashboardScreen} from "../DashboardScreen/DashboardScreen";
-import {RegisterResearchScreen} from "../RegisterResearch/RegisterResearchScreen";
-import {ReadResearchCarousel} from "../../Components/ReadResearchCarousel/ReadResearchCarousel";
 
 
 

@@ -104,19 +104,26 @@ function App() {
             </div>
         )
     } else {
-        return (
-            <Router>
-                <div>
-                    <Switch>
-                        <Route path={"/"} exact component={RootDirectory}/>
-                        <Route path="/dashboard"  component={MainScreen}/>
-                        <Route path="/login"  component={LoginScreen}/>
-                        <Route exact path={"/researchs/:id"} component={AnswerResearchScreen}/>
-                        <Route path={"*"} component={NotFound}/>
-                    </Switch>
-                </div>
-            </Router>
-        );
+        try {
+            return (
+                <Router>
+                    <div>
+                        <Switch>
+                            <Route path={"/"} exact component={RootDirectory}/>
+                            <Route path="/dashboard"  component={MainScreen}/>
+                            <Route path="/login"  component={LoginScreen}/>
+                            <Route exact path={"/researchs/:id"} component={AnswerResearchScreen}/>
+                            <Route path={"*"} component={NotFound}/>
+                        </Switch>
+                    </div>
+                </Router>
+            );
+        } catch (e) {
+            console.log(e);
+            return <div>
+                Error!
+            </div>
+        }
     }
 }
 

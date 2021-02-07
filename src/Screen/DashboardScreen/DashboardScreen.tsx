@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
 import "./DashboardScreen.css"
-import {ReadResearchCarousel} from "../../Components/ReadResearchCarousel/ReadResearchCarousel";
 import {
     Switch,
     Route,
@@ -9,11 +8,6 @@ import {
 import {SelectResearch} from "../../Components/SelectResearch/SelectResearch";
 import {ResearchList} from "../../Components/ResearchList/ResearchList";
 import {FirestoreManager} from "../../utils/Services/FirebaseManager/FirestoreManager";
-import {generateFakeData} from "../../utils/Data/FakeResearchData";
-import {Research} from "../../utils/Data/ResearchData";
-import firebase from "firebase";
-import {ReduxState} from "../../redux/reducer";
-import {useSelector} from "react-redux";
 import {CircularProgress} from "@material-ui/core";
 import {RegisterResearchScreen} from "../RegisterResearch/RegisterResearchScreen";
 import {Analysis} from "../Analysis/Analysis";

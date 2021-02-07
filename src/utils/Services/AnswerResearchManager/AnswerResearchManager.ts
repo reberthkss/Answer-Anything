@@ -44,7 +44,6 @@ export class AnswerResearchManager {
 
     async startQuestionnaire(researchId: string, answerData: AnswerData): Promise<AnswerResearchManagerResponse> {
         try {
-            console.log(`rId => ${researchId}`);
             const res = await this
                 .firestore
                 .collection(FirestoreManager.COLLECTIONS.RESEARCH)
@@ -145,7 +144,7 @@ export class AnswerResearchManager {
                 .collection(FirestoreManager.COLLECTIONS.ANSWERS)
                 .where("researchId", "==", researchId)
                 .get());
-            const answersDoc:  firebase.firestore.DocumentReference<firebase.firestore.DocumentData> | null= answersRef.docs.length > 0 ? answersRef.docs[0].ref : null;
+            const answersDoc:  firebase.firestore.DocumentReference<firebase.firestore.DocumentData> | null = answersRef.docs.length > 0 ? answersRef.docs[0].ref : null;
             if (answersDoc == null) return {result: false, error: "Answer Not Found!"};
             const answers: Answers = Answers.from((await answersDoc.get()).data() as AnswersSnapshotData);
             const answersOfResearch: {

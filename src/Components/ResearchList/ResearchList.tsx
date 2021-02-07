@@ -11,19 +11,18 @@ import Scrollbar from "react-scrollbars-custom";
 export const ResearchList = () => {
     let { url } = useRouteMatch();
     const _renderItem = (item: {id: string, research: Research}) => {
-        return Array.from({length: 30}).map(() => {
-            return (
-                <Link className={"linkContainer"} to={`${url}/research/${item.id}`}>
-                    <div className={"rootContainerOfTheList"}>
-                        <div className={"mainContainerOfTheItem"}>
-                            <span className={"span_text_wrap"}>qewwwwwqwweeeeeeee</span>
-                        </div>
+        return (
+            <Link className={"linkContainer"} to={`${url}/research/${item.id}`}>
+                <div className={"rootContainerOfTheList"}>
+                    <div className={"mainContainerOfTheItem"}>
+                        <span className={"span_text_wrap"}> {item.research.title}</span>
                     </div>
-                </Link>
-            )
-        })
+                </div>
+            </Link>
+        )
     }
     const researchData = useSelector((state: ReduxState) => state.researchs);
+
 
     return (
         <div className={"mainGridContainer"}>
@@ -32,9 +31,11 @@ export const ResearchList = () => {
                     Pesquisas
                 </span>
             </div>
-            <Scrollbar style={{height: "10px"}}>
-                <List data={researchData} renderItem={_renderItem}/>
-            </Scrollbar>
+            <div className={"scrollbar-container"}>
+                <Scrollbar className={"scrollbar-component"}>
+                    <List data={researchData} renderItem={_renderItem}/>
+                </Scrollbar>
+            </div>
         </div>
     )
 }

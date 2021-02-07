@@ -12,6 +12,7 @@
 }
 
 .mainGridContainer {
+    height: 86.5vh;
     background-color: #3F51B5;
 }
 
@@ -29,8 +30,13 @@
 
 .scrollbar-container {
     width: 100%;
+    height: 100%;
+    background-color: #3F51B5;
 }
 
+.scrollbar-component {
+    height: 100%;
+}
 
 .linkContainer {
     background-color: green;

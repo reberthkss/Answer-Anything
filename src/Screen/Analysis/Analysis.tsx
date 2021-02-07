@@ -124,7 +124,11 @@ export const Analysis = () => {
     }
 
     useEffect(() => {
-        setDataset({researchId: id, dataSet: computeAnswers(answers as AnswerResearchProps)});
+        // @ts-ignore
+        if (answers == null) return;
+        const researchId = (answers as AnswerResearchProps).researchId;
+        if (researchId != id) return;
+        setDataset({researchId, dataSet: computeAnswers(answers as AnswerResearchProps)});
     }, [answers]);
 
     useEffect(() => {
@@ -138,6 +142,7 @@ export const Analysis = () => {
             })
     }, [id])
 
+    console.log("content => ", dataSet);
     return (
         <div className={"analysisRoot"}>
             {renderContent(dataSet)}
