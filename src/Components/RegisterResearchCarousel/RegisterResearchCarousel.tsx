@@ -152,6 +152,7 @@ export const RegisterCarousel = () => {
                 }}
                 isTextValidCallback={(text) => text != null && text.length >= 0}
                 initialValue={research.title || ""}
+                autofocus={true}
             />
             <FormTextField
                 getRef={() => subTitleRef}

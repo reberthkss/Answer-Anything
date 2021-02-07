@@ -241,6 +241,7 @@ export const StepTwo = ({error, onGetQuestions, savedQuestions, nextButtonRef}: 
                             getRef={() => textFieldRef}
                             errorInField={hasErrorInQuestionTitle}
                             initialValue={question?.question || ""}
+                            autofocus={true}
                         />
                     </div>
                     <div className={"questionOptions"}>

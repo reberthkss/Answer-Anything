@@ -78,7 +78,6 @@ export const NewOption = ({onDeleteOption, onUpdateValue, value = null, id, onKe
                         type={"text"}
                         defaultValue={optionValue || ""}
                         className={"optionQuestionEnabled"}
-                        autoFocus={true}
                         onKeyDown={_handleKey}
                         onChange={(event) => setOption(event.target.value)}
                         placeholder={t("tip_a_option")}
