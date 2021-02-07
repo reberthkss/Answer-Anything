@@ -3,6 +3,7 @@
     width: 100%;
     display: flex;
     flex-direction: column;
+    backgroundcolor: blue;
 }
 
 .greetingTitleContainer {
@@ -22,10 +23,10 @@
 }
 
 .greetingUserDataContainer {
+    height: 100%;
+    width: 100%;
     display: flex;
     flex-direction: column;
-    padding: 10px 300px;
-    height: 100%;
 }
 
 .greetingNextSectionContainer {
@@ -51,5 +52,9 @@
 
 .inputContainer {
     width: 100%;
+
+}
+
+.input-sub-container {
     margin: 10px 10px;
 }

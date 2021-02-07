@@ -81,24 +81,28 @@ export const Greeting = ({title, description, onStartQuestionnaire}: GreetingPro
             </div>
             <div className={"greetingUserDataContainer"}>
                 <div className={"inputContainer"}>
-                    <TextField id="outlined-basic" label="E-mail" variant="outlined" required
-                               fullWidth
-                               type={"email"}
-                               error={inputsStatus.email.error}
-                               helperText={inputsStatus.email.message}
-                               onBlur={onBlurEmail}
-                               onFocus={onFocusEmail}
-                    />
+                    <div className={"input-sub-container"}>
+                        <TextField id="outlined-basic" label="E-mail" variant="outlined" required
+                                   fullWidth
+                                   type={"email"}
+                                   error={inputsStatus.email.error}
+                                   helperText={inputsStatus.email.message}
+                                   onBlur={onBlurEmail}
+                                   onFocus={onFocusEmail}
+                        />
+                    </div>
                 </div>
                 <div className={"inputContainer"}>
-                    <TextField id="outlined-basic" label="Nome" variant="outlined" required
-                               fullWidth
-                               type={"text"}
-                               error={inputsStatus.name.error}
-                               helperText={inputsStatus.name.message}
-                               onChange={onBlurName}
-                               onFocus={onFocusName}
-                    />
+                    <div className={"input-sub-container"}>
+                        <TextField id="outlined-basic" label="Nome" variant="outlined" required
+                                   fullWidth
+                                   type={"text"}
+                                   error={inputsStatus.name.error}
+                                   helperText={inputsStatus.name.message}
+                                   onChange={onBlurName}
+                                   onFocus={onFocusName}
+                        />
+                    </div>
                 </div>
             </div>
             <div className={"greetingNextSectionContainer"}>
