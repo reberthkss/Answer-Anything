@@ -10,9 +10,10 @@ interface Props {
     isTextValidCallback: (text: string | null) => boolean,
     getRef: () => MutableRefObject<HTMLDivElement | null>,
     errorInField: boolean,
-    initialValue: string
+    initialValue: string,
+    autofocus?: boolean
 }
-export function FormTextField ({field, title, onChangeCallback, onKeyPressCallback, isTextValidCallback, getRef, errorInField, initialValue=""}: Props) {
+export function FormTextField ({field, title, onChangeCallback, onKeyPressCallback, isTextValidCallback, getRef, errorInField, initialValue="", autofocus}: Props) {
     const [text, setText] = useState<string>(initialValue);
     const [hasError, setError] = useState<boolean>(false);
 
@@ -33,6 +34,7 @@ export function FormTextField ({field, title, onChangeCallback, onKeyPressCallba
                 onKeyPress={(event) => {
                     onKeyPressCallback(event.key);
                 }}
+                autoFocus={autofocus}
                 value={text}
             />
         )
