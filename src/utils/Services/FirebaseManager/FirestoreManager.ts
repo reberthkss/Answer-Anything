@@ -8,6 +8,7 @@ import {saveAnswerResearchPayload, saveResearch, saveResearchs} from "../../../r
 import {AnswerData} from "../../Data/AnswerData";
 import ReactDOM from "react-dom";
 import {app} from "../../../index";
+import {isDevEnv} from "../../utils";
 
 interface FirestoreManagerResponse {
     result: boolean,
@@ -27,13 +28,19 @@ export class FirestoreManager {
         this.store = store;
     }
 
-    private firestore: firebase.firestore.Firestore
-    private store: Store<ReduxState & PersistPartial, ReduxAction>
+    private firestore: firebase.firestore.Firestore;
+    private store: Store<ReduxState & PersistPartial, ReduxAction>;
 
     /*TODO - UPDATE THIS TO CHOOSE COLLECTION*/
     async read(): Promise<FirestoreManagerResponse> {
         try {
             const user = this.store.getState().user;
+            const collection = this.firestore
+                .collection(FirestoreManager.COLLECTIONS.RESEARCH)
+                .where(`roles.${user?.user.id}`, "==", "owner");
+
+            /*
+            ---------DEPRECATED - 11/02/2021---------
             const researchs = (await this.firestore
                 .collection(FirestoreManager.COLLECTIONS.RESEARCH)
                 .where(`roles.${user?.user.id}`, "==", "owner")
@@ -47,9 +54,19 @@ export class FirestoreManager {
                 });
 
             this.store.dispatch(saveResearchs(researchs));
+            */
+            collection.onSnapshot((data) => {
+                const researchs = data.docs.map((doc) => {
+                    return {
+                        id: doc.id,
+                        research: Research.from(doc.data())
+                    }
+                });
+                this.store.dispatch(saveResearchs(researchs));
+            });
             return {result: true, error: null}
         } catch (e) {
-            console.log("error => ", e);
+            isDevEnv() && console.log("error => ", e);
             /* TODO - SHOW ERROR */
             return {result: false, error: e.message};
         }
@@ -69,7 +86,7 @@ export class FirestoreManager {
             return {result: true, error: null};
         } catch (e) {
             /* TODO - SHOW ERROR */
-            console.log(`error => ${e.message}`);
+            isDevEnv() && console.log(`error => ${e.message}`);
             return {result: false, error: e.message};
         }
     }
@@ -83,7 +100,7 @@ export class FirestoreManager {
             console.log(this.TAG, "Updated research")
             return {result: true, error: null};
         } catch (e) {
-            console.log(this.TAG, "[FIRESTOREMANAGER] error => ", e);
+            isDevEnv() && console.log(this.TAG, "[FIRESTOREMANAGER] error => ", e);
             /* TODO - SHOW ERROR */
             return {result: false, error: e.message};
         }
@@ -98,7 +115,7 @@ export class FirestoreManager {
             console.log(this.TAG, "Document removed! ");
             return {result: true, error: null};
         } catch (e) {
-            console.log(this.TAG, "Error => ", e);
+            isDevEnv() && console.log(this.TAG, "Error => ", e);
             /* TODO - SHOW ERROR */
             return {result: false, error: e.message};
         }
@@ -118,9 +135,8 @@ export class FirestoreManager {
                 return {result: true, error: null};
             }
         } catch (e) {
-            console.log(this.TAG, e.message);
+            isDevEnv() && console.log(this.TAG, e.message);
             return {result: false, error: e.message};
         }
     }
-
 }
