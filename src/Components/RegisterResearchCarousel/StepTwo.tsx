@@ -160,7 +160,7 @@ export const StepTwo = ({error, onGetQuestions, savedQuestions, nextButtonRef}: 
                                                         savedQuestions[indexOfTargetQuestion].options = question!!.options;
                                                         savedQuestions[indexOfTargetQuestion].question = question!!.question;
                                                     }
-                                                    nextButtonRef.current?.focus();
+                                                    // nextButtonRef.current?.focus();
                                                     onGetQuestions(savedQuestions);
                                                 }
                                             }
