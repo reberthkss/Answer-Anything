@@ -25,32 +25,21 @@ exports.researchOnWrite = functions
             research: context.params.research,
             answeredQuestion: context.params.answeredQuestion
         }
-        console.log("snap => ", snap.after.data());
         const afterAnswerData = AnswerData.from(snap.after.id, snap.after.data());
         const beforeAnswerData = AnswerData.from(snap.before.id, snap.before.data());
         if (afterAnswerData.status == "done" || beforeAnswerData.status == "done") {
             return snap.after.data();
         }
-
-        console.log(`researchs id => ${identifiers.research} - answeredQuestion id => ${identifiers.answeredQuestion}`);
-
         const research = Research.from((await admin
             .firestore()
             .doc(`researchs/${identifiers.research}`)
             .get()).data());
-
-
         const answer = (await admin
             .firestore()
             .collection("answers")
             .where("researchId", "==", identifiers.research)
             .get()).docs[0];
-
         if (answer == null) {
-            console.log("entrou null");
-            research.questions.forEach((question) => {
-                console.log("id => ", question.id);
-            })
             const questionsData = Array.from({length: research.questions.length})
                 .map((_, index) => {
                     const question = research.questions.find((question: ResearchQuestionData) => question.id == index.toString());
@@ -72,13 +61,9 @@ exports.researchOnWrite = functions
                             }
                         })
                     };
-                    console.log("index => ", index);
-                    console.log("selected option => ", question.selectedOption);
-
                     return data;
                 })
                 .filter((question) => question != null);
-            console.log("questions data => ", questionsData);
             await admin
                 .firestore()
                 .collection("answers")
@@ -87,33 +72,17 @@ exports.researchOnWrite = functions
                     'questions': questionsData
                 });
         } else {
-            console.log("entrou non null");
-
             afterAnswerData.answeredQuestions.map((question, index) => {
-                console.log("answer.data()[\"questions\"] size  => ", answer.data()["questions"].length);
-                console.log("questions == question ? ", answer.data()["questions"][0].questionId == question.question);
                 const indexOfQuestionAnswered = (answer.data()["questions"] as any[]).findIndex((questionAnswered: QuestionAnswered) => questionAnswered.questionId == question.question);
                 const questionAnswered: QuestionAnswered = answer.data()["questions"][indexOfQuestionAnswered];
-                console.log("indexOfQuestionAnswered => ", indexOfQuestionAnswered);
-                console.log("questionAnswered => ", questionAnswered);
                 if (indexOfQuestionAnswered != -1) {
-                    console.log("entrou");
-                    console.log("snap => ", snap.after.data());
                     const prevSelectedOption = afterAnswerData.answeredQuestions.find((answeredQuestion) => answeredQuestion.question == questionAnswered.questionId)?.prevSelectedOption;
-                    console.log("prevSelectedOption => ", prevSelectedOption);
                     const newArrayOfQuestionsAnswered = answer
                         .data()["questions"]
                         .filter((question: QuestionAnswered) => question.questionId != questionAnswered.questionId);
-                    console.log("prevSelectedOption != null", prevSelectedOption != null);
-                    console.log("prevSelectedOption != question.selectedOption", prevSelectedOption != question.selectedOption);
                     if (prevSelectedOption != null && prevSelectedOption != question.selectedOption) {
-                        console.log("entrou");
-                        console.log("options => ", questionAnswered.option);
-                        console.log("before => questionAnswered.option[prevSelectedOption][prevSelectedOption]", questionAnswered.option[prevSelectedOption][prevSelectedOption]);
                         questionAnswered.option[prevSelectedOption][prevSelectedOption]--;
-                        console.log("after => questionAnswered.option[prevSelectedOption][prevSelectedOption]", questionAnswered.option[prevSelectedOption][prevSelectedOption]);
                     }
-                    console.log("selected option => ", question.selectedOption);
                     questionAnswered.option[question.selectedOption][question.selectedOption]++;
                     answer.ref.update({
                         "questions": [
@@ -121,7 +90,6 @@ exports.researchOnWrite = functions
                             questionAnswered
                         ]
                     });
-                    console.log("updated!");
                 }
             })
         }

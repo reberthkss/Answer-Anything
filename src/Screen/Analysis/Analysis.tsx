@@ -142,7 +142,6 @@ export const Analysis = () => {
             })
     }, [id])
 
-    console.log("content => ", dataSet);
     return (
         <div className={"analysisRoot"}>
             {renderContent(dataSet)}

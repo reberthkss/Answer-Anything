@@ -14,7 +14,6 @@ export function ChartWrapper({type, title, labels, backgroundColors, data, props
     const chartRef = useRef<HTMLCanvasElement | null>(null);
     let chart: Chart | null = null;
     useEffect(() => {
-        console.log("chart ref => ", chartRef.current)
         if (chartRef.current) {
             if (chart != null) {
                 chart.data = data;
