@@ -1,10 +1,9 @@
-import React, {createRef, useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import "./RegisterResearchCarousel.css"
 import {STEPS} from "../../utils/Steps";
 import {Card} from "@material-ui/core";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
-import TextField from "@material-ui/core/TextField";
 import {Research} from "../../utils/Data/ResearchData";
 import {ResearchQuestionData} from "../../utils/Data/ResearchQuestionData";
 import {generateInitialOptions, OptionState, QuestionsState, StepTwo} from "./StepTwo";
@@ -15,6 +14,7 @@ import {ShareResearch} from "./ShareResearch";
 import {Loading} from "../AnimatedComponents/Loading/Loading";
 import {FormTextField} from "../../Form/TextField/FormTextField";
 import {useTranslation} from "react-i18next";
+import {useLocation, useParams} from "react-router-dom";
 
 interface LoadingState {
     loading: boolean,
@@ -43,7 +43,7 @@ const getRoles = () => {
 export const RegisterCarousel = () => {
     const [loading, setLoading] = useState<LoadingState>({loading: false, result: true});
     const [actualStep, setStep] = useState(STEPS.ONE);
-    const [questions, saveQuestions] = useState<QuestionsState[] | null>(null);
+    const [questions, saveQuestions] = useState<QuestionsState[]>(initialQuestionsState);
     const [error, setError] = useState<boolean>(false);
     const titleRef = useRef<HTMLDivElement | null>(null);
     const [titleError, setTitleError] = useState(false);
@@ -52,10 +52,16 @@ export const RegisterCarousel = () => {
     const desRef = useRef<HTMLDivElement | null>(null);
     const [desError, setDesError] = useState(false);
     const nextRef = useRef<HTMLDivElement | null>(null);
-    const research: Research = useRef(new Research()).current;
+    const [research, setResearch] = useState(new Research());
     const firestoreManager = new FirestoreManager();
+    const {id}: any = useParams();
     const {t} = useTranslation();
+    const location = useLocation();
 
+    useEffect(() => {
+        setStep(STEPS.ONE);
+        setResearch(new Research());
+    }, [location])
 
 
     const _decreaseStep = () => setStep(actualStep - 1);
@@ -194,7 +200,7 @@ export const RegisterCarousel = () => {
             <StepTwo
                 error={error}
                 onGetQuestions={(questions) => saveQuestions(questions)}
-                savedQuestions={questions || initialQuestionsState}
+                savedQuestions={questions}
                 nextButtonRef={nextRef}
             />
         )
@@ -218,7 +224,7 @@ export const RegisterCarousel = () => {
             );
         research.roles = getRoles();
         research.status = ResearchStatus.OPEN;
-        const response = await firestoreManager.write(research);
+        const response = await firestoreManager.write(research, id);
         return response.result;
     }
 

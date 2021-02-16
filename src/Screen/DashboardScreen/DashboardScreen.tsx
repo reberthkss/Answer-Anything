@@ -34,7 +34,7 @@ export const DashboardScreen = () => {
                     <Switch>
                         <Route path={path} exact component={SelectResearch}/>
                         <Route path={`${path}/research/:id`} component={Analysis}/>
-                        <Route path={`${path}/register-research`} component={RegisterResearchScreen}/>
+                        <Route path={`${path}/register-research/:id`} component={RegisterResearchScreen}/>
                     </Switch>
                 </>
             )

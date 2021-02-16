@@ -5,8 +5,6 @@ import {PersistPartial} from "redux-persist/lib/persistReducer";
 import {Store} from "redux";
 import {store} from "../../../redux/ConfigureStore";
 import {saveAnswerResearchPayload, saveResearch, saveResearchs} from "../../../redux/Actions";
-import {AnswerData} from "../../Data/AnswerData";
-import ReactDOM from "react-dom";
 import {app} from "../../../index";
 import {isDevEnv} from "../../utils";
 
@@ -72,17 +70,18 @@ export class FirestoreManager {
         }
     }
 
-    async write(research: Research): Promise<FirestoreManagerResponse> {
+    async write(research: Research, id: string): Promise<FirestoreManagerResponse> {
         /* TODO - Look ways to block updated from here */
         try {
-            const researchSaved = await this.firestore
+            await this.firestore
                 .collection(FirestoreManager.COLLECTIONS.RESEARCH)
-                .add(research.parseFirebase());
+                .doc(id)
+                .set(research.parseFirebase());
             this.store.dispatch(saveAnswerResearchPayload({
                 answerResearchId: "",
-                researchId: researchSaved.id
+                researchId: id
             }));
-            console.log(this.TAG, "Successful saved research!");
+            isDevEnv() && console.log(this.TAG, "Successful saved research!");
             return {result: true, error: null};
         } catch (e) {
             /* TODO - SHOW ERROR */
