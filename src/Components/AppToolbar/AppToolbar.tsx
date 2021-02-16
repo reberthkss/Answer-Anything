@@ -1,4 +1,4 @@
-import {Link, useRouteMatch} from "react-router-dom";
+import {Link, useHistory, useRouteMatch} from "react-router-dom";
 import {useSelector} from "react-redux";
 import {ReduxState} from "../../redux/reducer";
 import {AppBar, Toolbar, Typography, Popover} from "@material-ui/core";
@@ -11,6 +11,8 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import "./AppToolbar.css"
 import {GoogleAuth} from "../../utils/Services/GoogleAuth";
 import {useTranslation} from "react-i18next";
+import {FirestoreManager} from "../../utils/Services/FirebaseManager/FirestoreManager";
+import firebase from "firebase";
 
 const AppPopOver = ({id, open, anchorElement, handleClose, children}: {id: string | undefined, open: boolean, anchorElement: any, handleClose: () => void, children: any}) => {
     return (
@@ -37,6 +39,7 @@ export const AppToolbar = () => {
     const googleAuth = new GoogleAuth();
     const [anchorEl, setAnchorEl] = useState(null);
     const {t} = useTranslation();
+    const history = useHistory();
     const handleClick = (event: any) => {
         setAnchorEl(event.currentTarget);
     };
@@ -72,11 +75,14 @@ export const AppToolbar = () => {
     const _renderRegisterNewResearch = () => {
         return (
           <div className={"registerNewResearchDiv"}>
-              <Link className={"link"} to={`${url}/register-research`}>
+              <a className={"link"}  onClick={async () => {
+                  const newId = firebase.firestore().collection(FirestoreManager.COLLECTIONS.RESEARCH).doc().id;
+                  history.replace(`${url}/register-research/${newId}`);
+              }}>
                   <div className={"registerNewResearchText"} >
                       {t("register_new_research")}
                   </div>
-              </Link>
+              </a>
           </div>
         );
     }
