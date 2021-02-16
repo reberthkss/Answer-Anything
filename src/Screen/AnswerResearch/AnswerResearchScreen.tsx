@@ -44,8 +44,6 @@ export const AnswerResearchScreen = () => {
         const prevSelectedOption = question.selectedOption;
         question.selectedOption = selectedOption;
         const newResearch = new Research(research.title, research.subtitle, research.description, research.questions, research.status, research.roles);
-        console.log("prev => ", question.prevSelectedOption);
-        console.log("actual => ",question.selectedOption);
         const responseOnSave = await answerResearchManager.saveAnsweredQuestion({
             researchId: answerResearchPayload?.researchId || null,
             answerResearchId: answerResearchPayload?.answerResearchId || null,
