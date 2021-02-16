@@ -55,7 +55,7 @@ export const NewOption = ({onDeleteOption, onUpdateValue, value = null, id, onKe
     }
 
     const _renderOptionField = () => {
-        if (disabled) {
+        /*if (disabled) {
             return <div className={"optionQuestionDisabledDiv"} id={id}>
                 <div className={"optionQuestionDisabled"} onClick={() => {
                     setDisabled(!disabled);
@@ -88,7 +88,24 @@ export const NewOption = ({onDeleteOption, onUpdateValue, value = null, id, onKe
                     </span>
                 </div>
             )
-        }
+        }*/
+        return (
+            <div className={"optionQuestionEnabledContainer"}>
+                <input
+                    id={id}
+                    type={"text"}
+                    defaultValue={optionValue || ""}
+                    className={"optionQuestionEnabled"}
+                    onKeyDown={_handleKey}
+                    onChange={(event) => setOption(event.target.value)}
+                    placeholder={t("tip_a_option")}
+                    onBlur={() => setError(false)}
+                />
+                <span className={"spanError"}>
+                        {_renderErrorMessage()}
+                    </span>
+            </div>
+        )
     }
 
     return (
