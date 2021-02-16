@@ -21,9 +21,9 @@ interface LoadingState {
     result: boolean
 }
 
-const initialQuestionsState = [
-    {index: 0, question: null, options: generateInitialOptions(0)}
-]
+function getInitialQuestionState() {
+    return  [{index: 0, question: null, options: generateInitialOptions(0)}];
+}
 
 const mapOptions = (options: OptionState[]): Map<number, string> => {
     const optionsMap = new Map<number, string>();
@@ -43,7 +43,7 @@ const getRoles = () => {
 export const RegisterCarousel = () => {
     const [loading, setLoading] = useState<LoadingState>({loading: false, result: true});
     const [actualStep, setStep] = useState(STEPS.ONE);
-    const [questions, saveQuestions] = useState<QuestionsState[]>(initialQuestionsState);
+    const [questions, saveQuestions] = useState<QuestionsState[]>(getInitialQuestionState());
     const [error, setError] = useState<boolean>(false);
     const titleRef = useRef<HTMLDivElement | null>(null);
     const [titleError, setTitleError] = useState(false);
@@ -61,6 +61,7 @@ export const RegisterCarousel = () => {
     useEffect(() => {
         setStep(STEPS.ONE);
         setResearch(new Research());
+        saveQuestions(getInitialQuestionState());
     }, [location])
 
 

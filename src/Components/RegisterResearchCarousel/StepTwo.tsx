@@ -59,10 +59,6 @@ export const StepTwo = ({error, onGetQuestions, savedQuestions, nextButtonRef}: 
     }, [currentQuestion]);
 
     useEffect(() => {
-        console.log(savedQuestions);
-    }, [savedQuestions])
-
-    useEffect(() => {
         if (question != null) {
             setQuestionOptions(question.options);
         }
