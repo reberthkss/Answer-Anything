@@ -15,7 +15,7 @@ import {useTranslation} from "react-i18next";
 
 interface StepTwoProps {
     error: boolean,
-    onGetQuestions: (questions: QuestionsState[] | null) => void,
+    onGetQuestions: (questions: QuestionsState[]) => void,
     nextButtonRef: MutableRefObject<HTMLDivElement | null>
     readonly savedQuestions: QuestionsState[]
 }
@@ -39,7 +39,6 @@ export const generateInitialOptions = (question: number) => Array.from({length: 
 export const StepTwo = ({error, onGetQuestions, savedQuestions, nextButtonRef}: StepTwoProps) => {
     const [currentQuestion, setCurrentQuestion] = useState(0);
     const [hasErrorInQuestionTitle, setErrorInQuestionTitle] = useState(false);
-    const [questionOptionsId, setQuestionOptionsId] = useState<string[]>([]);
     const [question, setQuestion] = useState<QuestionsState | null>(null);
     const [goBackButtonIsDisabled, setGoBackButtonVisibility] = useState<boolean>(true);
     const [deleteQuestionButtonIsDisabled, setDeleteButtonVisibility] = useState<boolean>(true);
@@ -58,6 +57,10 @@ export const StepTwo = ({error, onGetQuestions, savedQuestions, nextButtonRef}: 
             setDeleteButtonVisibility(false);
         }
     }, [currentQuestion]);
+
+    useEffect(() => {
+        console.log(savedQuestions);
+    }, [savedQuestions])
 
     useEffect(() => {
         if (question != null) {
@@ -148,10 +151,10 @@ export const StepTwo = ({error, onGetQuestions, savedQuestions, nextButtonRef}: 
                                         if (key == "Enter") {
                                             const indexOfCurrentField = questionOptions.findIndex((option) => option.id == id);
                                             if (indexOfCurrentField != -1) {
-                                                const indexOfNextField = indexOfCurrentField+1;
+                                                const indexOfNextField = indexOfCurrentField + 1;
                                                 if (indexOfNextField < questionOptions.length) {
                                                     const nodeReference = document.getElementById(questionOptions[indexOfNextField].id);
-                                                    if(nodeReference != null) {
+                                                    if (nodeReference != null) {
                                                         nodeReference.focus();
                                                     }
                                                 } else {
