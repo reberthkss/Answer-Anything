@@ -111,4 +111,8 @@
     text-decoration: none;
 }
 
+.toolbar {
+    background-image: linear-gradient(to right, #FFC200, #FF8001);
+}
+
 
