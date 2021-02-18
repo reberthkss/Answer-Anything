@@ -25,7 +25,7 @@ export class FacebookAuth {
             const response = await firebase.auth().signInWithPopup(this.provider);
             const payload: ProfileData = {
                 // @ts-ignore
-                uid: response.additionalUserInfo?.profile["id"] || "",
+                id: firebase.auth().currentUser?.uid || "",
                 // @ts-ignore
                 firstName: response.additionalUserInfo?.profile["first_name"] || "",
                 // @ts-ignore
@@ -33,7 +33,7 @@ export class FacebookAuth {
                 // @ts-ignore
                 avatarUrl: response.additionalUserInfo?.profile["picture"]["data"]["url"] || "",
                 // @ts-ignore
-                email: response.user?.email || ""
+                email: response.user?.email || "reberthkss@outlook.com"
             }
             const userData = new UserData(payload);
             this.store.dispatch(saveAuthenticatedUser(userData))

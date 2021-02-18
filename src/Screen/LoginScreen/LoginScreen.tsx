@@ -19,13 +19,21 @@ export const LoginScreen = () => {
     const {t} = useTranslation();
 
     const _handleGoogleLogin = async () => {
-       await authGoogle.doLogin();
-       history.push("/");
+       const authResponse = await authGoogle.doLogin();
+       if (authResponse.isSuccessful) {
+           history.push("/");
+       } else {
+           /*toast error*/
+       }
     }
 
     const _handleFacebookLogin = async () => {
-        await authFacebook.doLogin();
-        history.push("/");
+        const authResponse = await authFacebook.doLogin();
+        if (authResponse.isSuccessful) {
+            history.push("/");
+        } else {
+            /* toast error*/
+        }
     }
 
     /* ANIMATE LOADING */
