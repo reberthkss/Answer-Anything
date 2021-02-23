@@ -108,8 +108,8 @@ export const NewOption = ({onDeleteOption, onUpdateValue, value = null, id, onKe
                             <AddCircleOutlineIcon/>
                         </IconButton>
                     </Tooltip>
-                    <Tooltip title={"Remover pergunta"}> {/* TODO */}
-                        <IconButton onClick={() => null}>
+                    <Tooltip title={"Remover pergunta"}>
+                        <IconButton onClick={() => null}> {/* TODO */}
                             <RemoveCircleOutlineIcon/>
                         </IconButton>
                     </Tooltip>
