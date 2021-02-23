@@ -8,6 +8,7 @@ import {ChartWrapper} from "../../Components/Chart/ChartWrapper";
 import { CircularProgress } from "@material-ui/core";
 import {Answers} from "../../utils/Data/Answers";
 import {useTranslation} from "react-i18next";
+import Scrollbar from "react-scrollbars-custom";
 const randomColor = require('randomcolor');
 
 interface DatasetProps {

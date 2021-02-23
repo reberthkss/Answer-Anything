@@ -1,6 +1,6 @@
 import React, {useEffect, useRef} from "react";
 import Chart from 'chart.js';
-
+import "./ChartWrapper.css";
 interface ChartProps {
     data: any,
     props?: any,
@@ -49,6 +49,6 @@ export function ChartWrapper({type, title, labels, backgroundColors, data, props
         }
     }, [data])
     return (
-        <canvas ref={chartRef}/>
+        <canvas ref={chartRef} className={"canvas-container"}/>
     )
 }

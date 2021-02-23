@@ -4,13 +4,21 @@
     height: 100%;
 }
 
+.scrollbar {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
 .chartContainer {
     height: 100%;
     width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
 }
 
 .chart {
-    height: 400px;
+    height: 200px;
     width: 400px;
 }
 
