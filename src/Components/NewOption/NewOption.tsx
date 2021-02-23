@@ -8,12 +8,13 @@ import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
 interface NewOptionProps {
     id: string,
-    onDeleteOption: () => void,
+    onDeleteOption: (id: string) => void,
+    onAddOptionBelow: (id: string) => void,
     onUpdateValue: (option: string) => void,
     onKeyPressed: (id: string, keyPressed: string) => void,
     value: string | null,
 }
-export const NewOption = ({onDeleteOption, onUpdateValue, value = null, id, onKeyPressed }: NewOptionProps) => {
+export const NewOption = ({onDeleteOption, onUpdateValue, value = null, id, onKeyPressed, onAddOptionBelow }: NewOptionProps) => {
     const [disabled, setDisabled] = useState(value != null);
     const [error, setError] = useState(false);
     const [optionValue, setOption] = useState<string | null>( null);
@@ -49,10 +50,6 @@ export const NewOption = ({onDeleteOption, onUpdateValue, value = null, id, onKe
         } else {
             return "";
         }
-    }
-
-    const _deleteOption = () => {
-        onDeleteOption();
     }
 
     const _renderOptionField = () => {
@@ -104,12 +101,12 @@ export const NewOption = ({onDeleteOption, onUpdateValue, value = null, id, onKe
                         onBlur={() => setError(false)}
                     />
                     <Tooltip title={"Adicionar pergunta abaixo"}>
-                        <IconButton onClick={() => null}> {/* TODO */}
+                        <IconButton onClick={() => onAddOptionBelow(id)}>
                             <AddCircleOutlineIcon/>
                         </IconButton>
                     </Tooltip>
                     <Tooltip title={"Remover pergunta"}>
-                        <IconButton onClick={() => null}> {/* TODO */}
+                        <IconButton onClick={() => onDeleteOption(id)}>
                             <RemoveCircleOutlineIcon/>
                         </IconButton>
                     </Tooltip>
