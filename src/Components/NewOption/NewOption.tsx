@@ -4,7 +4,8 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import {Tooltip} from "@material-ui/core";
 import IconButton from "@material-ui/core/IconButton";
 import {useTranslation} from "react-i18next";
-
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
+import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
 interface NewOptionProps {
     id: string,
     onDeleteOption: () => void,
@@ -55,7 +56,7 @@ export const NewOption = ({onDeleteOption, onUpdateValue, value = null, id, onKe
     }
 
     const _renderOptionField = () => {
-        /*if (disabled) {
+       /* if (disabled) {
             return <div className={"optionQuestionDisabledDiv"} id={id}>
                 <div className={"optionQuestionDisabled"} onClick={() => {
                     setDisabled(!disabled);
@@ -91,16 +92,28 @@ export const NewOption = ({onDeleteOption, onUpdateValue, value = null, id, onKe
         }*/
         return (
             <div className={"optionQuestionEnabledContainer"}>
-                <input
-                    id={id}
-                    type={"text"}
-                    defaultValue={optionValue || ""}
-                    className={"optionQuestionEnabled"}
-                    onKeyDown={_handleKey}
-                    onChange={(event) => setOption(event.target.value)}
-                    placeholder={t("tip_a_option")}
-                    onBlur={() => setError(false)}
-                />
+                <div className={"text-input-container"}>
+                    <input
+                        id={id}
+                        type={"text"}
+                        defaultValue={optionValue || ""}
+                        className={"optionQuestionEnabled"}
+                        onKeyDown={_handleKey}
+                        onChange={(event) => setOption(event.target.value)}
+                        placeholder={t("tip_a_option")}
+                        onBlur={() => setError(false)}
+                    />
+                    <Tooltip title={"Adicionar pergunta abaixo"}>
+                        <IconButton onClick={() => null}> {/* TODO */}
+                            <AddCircleOutlineIcon/>
+                        </IconButton>
+                    </Tooltip>
+                    <Tooltip title={"Remover pergunta"}> {/* TODO */}
+                        <IconButton onClick={() => null}>
+                            <RemoveCircleOutlineIcon/>
+                        </IconButton>
+                    </Tooltip>
+                </div>
                 <span className={"spanError"}>
                         {_renderErrorMessage()}
                     </span>
