@@ -1,0 +1,28 @@
+.register-questions-container {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    width: 100%;
+}
+
+.question-content-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+}
+
+.question-label-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.question-title-container {
+    width: 100%;
+}
+
+.question-options-container {
+    height: 100%;
+    width: 100%;
+}

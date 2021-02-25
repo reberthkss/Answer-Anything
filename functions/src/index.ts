@@ -43,7 +43,6 @@ exports.researchOnWrite = functions
             const questionsData = Array.from({length: research.questions.length})
                 .map((_, index) => {
                     const question = research.questions.find((question: ResearchQuestionData) => question.id == index.toString());
-                    console.log("question is null => ", question == null);
                     if (question == null) return null;
                     const optionsArray = Array.from(question.options!!.entries());
                     const data = {

@@ -9,20 +9,15 @@ import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
 interface NewOptionProps {
     id: string,
     onDeleteOption: (id: string) => void,
-    onAddOptionBelow: (id: string) => void,
     onUpdateValue: (option: string) => void,
     onKeyPressed: (id: string, keyPressed: string) => void,
-    value: string | null,
+    value: string,
 }
-export const NewOption = ({onDeleteOption, onUpdateValue, value = null, id, onKeyPressed, onAddOptionBelow }: NewOptionProps) => {
-    const [disabled, setDisabled] = useState(value != null);
+export const NewOption = ({onDeleteOption, onUpdateValue, value = "", id, onKeyPressed }: NewOptionProps) => {
     const [error, setError] = useState(false);
-    const [optionValue, setOption] = useState<string | null>( null);
+    const [optionValue, setOption] = useState<string>( "");
     const {t} = useTranslation();
 
-    useEffect(() => {
-        setOption(value);
-    }, [value]);
     const _fieldAreInvalid = (value: string) => {
         if (value === "" || value == null) {
             return true;
@@ -38,8 +33,7 @@ export const NewOption = ({onDeleteOption, onUpdateValue, value = null, id, onKe
                 setError(true);
                 return;
             } else {
-                setDisabled(!disabled);
-                onUpdateValue(optionValue || "");
+                onUpdateValue(optionValue);
             }
         }
     }
@@ -53,58 +47,19 @@ export const NewOption = ({onDeleteOption, onUpdateValue, value = null, id, onKe
     }
 
     const _renderOptionField = () => {
-       /* if (disabled) {
-            return <div className={"optionQuestionDisabledDiv"} id={id}>
-                <div className={"optionQuestionDisabled"} onClick={() => {
-                    setDisabled(!disabled);
-                }}>
-                    {optionValue}
-                </div>
-                <div className={"deleteOptionButton"}>
-                    <Tooltip title={(t("delete_this_option")).toString()}>
-                        <IconButton>
-                            <DeleteIcon onClick={_deleteOption}/>
-                        </IconButton>
-                    </Tooltip>
-                </div>
-            </div>
-        } else {
-            return (
-                <div className={"optionQuestionEnabledContainer"}>
-                    <input
-                        id={id}
-                        type={"text"}
-                        defaultValue={optionValue || ""}
-                        className={"optionQuestionEnabled"}
-                        onKeyDown={_handleKey}
-                        onChange={(event) => setOption(event.target.value)}
-                        placeholder={t("tip_a_option")}
-                        onBlur={() => setError(false)}
-                    />
-                    <span className={"spanError"}>
-                        {_renderErrorMessage()}
-                    </span>
-                </div>
-            )
-        }*/
         return (
             <div className={"optionQuestionEnabledContainer"}>
                 <div className={"text-input-container"}>
                     <input
                         id={id}
                         type={"text"}
-                        defaultValue={optionValue || ""}
                         className={"optionQuestionEnabled"}
                         onKeyDown={_handleKey}
                         onChange={(event) => setOption(event.target.value)}
+                        value={optionValue}
                         placeholder={t("tip_a_option")}
                         onBlur={() => setError(false)}
                     />
-                    <Tooltip title={"Adicionar pergunta abaixo"}>
-                        <IconButton onClick={() => onAddOptionBelow(id)}>
-                            <AddCircleOutlineIcon/>
-                        </IconButton>
-                    </Tooltip>
                     <Tooltip title={"Remover pergunta"}>
                         <IconButton onClick={() => onDeleteOption(id)}>
                             <RemoveCircleOutlineIcon/>
@@ -113,7 +68,7 @@ export const NewOption = ({onDeleteOption, onUpdateValue, value = null, id, onKe
                 </div>
                 <span className={"spanError"}>
                         {_renderErrorMessage()}
-                    </span>
+                </span>
             </div>
         )
     }

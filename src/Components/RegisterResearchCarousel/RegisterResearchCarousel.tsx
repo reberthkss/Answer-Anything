@@ -6,7 +6,6 @@ import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import {Research} from "../../utils/Data/ResearchData";
 import {ResearchQuestionData} from "../../utils/Data/ResearchQuestionData";
-import {generateInitialOptions, OptionState, QuestionsState, StepTwo} from "./StepTwo";
 import {store} from "../../redux/ConfigureStore";
 import {ResearchStatus} from "../../utils/Data/ResearchStatus";
 import {FirestoreManager} from "../../utils/Services/FirebaseManager/FirestoreManager";
@@ -15,14 +14,17 @@ import {Loading} from "../AnimatedComponents/Loading/Loading";
 import {FormTextField} from "../../Form/TextField/FormTextField";
 import {useTranslation} from "react-i18next";
 import {useLocation, useParams} from "react-router-dom";
+import RegisterQuestions, {OptionState, QuestionsState} from "./RegisterQuestions";
 
 interface LoadingState {
     loading: boolean,
     result: boolean
 }
 
-function getInitialQuestionState() {
-    return  [{index: 0, question: null, options: generateInitialOptions(0)}];
+export const generateInitialOptions = (question: number) => Array.from({length: 4}, (_, index) => ({id: `question-${question}-option-${index}`, index, payload: "", isValid: true}));
+
+function getInitialQuestionState(questionIndex: number): QuestionsState[] {
+    return  [{index: questionIndex, question: {value: "", isValid: true}, options: generateInitialOptions(questionIndex)}];
 }
 
 const mapOptions = (options: OptionState[]): Map<number, string> => {
@@ -43,8 +45,7 @@ const getRoles = () => {
 export const RegisterCarousel = () => {
     const [loading, setLoading] = useState<LoadingState>({loading: false, result: true});
     const [actualStep, setStep] = useState(STEPS.ONE);
-    const [questions, saveQuestions] = useState<QuestionsState[]>(getInitialQuestionState());
-    const [error, setError] = useState<boolean>(false);
+    const [questions, setQuestions] = useState<QuestionsState[]>(getInitialQuestionState(0));
     const titleRef = useRef<HTMLDivElement | null>(null);
     const [titleError, setTitleError] = useState(false);
     const subTitleRef = useRef<HTMLDivElement | null>(null);
@@ -61,9 +62,12 @@ export const RegisterCarousel = () => {
     useEffect(() => {
         setStep(STEPS.ONE);
         setResearch(new Research());
-        saveQuestions(getInitialQuestionState());
-    }, [location])
+        setQuestions(getInitialQuestionState(0));
+    }, [location]);
 
+    useEffect(() => {
+
+    }, [questions])
 
     const _decreaseStep = () => setStep(actualStep - 1);
 
@@ -82,7 +86,7 @@ export const RegisterCarousel = () => {
         }
     }
 
-    const _fieldsAreValid = (): boolean => {
+    const researchInfoIsValid = (): boolean => {
         if (research.title?.length == 0 || research.subtitle == null) {
             setTitleError(true);
         }
@@ -104,26 +108,6 @@ export const RegisterCarousel = () => {
         return true;
     }
 
-    const _stepTwoFieldsAreValid = (questions: QuestionsState[] | null): boolean => {
-        let isValid = true;
-        if (questions) {
-            questions.forEach((question) => {
-                if (question.question == null || question.question === "") {
-                    isValid = false;
-                }
-                question.options.forEach((option) => {
-                    if (option.payload == null) {
-                        isValid = false;
-                    }
-                })
-            })
-        } else {
-            isValid = false;
-        }
-
-        return isValid;
-    }
-
     const _renderNextStep = () => {
         if (actualStep === STEPS.THREE) {
             return (
@@ -140,6 +124,7 @@ export const RegisterCarousel = () => {
             )
         }
     }
+
     const _renderStepOne = () => {
         return (<div className={"stepOneDiv"}>
             <FormTextField
@@ -196,17 +181,6 @@ export const RegisterCarousel = () => {
         </div>)
     }
 
-    const _renderStepTwo = () => {
-        return (
-            <StepTwo
-                error={error}
-                onGetQuestions={(questions) => saveQuestions(questions)}
-                savedQuestions={questions}
-                nextButtonRef={nextRef}
-            />
-        )
-    }
-
     const _renderStepThree = () => {
         return (
             <ShareResearch/>
@@ -218,7 +192,7 @@ export const RegisterCarousel = () => {
             .map(
                 (question) => new ResearchQuestionData(
                     question.index.toString(),
-                    question.question,
+                    question.question.value,
                     mapOptions(question.options),
                     null
                 )
@@ -230,32 +204,115 @@ export const RegisterCarousel = () => {
     }
 
 
-    const _increaseStep = () => {
-        setError(false);
-        switch (actualStep) {
-            case STEPS.ONE:
-                if (_fieldsAreValid()) {
-                    setStep(actualStep + 1);
-                } else {
-                    setError(true)
-                }
-                break;
-            case STEPS.TWO:
-                if (_stepTwoFieldsAreValid(questions)) {
-                    _handleSavingQuestion(research).then((res) => {
-                        if (res) {
-                            setStep(actualStep + 1);
-                        }
-                    })
-                } else {
-                    setError(true);
-                }
-                break;
-            case STEPS.THREE:
-                break;
-            default:
-                break;
+
+
+    const onQuestionOptionUpdate = (questionIndex: number,  optionIndex: number, newValue: string) => {
+        const targetQuestion = questions.find((question) => question.index == questionIndex);
+        const newQuestions = questions.filter((question) => question.index != questionIndex);
+        if (targetQuestion) {
+            targetQuestion.options[optionIndex].payload = newValue;
+            targetQuestion.options[optionIndex].isValid = newValue != "";
+            setQuestions([...newQuestions, targetQuestion]);
         }
+    }
+
+    const addNewOption = (questionIndex: number, optionId: number) => {
+        const targetQuestion = questions.find((question) => question.index == questionIndex);
+        const newQuestions = questions.filter((question) => question.index != questionIndex);
+        if (targetQuestion) {
+            const options = [...targetQuestion.options];
+            options.push({id: `question-${questionIndex}-option-${options.length}`, index: options.length, payload: "", isValid: true});
+            for (let i = options.length - 1 ; i > optionId + 1 ; i--) {
+                options[i] = options[i-1];
+                options[i].index = i;
+                options[i].id = `question-${questionIndex}-option-${i}`;
+            }
+            options[optionId+1] = {id: `question-${questionIndex}-option-${optionId+1}`, index: optionId + 1, payload: "", isValid: true};
+            targetQuestion.options = options;
+            newQuestions[questionIndex] = targetQuestion;
+            setQuestions(newQuestions);
+        }
+    }
+
+    const removeOption = (questionIndex: number, optionIndex: number) => {
+        const targetQuestion = questions.find((question) => question.index == questionIndex);
+        const newQuestions = questions.filter((question) => question.index != questionIndex);
+        if (targetQuestion) {
+            const options = targetQuestion.options;
+            const newOptions = options.filter((option) => option.index != optionIndex);
+            newOptions.forEach((option, index) =>{
+                option.id = `question-${questionIndex}-option-${index}`;
+                option.index = index;
+            })
+            targetQuestion.options = newOptions;
+            newQuestions[questionIndex] = targetQuestion;
+            setQuestions(newQuestions)
+        }
+    }
+
+    const addNewQuestion = (questionIndex: number) => {
+        const newQuestions = [...questions];
+        newQuestions.push(getInitialQuestionState(newQuestions.length)[0]);
+        for (let questionId = newQuestions.length - 1 ; questionId > (questionIndex + 1); questionId--) {
+            newQuestions[questionId] = newQuestions[questionId-1];
+            newQuestions[questionId].index++;
+            newQuestions[questionId].options.forEach((option, index) => {
+                option.id = `question-${questionId}-option-${index}`;
+            })
+        }
+        newQuestions[questionIndex+1] = getInitialQuestionState(questionIndex+1)[0];
+        setQuestions(newQuestions);
+    }
+
+    const removeQuestion = (questionIndex: number) => {
+        const targetQuestion = questions.find((question) => question.index == questionIndex);
+        console.log("before => ", questions);
+        const newQuestions = questions.filter((question) => question.index != questionIndex);
+        if (targetQuestion) {
+            for (let questionId = 0 ; questionId < newQuestions.length ; questionId++) {
+                newQuestions[questionId].index = questionId;
+                newQuestions[questionId].options.forEach((option, index) => {
+                    option.id = `question-${questionId}-option-${index}`;
+                })
+            }
+            console.log("after => ", newQuestions);
+            setQuestions(newQuestions);
+        }
+    }
+
+    const onQuestionTitleUpdate = (questionIndex: number, newValue: string) => {
+        const newQuestions = [...questions];
+        newQuestions[questionIndex].question.value = newValue;
+        newQuestions[questionIndex].question.isValid = newValue != "";
+        setQuestions(newQuestions);
+    }
+
+    const questionsAreValid = (questions: QuestionsState[]) => {
+        let isValid = true;
+        questions.forEach((question) => {
+            if (!question.question.isValid || question.question.value == "") {
+                isValid = false;
+                return false;
+            }
+            question.options.forEach((option) => {
+                if (!option.isValid || option.payload == "") {
+                    isValid = false;
+                    return false;
+                }
+            })
+        });
+        return isValid;
+    }
+
+    const triggerAlertError = (questions: QuestionsState[]) => {
+        const newQuestions = [...questions];
+        newQuestions.forEach((question) => {
+            if (question.question.value == "") question.question.isValid = false;
+            question.options.forEach((option) => {
+                if (option.payload == "") option.isValid = false;
+            })
+        })
+        setQuestions(newQuestions);
     }
 
     const _renderAsFromStep = () => {
@@ -263,7 +320,15 @@ export const RegisterCarousel = () => {
             case STEPS.ONE:
                 return _renderStepOne();
             case STEPS.TWO:
-                return _renderStepTwo();
+                return (<RegisterQuestions
+                    addNewQuestion={addNewQuestion}
+                    removeQuestion={removeQuestion}
+                    addNewOption={addNewOption}
+                    removeOption={removeOption}
+                    questions={questions}
+                    onQuestionOptionUpdate={onQuestionOptionUpdate}
+                    onQuestionTitleUpdate={onQuestionTitleUpdate}
+                    />)
             case STEPS.THREE:
                 /* todo check if is not null */
                 /* Disable back and next button while saving*/
@@ -278,6 +343,32 @@ export const RegisterCarousel = () => {
                 } else {
                     return _renderStepThree();
                 }
+            default:
+                break;
+        }
+    }
+
+    const _increaseStep = () => {
+
+        switch (actualStep) {
+            case STEPS.ONE:
+                if (researchInfoIsValid()) {
+                    setStep(actualStep + 1);
+                }
+                break;
+            case STEPS.TWO:
+                if (questionsAreValid(questions)) {
+                    _handleSavingQuestion(research).then((res) => {
+                        if (res) {
+                            setStep(actualStep + 1);
+                        }
+                    })
+                } else {
+                    triggerAlertError(questions);
+                }
+                break;
+            case STEPS.THREE:
+                break;
             default:
                 break;
         }
