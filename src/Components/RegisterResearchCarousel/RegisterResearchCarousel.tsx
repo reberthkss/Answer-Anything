@@ -266,7 +266,6 @@ export const RegisterCarousel = () => {
 
     const removeQuestion = (questionIndex: number) => {
         const targetQuestion = questions.find((question) => question.index == questionIndex);
-        console.log("before => ", questions);
         const newQuestions = questions.filter((question) => question.index != questionIndex);
         if (targetQuestion) {
             for (let questionId = 0 ; questionId < newQuestions.length ; questionId++) {
@@ -275,7 +274,6 @@ export const RegisterCarousel = () => {
                     option.id = `question-${questionId}-option-${index}`;
                 })
             }
-            console.log("after => ", newQuestions);
             setQuestions(newQuestions);
         }
     }

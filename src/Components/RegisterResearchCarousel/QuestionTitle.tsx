@@ -1,5 +1,5 @@
 import React, {ChangeEvent} from "react";
-import {Input} from "@material-ui/core";
+import {Input, TextField} from "@material-ui/core";
 import "./QuestionTitle.css"
 
 interface QuestionTitleProps {
@@ -12,10 +12,14 @@ interface QuestionTitleProps {
 const QuestionTitle = ({questionId, title, hasError, onQuestionTitleUpdate}: QuestionTitleProps) => {
     return (
         <div className={"title-container"}>
-            <Input
+            <TextField
                 value={title}
                 onChange={({target: {value}}: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => onQuestionTitleUpdate(questionId, value)}
                 error={hasError}
+                autoFocus={true}
+                label={"Pergunta"}
+                helperText={"Não deixe o campo vazio!"}
+                placeholder={"Digite a pergunta aqui"}
                 className={"input-container"}
             />
         </div>
