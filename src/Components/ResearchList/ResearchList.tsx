@@ -12,6 +12,7 @@ import Clipboard from 'react-clipboard.js';
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import {IconButton, Tooltip} from "@material-ui/core";
 import {ShareManager} from "../../utils/Services/ShareManager/ShareManager";
+import SharePopover from "../ShareIcon/SharePopover";
 export const ResearchList = () => {
     let { url } = useRouteMatch();
     const _renderItem = (item: {id: string, research: Research}) => {
@@ -25,13 +26,7 @@ export const ResearchList = () => {
                    </div>
                </Link>
                <div className={"icon-container"}>
-                   <Tooltip title={"Copie o link da pesquisa"}>
-                       <IconButton size={"small"}>
-                           <Clipboard className={"copy-and-paste-component"} data-clipboard-text={ShareManager.shareResearch(item.id)}>
-                               <FileCopyIcon fontSize={"small"}/>
-                           </Clipboard>
-                       </IconButton>
-                   </Tooltip>
+                   <SharePopover researchId={item.id}/>
                </div>
            </div>
         )

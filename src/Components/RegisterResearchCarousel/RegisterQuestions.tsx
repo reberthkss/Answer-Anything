@@ -73,10 +73,19 @@ const RegisterQuestions = ({questions, onQuestionOptionUpdate, onQuestionTitleUp
                    <h2>Pergunta {currentQuestion+1}</h2>
                </div>
                <div className={"question-title-container"}>
-                   <QuestionTitle questionId={selectedQuestion.index} title={selectedQuestion.question.value} hasError={!selectedQuestion.question.isValid} onQuestionTitleUpdate={onQuestionTitleUpdate}/>
+                   <QuestionTitle
+                       questionId={selectedQuestion.index}
+                       title={selectedQuestion.question.value}
+                       hasError={!selectedQuestion.question.isValid}
+                       onQuestionTitleUpdate={onQuestionTitleUpdate}/>
                </div>
                <div className={"question-options-container"}>
-                   <QuestionOptions questionId={selectedQuestion.index} options={selectedQuestion.options} onQuestionOptionUpdate={onQuestionOptionUpdate} addNewOption={addNewOption} removeOption={removeOption}/>
+                   <QuestionOptions
+                       questionId={selectedQuestion.index}
+                       options={selectedQuestion.options}
+                       onQuestionOptionUpdate={onQuestionOptionUpdate}
+                       addNewOption={addNewOption}
+                       removeOption={removeOption}/>
                </div>
            </div>
            <ColumnCommands>

@@ -46,8 +46,7 @@ export const AppToolbar = () => {
     const handleClose = () => {
         setAnchorEl(null);
     };
-    const open = Boolean(anchorEl);
-    const id = open ? 'simple-popover' : undefined;
+    const open = anchorEl != null;
     let {url} = useRouteMatch();
     const user = useSelector((state: ReduxState) => state.user);
     const _renderUserInfo = () => {
@@ -101,7 +100,7 @@ export const AppToolbar = () => {
                     </div>
                 </Toolbar>
             </AppBar>
-            <AppPopOver anchorElement={anchorEl} handleClose={handleClose} id={id} open={open}>
+            <AppPopOver anchorElement={anchorEl} handleClose={handleClose} id={"simple-popover"} open={open}>
                 <div className={"popOver"}>
                     <div className={"signOut"} onClick={() => googleAuth.doLogout()}>
                         <ExitToAppIcon/>

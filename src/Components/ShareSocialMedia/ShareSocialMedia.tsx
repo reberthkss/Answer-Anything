@@ -10,15 +10,24 @@ import {TelegramIcon} from "../../resources/Icons/TelegramIcon";
 import {WhatsappIcon} from "../../resources/Icons/WhatsAppIcon";
 import "./ShareSocialMedia.css";
 import React from "react";
-import {FacebookShareButton, FacebookMessengerShareButton, LinkedinShareButton, TelegramShareButton, WhatsappShareButton} from "react-share";
+import {
+    FacebookShareButton,
+    FacebookMessengerShareButton,
+    LinkedinShareButton,
+    TelegramShareButton,
+    WhatsappShareButton,
+    RedditShareButton, RedditIcon, TwitterShareButton, TwitterIcon
+} from "react-share";
 import Clipboard from 'react-clipboard.js';
 import {useTranslation} from "react-i18next";
+import {Reddit} from "@material-ui/icons";
 export interface ShareSocialMediaProps {
     url: string,
-    message: string | null
+    message: string
 }
-export const ShareSocialMedia = ({url, message}: ShareSocialMediaProps ) => {
+export const ShareSocialMedia = ({url, message = "Hey there! Take a look at the research i made!"}: ShareSocialMediaProps ) => {
     const {t} = useTranslation();
+    const TITLE = "Answer Anything"
     return (
         <div className={"shareOptionsContainer"}>
             <div className={"urlShareOptionContainer"}>
@@ -39,25 +48,26 @@ export const ShareSocialMedia = ({url, message}: ShareSocialMediaProps ) => {
             </div>
             <div className={"socialMedia"}>
                 {/*<DiscordIcon onClick={() => null}/>*/}
-                <FacebookShareButton url={url}>
+                <FacebookShareButton url={url} quote={message}>
                     <FacebookIcon/>
                 </FacebookShareButton>
-                <LinkedinShareButton url={url}>
+                <LinkedinShareButton title={TITLE} url={url} summary={message} source={"www.answeranything.com"}>
                     <LinkedinIcon/>
                 </LinkedinShareButton>
-                {/*<GmailIcon onClick={() => null}/>*/}
-                {/*<InstagramIcon onClick={() => null} />*/}
+                <RedditShareButton title={TITLE} url={url}>
+                    <RedditIcon/>
+                </RedditShareButton>
             </div>
             <div className={"socialMedia"}>
-                {/*<MessengerIcon onClick={() => null}/>*/}
-                {/*<OutlookIcon onClick={() => null}/>*/}
-                {/*<SlackIcon onClick={() => null}/>*/}
-                <TelegramShareButton url={url}>
+                <TelegramShareButton title={TITLE} url={url}>
                     <TelegramIcon />
                 </TelegramShareButton>
-                <WhatsappShareButton url={url}>
+                <WhatsappShareButton title={TITLE} separator={"-"} url={url}>
                     <WhatsappIcon />
                 </WhatsappShareButton>
+                <TwitterShareButton title={TITLE} url={url} via={message}>
+                    <TwitterIcon />
+                </TwitterShareButton>
             </div>
         </div>
     )

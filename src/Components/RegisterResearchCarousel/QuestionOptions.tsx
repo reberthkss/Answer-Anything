@@ -31,12 +31,12 @@ const QuestionOptions = ({questionId, options, onQuestionOptionUpdate, addNewOpt
                         />
                         <div className={"actions-container"}>
                             <Tooltip title={"Adicionar"}>
-                                <IconButton onClick={() => addNewOption(0, option.index)}>
+                                <IconButton onClick={() => addNewOption(questionId, option.index)}>
                                     <Add/>
                                 </IconButton>
                             </Tooltip>
                             <Tooltip title={"Remover"}>
-                                <IconButton onClick={() => removeOption(0, option.index)} disabled={removeOptionIsEnabled(options)}>
+                                <IconButton onClick={() => removeOption(questionId, option.index)} disabled={removeOptionIsEnabled(options)}>
                                     <Remove/>
                                 </IconButton>
                             </Tooltip>

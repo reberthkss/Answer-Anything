@@ -212,7 +212,9 @@ export const RegisterCarousel = () => {
         if (targetQuestion) {
             targetQuestion.options[optionIndex].payload = newValue;
             targetQuestion.options[optionIndex].isValid = newValue != "";
-            setQuestions([...newQuestions, targetQuestion]);
+            newQuestions.push(targetQuestion);
+            newQuestions.sort((questionA, questionB) => questionA.index - questionB.index);
+            setQuestions(newQuestions);
         }
     }
 
@@ -245,7 +247,9 @@ export const RegisterCarousel = () => {
                 option.index = index;
             })
             targetQuestion.options = newOptions;
-            newQuestions[questionIndex] = targetQuestion;
+            // newQuestions[questionIndex] = targetQuestion;
+            newQuestions.push(targetQuestion);
+            newQuestions.sort((questionA, questionB) => questionA.index - questionB.index);
             setQuestions(newQuestions)
         }
     }
