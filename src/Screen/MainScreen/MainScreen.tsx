@@ -5,6 +5,7 @@ import {AppToolbar} from "../../Components/AppToolbar/AppToolbar";
 import {ReduxState} from "../../redux/reducer";
 import {useSelector} from "react-redux";
 import {DashboardScreen} from "../DashboardScreen/DashboardScreen";
+import {Grid} from "@material-ui/core";
 
 
 
@@ -25,14 +26,14 @@ export const MainScreen = () => {
     }, [user]);
 
     return (
-        <div>
+        <Grid container xs={12} sm={12} md={12} lg={12} xl={12}>
             <AppToolbar/>
             <Switch>
                 <Route path={path} component={DashboardScreen}/>
                 {/*<Route path={`${path}/configurations`} component={ConfigurationScreen}/>*/}
                 {/*<Route path={`${path}/register-research`} component={RegisterResearchScreen}/>*/}
             </Switch>
-        </div>
+        </Grid>
     )
 }
 

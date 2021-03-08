@@ -15,6 +15,7 @@ import { useTranslation, initReactI18next } from "react-i18next";
 import {Loading} from "./Components/AnimatedComponents/Loading/Loading";
 import {CircularProgress} from "@material-ui/core";
 import LanguageDetector from 'i18next-browser-languagedetector';
+import Grid from "@material-ui/core/Grid";
 
 
 function App() {
@@ -107,7 +108,7 @@ function App() {
         try {
             return (
                 <Router>
-                    <div>
+                    <Grid container xs={12} sm={12} md={12} lg={12} xl={12}>
                         <Switch>
                             <Route path={"/"} exact component={RootDirectory}/>
                             <Route path="/dashboard"  component={MainScreen}/>
@@ -115,7 +116,7 @@ function App() {
                             <Route exact path={"/researchs/:id"} component={AnswerResearchScreen}/>
                             <Route path={"*"} component={NotFound}/>
                         </Switch>
-                    </div>
+                    </Grid>
                 </Router>
             );
         } catch (e) {

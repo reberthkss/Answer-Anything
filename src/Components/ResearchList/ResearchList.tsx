@@ -1,20 +1,20 @@
-import {OverviewPaper} from "../Overview/OverviewPaper";
 import {List} from "../List/List";
 import React from "react";
 import {Link, useRouteMatch} from "react-router-dom";
 import "./ResearchList.css"
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {ReduxState} from "../../redux/reducer";
 import {Research} from "../../utils/Data/ResearchData";
 import Scrollbar from "react-scrollbars-custom";
-import FileCopyIcon from '@material-ui/icons/FileCopy';
-import Clipboard from 'react-clipboard.js';
-import ChevronRightIcon from "@material-ui/icons/ChevronRight";
-import {IconButton, Tooltip} from "@material-ui/core";
-import {ShareManager} from "../../utils/Services/ShareManager/ShareManager";
 import SharePopover from "../ShareIcon/SharePopover";
+import Sidebar from "react-sidebar";
+import {ActionsTypes} from "../../redux/ActionTypes";
+import {displaySidebar, hideSidebar} from "../../redux/Actions";
+
 export const ResearchList = () => {
-    let { url } = useRouteMatch();
+    const { url } = useRouteMatch();
+    const {sidebarIsVisible} = useSelector((state: ReduxState) => state);
+    const dispatch = useDispatch();
     const _renderItem = (item: {id: string, research: Research}) => {
         return (
            <div className={"research-item-container"}>
@@ -36,16 +36,45 @@ export const ResearchList = () => {
 
     return (
         <div className={"mainGridContainer"}>
-            <div className={"research_text_container"}>
+            <Sidebar
+                sidebar={<b>Sidebar content</b>}
+                open={sidebarIsVisible}
+                onSetOpen={() => dispatch(sidebarIsVisible ? hideSidebar() : displaySidebar())}
+                rootClassName={"sidebar-root-container"}
+                sidebarClassName={"sidebar-container"}
+                contentClassName={"sidebar-content-container"}
+                overlayClassName={"sidebar-overlay-container"}
+                styles={{
+                    root: {
+
+                    },
+                    sidebar: {
+                    },
+                    overlay: {
+
+                    },
+                    content: {
+                        position: "block !important",
+                        height: "86.5vh",
+                        overflow: "hidden",
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "flex-end"
+                    }
+
+                }}
+            >
+                <div className={"research_text_container"}>
                 <span className={"research_text"}>
                     Pesquisas
                 </span>
-            </div>
-            <div className={"scrollbar-container"}>
-                <Scrollbar className={"scrollbar-component"}>
-                    <List data={researchData} renderItem={_renderItem}/>
-                </Scrollbar>
-            </div>
+                </div>
+                <div className={"scrollbar-container"}>
+                    <Scrollbar className={"scrollbar-component"}>
+                        <List data={researchData} renderItem={_renderItem}/>
+                    </Scrollbar>
+                </div>
+            </Sidebar>
         </div>
     )
 }

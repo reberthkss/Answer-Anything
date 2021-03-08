@@ -8,14 +8,14 @@
     }
 
     .userInfoPaperContainer {
-        width: 100px;
+
     }
 
     .userInfoGridItem {
-        width: 100px;
+
     }
 
-    .registerNewResearchDiv {
+    .register-research-div {
 
     }
 
@@ -24,8 +24,23 @@
     }
 
     .registerNewResearchText {
-        width: 105px;
-        height: 20px;
+
+    }
+
+    .toolbar-avatar-container {
+        display: none !important;
+    }
+
+    .toolbar-link {
+        width: 95%;
+    }
+
+    .toolbar-link-to-home {
+        display: none;
+    }
+
+    .toolbar-menu-icon {
+        display: block;
     }
 }
 
@@ -39,14 +54,14 @@
     }
 
     .userInfoPaperContainer {
-        width: 200px;
+
     }
 
     .userInfoGridItem {
-        width: 200px;
+
     }
 
-    .registerNewResearchDiv {
+    .register-research-div {
 
     }
 
@@ -54,14 +69,54 @@
 
     }
 
-    .registerNewResearchText {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        width: 200px;
-        height: 20px;
-
+    .toolbar-avatar-container {
+        display: flex !important;
     }
+
+
+}
+
+@media (min-width: 728px) {
+    .avatar-button-container {
+        display: flex;
+    }
+
+    .toolbar-link {
+        width: 30%;
+    }
+
+    .toolbar-link-to-home {
+        display: flex;
+    }
+
+    .toolbar-menu-icon {
+        display: none;
+    }
+}
+
+
+.desktop-username-options {
+
+}
+
+.app-toolbar-root-container {
+}
+
+.app-toolbar-options-container {
+}
+
+.avatar-button-container {
+    opacity: 1;
+    cursor: pointer;
+    transition: opacity 300ms;
+}
+
+.register-research-button-container {
+}
+
+.avatar-button-container:hover {
+    opacity: 0.75;
+    transition: opacity 300ms;
 }
 
 .popOver {
@@ -84,35 +139,67 @@
     text-decoration: underline;
 }
 
-.registerNewResearchDiv {
-    height: 100%;
+.register-research-div {
     display: flex;
-    align-items: center;
-    padding: 0px 10px;
+    flex-direction: column;
+    align-items: flex-end;
+    height: 100%;
 }
 
+.desktop-register-new-question {
+    height: 100%;
+}
 .registerNewResearchText {
-    display: flex;
+    height: 100%;
+    width: 100%;
     background-color: #039be5;
-    elevation: 100deg;
     cursor: pointer;
-    font-weight: 600;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
-    padding: 15px 5px;
     border-radius: 2px;
+}
+
+.register-new-research-span {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
+    text-align: center;
+    font-weight: 600;
+}
+
+.toolbar-avatar-container {
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.toolbar-avatar-container:hover {
+    opacity: 0.7
 }
 
 .registerNewResearchText:hover {
     transform: translate(0px, -2.5px);
 }
 
-.link {
-    text-decoration: none;
+.toolbar-link {
+    height: 100%;
 }
 
 .toolbar {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
     background-image: linear-gradient(to right, #FFC200, #FF8001);
 }
 
+.toolbar-link-to-home {
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 18px;
+}
 
+.toolbar-menu-icon {
+
+}
