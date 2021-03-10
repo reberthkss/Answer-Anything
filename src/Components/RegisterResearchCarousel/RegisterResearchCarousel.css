@@ -6,10 +6,16 @@
     }
 }
 
+@media(min-width: 768px) {
+    .registerCarouselCard {
+        width: 90%;
+        height: 70%;
+        /*background-color: red;*/
+    }
+}
+
 .registerCarouselCard {
-    width: 90%;
-    height: 90%;
-    /*background-color: red;*/
+
 }
 
 .card {
@@ -106,3 +112,26 @@
     justify-content: flex-start;
 }
 
+
+.stepper-container{
+    display: flex;
+    flex-direction: row;
+    width: 90%;
+}
+
+.stepper {
+    width: 100%;
+}
+
+.register-carousel-container {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.step-label-icon {
+    font-size: 20px;
+}

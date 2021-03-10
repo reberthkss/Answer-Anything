@@ -14,17 +14,16 @@ import Divider from '@material-ui/core/Divider';
 import React from "react";
 import ListIcon from '@material-ui/icons/List';
 import {ReduxState, ResearchProps} from "../../redux/reducer";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {UserSection} from "./UserSection/UserSection";
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import "./AppDrawer.css"
-import {useRouteMatch} from "react-router-dom";
+import {useHistory, useRouteMatch} from "react-router-dom";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import {clearAuthenticatedUser} from "../../redux/Actions";
 interface AppDrawerOptions {
     icon: any,
     text: string,
-    onClick: () => void,
-
 }
 
 interface AppDrawerProps {
@@ -35,19 +34,19 @@ interface AppDrawerProps {
 
 export const AppDrawer = ({researchList, drawerStatus, handleCloseCallback}: AppDrawerProps) => {
     const {url} = useRouteMatch();
+    const dispatch = useDispatch();
+    const history = useHistory();
 
     const authenticatedUser = useSelector((state: ReduxState) => state.user);
 
-    const researchClickEvent = () => {
-
-    }
 
     const exitClickEvent = () => {
-
+        dispatch(clearAuthenticatedUser());
+        history.replace("/")
     }
 
     const options: AppDrawerOptions[] = [
-        {icon: (<ListIcon/>), text: "Pesquisas", onClick: researchClickEvent }
+        {icon: (<ListIcon/>), text: "Pesquisas"}
     ]
 
     return (

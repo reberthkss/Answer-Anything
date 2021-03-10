@@ -28,11 +28,13 @@ export const MainScreen = () => {
     return (
         <Grid container xs={12} sm={12} md={12} lg={12} xl={12}>
             <AppToolbar/>
-            <Switch>
-                <Route path={path} component={DashboardScreen}/>
-                {/*<Route path={`${path}/configurations`} component={ConfigurationScreen}/>*/}
-                {/*<Route path={`${path}/register-research`} component={RegisterResearchScreen}/>*/}
-            </Switch>
+            <Grid container item>
+                <Switch>
+                    <Route path={path} component={DashboardScreen}/>
+                    {/*<Route path={`${path}/configurations`} component={ConfigurationScreen}/>*/}
+                    {/*<Route path={`${path}/register-research`} component={RegisterResearchScreen}/>*/}
+                </Switch>
+            </Grid>
         </Grid>
     )
 }

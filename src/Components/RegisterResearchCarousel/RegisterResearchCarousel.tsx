@@ -1,7 +1,7 @@
 import React, {useEffect, useRef, useState} from "react";
 import "./RegisterResearchCarousel.css"
 import {STEPS} from "../../utils/Steps";
-import {Card} from "@material-ui/core";
+import {Card, Step, StepLabel, Stepper} from "@material-ui/core";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import {Research} from "../../utils/Data/ResearchData";
@@ -395,19 +395,40 @@ export const RegisterCarousel = () => {
     }
 
     return (
-        <div className={"registerCarouselCard"}>
-            <Card className={"card"} elevation={5} raised={true}>
-                <div className={"header"}>
-                    {t("information")}
-                </div>
-                <div className={"contentDiv"}>
-                    {_renderAsFromStep()}
-                </div>
-                <div className={"optionsDiv"}>
-                    {_renderBackStep()}
-                    {_renderNextStep()}
-                </div>
-            </Card>
+        <div className={"register-carousel-container"}>
+            <div className={"stepper-container"}>
+                <Stepper activeStep={actualStep} alternativeLabel className={"stepper"}>
+                    <Step>
+                        <StepLabel>
+                            Dê um nome e uma descrição a sua pesquisa 🤔
+                        </StepLabel>
+                    </Step>
+                    <Step>
+                        <StepLabel >
+                            Liste as perguntas que você tenha em mente 📝
+                        </StepLabel>
+                    </Step>
+                    <Step>
+                        <StepLabel>
+                            Pesquisa criada! Go survey! 🤩
+                        </StepLabel>
+                    </Step>
+                </Stepper>
+            </div>
+            <div className={"registerCarouselCard"}>
+                <Card className={"card"} elevation={5} raised={true}>
+                    <div className={"header"}>
+                        {t("information")}
+                    </div>
+                    <div className={"contentDiv"}>
+                        {_renderAsFromStep()}
+                    </div>
+                    <div className={"optionsDiv"}>
+                        {_renderBackStep()}
+                        {_renderNextStep()}
+                    </div>
+                </Card>
+            </div>
         </div>
     )
 }
