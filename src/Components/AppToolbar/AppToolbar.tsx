@@ -3,9 +3,7 @@ import {useSelector} from "react-redux";
 import {ReduxState} from "../../redux/reducer";
 import {AppBar, Toolbar, Typography, Popover, IconButton, Button, InputBase, Drawer} from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
 import Avatar from "@material-ui/core/Avatar";
-import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import React, {useState} from "react";
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import "./AppToolbar.css"

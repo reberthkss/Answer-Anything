@@ -6,7 +6,6 @@ import {
     useRouteMatch
 } from "react-router-dom";
 import {SelectResearch} from "../../Components/SelectResearch/SelectResearch";
-import {ResearchList} from "../../Components/ResearchList/ResearchList";
 import {FirestoreManager} from "../../utils/Services/FirebaseManager/FirestoreManager";
 import {CircularProgress} from "@material-ui/core";
 import {RegisterResearchScreen} from "../RegisterResearch/RegisterResearchScreen";
@@ -29,14 +28,11 @@ export const DashboardScreen = () => {
             </div>
         } else {
             return (
-                <>
-                    <ResearchList/>
-                    <Switch>
-                        <Route path={path} exact component={SelectResearch}/>
-                        <Route path={`${path}/research/:id`} component={Analysis}/>
-                        <Route path={`${path}/register-research/:id`} component={RegisterResearchScreen}/>
-                    </Switch>
-                </>
+                <Switch>
+                    <Route path={path} exact component={SelectResearch}/>
+                    <Route path={`${path}/research/:id`} component={Analysis}/>
+                    <Route path={`${path}/register-research/:id`} component={RegisterResearchScreen}/>
+                </Switch>
             )
         }
     }
