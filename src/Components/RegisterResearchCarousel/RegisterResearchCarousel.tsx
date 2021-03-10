@@ -397,7 +397,7 @@ export const RegisterCarousel = () => {
     return (
         <div className={"register-carousel-container"}>
             <div className={"stepper-container"}>
-                <Stepper activeStep={actualStep} alternativeLabel className={"stepper"}>
+                <Stepper activeStep={actualStep} alternativeLabel className={"stepper"} >
                     <Step>
                         <StepLabel>
                             Dê um nome e uma descrição a sua pesquisa 🤔

@@ -6,6 +6,7 @@
 
 .mainContainerDashboardScreen {
     height: 91.8vh;
+    width: 100%;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
