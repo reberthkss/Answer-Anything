@@ -1,7 +1,7 @@
 import {Link, useHistory, useRouteMatch} from "react-router-dom";
 import {useSelector} from "react-redux";
 import {ReduxState} from "../../redux/reducer";
-import {AppBar, Toolbar, Typography, Popover, IconButton, Button, InputBase} from "@material-ui/core";
+import {AppBar, Toolbar, Typography, Popover, IconButton, Button, InputBase, Drawer} from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import Avatar from "@material-ui/core/Avatar";
@@ -17,6 +17,7 @@ import firebase from "firebase";
 import TextInputWithIconMdLgXl from "../TextInputWithIcon-md-lg-xl/TextInputWithIcon-md-lg-xl";
 import {Search} from "@material-ui/icons";
 import TextInputWithIconXsSm from "../TextInputWithIcon-xs-sm/TextInputWithIcon-xs-sm";
+import {AppDrawer} from "../AppDrawer/AppDrawer";
 
 const AppPopOver = ({id, open, anchorElement, handleClose, children}: {id: string | undefined, open: boolean, anchorElement: any, handleClose: () => void, children: any}) => {
     return (
@@ -42,6 +43,8 @@ const AppPopOver = ({id, open, anchorElement, handleClose, children}: {id: strin
 export const AppToolbar = () => {
     const googleAuth = new GoogleAuth();
     const [anchorEl, setAnchorEl] = useState(null);
+    const [drawerIsOpen, setDrawerStatus] = useState<boolean>(false);
+    const researchList = useSelector((state: ReduxState) => state.researchs);
     const {t} = useTranslation();
     const history = useHistory();
     const authenticatedUser = useSelector((state:ReduxState) => state.user);
@@ -87,7 +90,8 @@ export const AppToolbar = () => {
                                 <Grid container item xs={6} sm={6} md={6} lg={6} xl={6} direction={"row"} alignItems={"center"}  className={"app-toolbar-options-container"}>
                                     <Grid container item xs={2} sm={2} md={2} lg={2} xl={2} direction={"row"}  alignItems={"center"} >
                                         <div className={"toolbar-menu-icon"}>
-                                            <IconButton edge="start"  color="inherit" aria-label="menu">
+                                            <IconButton edge="start"  color="inherit" aria-label="menu"
+                                                        onClick={() => setDrawerStatus(!drawerIsOpen)}>
                                                 <MenuIcon />
                                             </IconButton>
                                         </div>
@@ -146,6 +150,11 @@ export const AppToolbar = () => {
         <Grid container xs={12} sm={12} md={12} lg={12} xl={12}>
             {renderToolbar()}
             {renderPopOver()}
+            <AppDrawer
+                researchList={researchList}
+                drawerStatus={drawerIsOpen}
+                handleCloseCallback={() => setDrawerStatus(false)}
+            />
         </Grid>
     )
 }

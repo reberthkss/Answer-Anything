@@ -1,0 +1,36 @@
+.drawer-menu {
+
+    max-width: 50%;
+}
+
+
+.accordion-typography {
+    margin: 0 0 0 -16px;
+}
+
+.research-list-item {
+    padding: 12px;
+}
+
+.app-drawer-link {
+    text-decoration: none !important;
+    color: black !important;
+}
+
+.app-drawer-list-container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.app-drawer-logout-container {
+    flex-direction: row;
+    justify-content: flex-start !important;
+    padding: 16px !important;
+}
+
+.app-drawer-span-text {
+    font-size: 18px;
+    margin-left: 22px;
+}

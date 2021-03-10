@@ -35,46 +35,6 @@ export const ResearchList = () => {
 
 
     return (
-        <div className={"mainGridContainer"}>
-            <Sidebar
-                sidebar={<b>Sidebar content</b>}
-                open={sidebarIsVisible}
-                onSetOpen={() => dispatch(sidebarIsVisible ? hideSidebar() : displaySidebar())}
-                rootClassName={"sidebar-root-container"}
-                sidebarClassName={"sidebar-container"}
-                contentClassName={"sidebar-content-container"}
-                overlayClassName={"sidebar-overlay-container"}
-                styles={{
-                    root: {
-
-                    },
-                    sidebar: {
-                    },
-                    overlay: {
-
-                    },
-                    content: {
-                        position: "block !important",
-                        height: "86.5vh",
-                        overflow: "hidden",
-                        display: "flex",
-                        flexDirection: "column",
-                        justifyContent: "flex-end"
-                    }
-
-                }}
-            >
-                <div className={"research_text_container"}>
-                <span className={"research_text"}>
-                    Pesquisas
-                </span>
-                </div>
-                <div className={"scrollbar-container"}>
-                    <Scrollbar className={"scrollbar-component"}>
-                        <List data={researchData} renderItem={_renderItem}/>
-                    </Scrollbar>
-                </div>
-            </Sidebar>
-        </div>
+        <div />
     )
 }
