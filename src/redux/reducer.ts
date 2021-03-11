@@ -24,7 +24,7 @@ export interface ReduxState {
     research: Research | null,
     researchs: ResearchProps[],
     answerResearchPayload: AnswerResearchPayloadProps | null,
-    answersOfResearch: AnswerResearchProps | null
+    answersOfResearch: AnswerResearchProps[] | null
 }
 
 export interface ReduxAction {
@@ -59,7 +59,9 @@ export const rootReducer = (state: ReduxState = initialState, action: ReduxActio
         case ActionsTypes.SAVE_ANSWER_RESEARCH_PAYLOAD:
             return {...state, answerResearchPayload: payload};
         case ActionsTypes.SAVE_ANSWERS_OF_RESEARCH:
-            return {...state, answersOfResearch: payload};
+            const {researchId, answers} = payload;
+            const anotherAnswers = state.answersOfResearch?.filter((answerOfResearch) => answerOfResearch.researchId != researchId) || [];
+            return {...state, answersOfResearch: [...anotherAnswers, payload]};
         default:
             return state;
     }
