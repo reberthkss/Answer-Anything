@@ -45,22 +45,23 @@ const initialState: ReduxState = {
 
 export const rootReducer = (state: ReduxState = initialState, action: ReduxAction): ReduxState => {
     const {type, payload} = action;
+    let researchList: ResearchProps[] = [];
     switch (type) {
         case ActionsTypes.SAVE_AUTHENTICATED_USER:
             return {...state, user: payload};
         case ActionsTypes.CLEAR_SAVED_USER:
             return initialState;
         case ActionsTypes.SAVE_RESEARCHS:
-            const listResearchs = [...state.researchs];
+            researchList = [...state.researchs];
             payload.forEach((research: any) => {
-                const targetResearchIndex = listResearchs.findIndex((rsch) => rsch.researchId == research.researchId);
+                const targetResearchIndex = researchList.findIndex((rsch) => rsch.researchId == research.researchId);
                 if (targetResearchIndex != -1) {
-                    listResearchs[targetResearchIndex].research = research
+                    researchList[targetResearchIndex].research = research.research
                 } else {
-                    listResearchs.push({researchId: research.researchId, research: research.research, answers: null, computedAnswers: null});
+                    researchList.push({researchId: research.researchId, research: research.research, answers: null, computedAnswers: null});
                 }
             });
-            return {...state, researchs: listResearchs}   ;
+            return {...state, researchs: researchList}   ;
         case ActionsTypes.SAVE_RESEARCH:
             return {...state, research: payload};
         case ActionsTypes.SAVE_ANSWER_RESEARCH_PAYLOAD:
