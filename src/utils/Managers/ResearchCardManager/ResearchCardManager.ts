@@ -1,8 +1,9 @@
 import {app} from "../../../index";
 import {FirestoreManager} from "../../Services/FirebaseManager/FirestoreManager";
-import {AnswerData} from "../../Data/AnswerData";
+import {Answers} from "../../Data/Answers";
 import {useDispatch} from "react-redux";
 import {saveAnswersOfResearch} from "../../../redux/Actions";
+import {store} from "../../../redux/ConfigureStore";
 
 interface ResearchCardManagerResponse {
     response: boolean,
@@ -12,19 +13,23 @@ interface ResearchCardManagerResponse {
 export class ResearchCardManager {
     private onChangeListener: any;
     private firestore = app.firestore;
+    private researchId;
+    constructor(researchId: string) {
+        this.researchId = researchId;
+    }
 
-    async setListener(researchId: string): Promise<ResearchCardManagerResponse> {
-        const dispatch = useDispatch();
+    async setListener(): Promise<ResearchCardManagerResponse> {
+        const dispatch = store.dispatch;
         try {
             this.onChangeListener = (await  this.firestore()
                 .collection(FirestoreManager.COLLECTIONS.RESEARCH)
-                .where("researchId.researchId", "==", researchId)
+                .where("researchId.researchId", "==", this.researchId)
                 .get())
                 .docs[0]
                 .ref
                 .collection(FirestoreManager.COLLECTIONS.ANSWERED_QUESTIONS)
                 .onSnapshot((data) => {
-                    const answerData = AnswerData.from(researchId, data.docs[0]);
+                    const answerData = Answers.from(this.researchId, data.docs[0]);
                     console.log(`Answer Data => ${answerData}`);
                 })
             return {response: true, error: null}
@@ -42,5 +47,6 @@ export class ResearchCardManager {
         }
     }
 }
+
 
 export default ResearchCardManager;
