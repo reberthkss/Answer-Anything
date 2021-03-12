@@ -1,10 +1,10 @@
-import {AnswerData} from "../../Data/AnswerData";
+import {Answers} from "../../Data/Answers";
 import firebase from "firebase";
 import {FirestoreManager} from "../FirebaseManager/FirestoreManager";
 import {getStore} from "../../../redux/ConfigureStore";
 import {saveAnswerResearchPayload, saveAnswersOfResearch} from "../../../redux/Actions";
 import {app} from "../../../index";
-import {Answers, AnswersSnapshotData} from "../../Data/Answers";
+import {ComputedAnswers, AnswersSnapshotData} from "../../Data/ComputedAnswers";
 
 
 
@@ -42,7 +42,7 @@ export class AnswerResearchManager {
     private firestore: firebase.firestore.Firestore;
     public unsubscribeToUpdatedAnswers: () => void;
 
-    async startQuestionnaire(researchId: string, answerData: AnswerData): Promise<AnswerResearchManagerResponse> {
+    async startQuestionnaire(researchId: string, answerData: Answers): Promise<AnswerResearchManagerResponse> {
         try {
             const res = await this
                 .firestore
@@ -146,10 +146,10 @@ export class AnswerResearchManager {
                 .get());
             const answersDoc:  firebase.firestore.DocumentReference<firebase.firestore.DocumentData> | null = answersRef.docs.length > 0 ? answersRef.docs[0].ref : null;
             if (answersDoc == null) return {result: false, error: "Answer Not Found!"};
-            const answers: Answers = Answers.from((await answersDoc.get()).data() as AnswersSnapshotData);
+            const answers: ComputedAnswers = ComputedAnswers.from((await answersDoc.get()).data() as AnswersSnapshotData);
             const answersOfResearch: {
                 researchId: string,
-                answers: Answers
+                answers: ComputedAnswers
             } = {
                 researchId: researchId,
                 answers: answers
@@ -157,7 +157,7 @@ export class AnswerResearchManager {
             this.unsubscribeToUpdatedAnswers = answersDoc.onSnapshot((data) => {
                 getStore().dispatch(saveAnswersOfResearch({
                     researchId,
-                    answers: Answers.from(data.data() as AnswersSnapshotData)
+                    answers: ComputedAnswers.from(data.data() as AnswersSnapshotData)
                 }))
             });
             getStore().dispatch(saveAnswersOfResearch(answersOfResearch));
