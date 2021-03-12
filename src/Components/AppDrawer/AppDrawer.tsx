@@ -74,7 +74,7 @@ export const AppDrawer = ({researchList, drawerStatus, handleCloseCallback}: App
                                 </AccordionSummary>
                                 {researchList.map((research) => (
                                     <div className={"research-list-item"}>
-                                        <Link href={`${url}/research/${research.id}`} className={"app-drawer-link"}>
+                                        <Link href={`${url}/research/${research.researchId}`} className={"app-drawer-link"}>
                                             {research.research.title}
                                         </Link>
                                     </div>
