@@ -17,3 +17,20 @@
     justify-content: center;
     align-items: center;
 }
+
+.masonry-grid-container {
+    display: -webkit-box; /* Not needed if autoprefixing */
+    display: -ms-flexbox; /* Not needed if autoprefixing */
+    display: flex;
+    margin-left: -30px; /* gutter size offset */
+    width: auto;
+}
+
+.masonry-grid-column-container {
+    padding-left: 30px; /* gutter size */
+    background-clip: padding-box;
+}
+
+.masonry-grid-column-container > div {
+    margin: 5px 0;
+}
