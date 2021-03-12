@@ -18,7 +18,7 @@ export class ResearchCardManager {
         this.researchId = researchId;
     }
 
-    async setListener(): Promise<ResearchCardManagerResponse> {
+    async subscribe(): Promise<ResearchCardManagerResponse> {
         const dispatch = store.dispatch;
         try {
             this.onChangeListener = (await  this.firestore()
@@ -38,7 +38,7 @@ export class ResearchCardManager {
         }
     }
 
-    async removeListener(): Promise<ResearchCardManagerResponse> {
+    async unsubscribe(): Promise<ResearchCardManagerResponse> {
         try {
             this.onChangeListener();
             return {response: true, error: null}
