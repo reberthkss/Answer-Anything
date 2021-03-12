@@ -13,7 +13,7 @@ export const ShareResearch = () => {
     *  */
 
     const {t} = useTranslation();
-    const researchId = useSelector((state: ReduxState) => state.answerResearchPayload?.researchId || null);
+    const researchId = useSelector((state: ReduxState) => state.inProgressAnswer?.researchId || null);
 
     return (
         <div className={"shareResearchContainer"}>
