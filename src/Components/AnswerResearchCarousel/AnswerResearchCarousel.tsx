@@ -9,7 +9,7 @@ import {Research} from "../../utils/Data/ResearchData";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import {ResearchQuestionData} from "../../utils/Data/ResearchQuestionData";
-import {AnswerData} from "../../utils/Data/AnswerData";
+import {Answers} from "../../utils/Data/Answers";
 import {AnswerResearchManager} from "../../utils/Services/AnswerResearchManager/AnswerResearchManager";
 import {getStore} from "../../redux/ConfigureStore";
 import { useLocation } from "react-router-dom";
