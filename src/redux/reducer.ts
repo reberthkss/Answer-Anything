@@ -17,7 +17,7 @@ import {ComputedAnswers} from "../utils/Data/ComputedAnswers";
 
  */
 
-export interface AnswerResearchProps {researchId: string, answers: ComputedAnswers}
+export interface ComputedAnswersPayload {researchId: string, computedAnswers: ComputedAnswers}
 export interface ResearchProps {researchId: string, research: Research, answers: Answers | null, computedAnswers: ComputedAnswers | null}
 export interface ReduxState {
     user: UserData | null,
@@ -65,8 +65,13 @@ export const rootReducer = (state: ReduxState = initialState, action: ReduxActio
             return {...state, research: payload};
         case ActionsTypes.SAVE_ANSWER_RESEARCH_PAYLOAD:
             return {...state, inProgressAnswer: payload};
-        case ActionsTypes.SAVE_ANSWERS_OF_RESEARCH:
-
+        case ActionsTypes.SAVE_COMPUTED_ANSWER:
+            researchList = [...state.researchs];
+            const indexOfTargetResearch = researchList.findIndex((research) => research.researchId == payload.researchId);
+            if (indexOfTargetResearch != -1) {
+                researchList[indexOfTargetResearch].computedAnswers = payload.computedAnswers;
+            }
+            return {...state, researchs: researchList};
         default:
             return state;
     }

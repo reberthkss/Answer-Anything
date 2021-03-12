@@ -2,7 +2,7 @@ import {Answers} from "../../Data/Answers";
 import firebase from "firebase";
 import {FirestoreManager} from "../FirebaseManager/FirestoreManager";
 import {getStore} from "../../../redux/ConfigureStore";
-import {saveAnswerResearchPayload, saveAnswersOfResearch} from "../../../redux/Actions";
+import {saveAnswerResearchPayload, saveComputedAnswer} from "../../../redux/Actions";
 import {app} from "../../../index";
 import {ComputedAnswers, AnswersSnapshotData} from "../../Data/ComputedAnswers";
 

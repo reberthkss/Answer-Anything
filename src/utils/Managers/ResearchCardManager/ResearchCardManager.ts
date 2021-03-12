@@ -2,7 +2,7 @@ import {app} from "../../../index";
 import {FirestoreManager} from "../../Services/FirebaseManager/FirestoreManager";
 import {Answers} from "../../Data/Answers";
 import {useDispatch} from "react-redux";
-import {saveAnswersOfResearch} from "../../../redux/Actions";
+import {saveComputedAnswer} from "../../../redux/Actions";
 import {store} from "../../../redux/ConfigureStore";
 
 interface ResearchCardManagerResponse {

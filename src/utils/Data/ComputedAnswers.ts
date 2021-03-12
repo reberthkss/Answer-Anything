@@ -14,7 +14,7 @@ export interface AnswersQuestionsOptionsProps {
     [key: string]: number
 }
 export interface AnswersQuestionsProps {
-    option: AnswersQuestionsOptionsProps[],
+    options: AnswersQuestionsOptionsProps[],
     questionId: number
 }
 export interface AnswersProps {
