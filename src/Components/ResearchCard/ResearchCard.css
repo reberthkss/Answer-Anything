@@ -1,5 +1,10 @@
 .research-card-root-container {
-    height: 50px;
-    width: 50px;
-    background-color: #039be5;
+
+}
+
+.research-card-no-available-data-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
