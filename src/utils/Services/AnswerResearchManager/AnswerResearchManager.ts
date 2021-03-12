@@ -137,34 +137,4 @@ export class AnswerResearchManager {
         }
     }
 
-    async loadAnswersByResearch(researchId: string): Promise<AnswerResearchManagerResponse> {
-        try {
-            const answersRef = (await this
-                .firestore
-                .collection(FirestoreManager.COLLECTIONS.ANSWERS)
-                .where("researchId", "==", researchId)
-                .get());
-            const answersDoc:  firebase.firestore.DocumentReference<firebase.firestore.DocumentData> | null = answersRef.docs.length > 0 ? answersRef.docs[0].ref : null;
-            if (answersDoc == null) return {result: false, error: "Answer Not Found!"};
-            const answers: ComputedAnswers = ComputedAnswers.from((await answersDoc.get()).data() as AnswersSnapshotData);
-            const answersOfResearch: {
-                researchId: string,
-                answers: ComputedAnswers
-            } = {
-                researchId: researchId,
-                answers: answers
-            };
-            this.unsubscribeToUpdatedAnswers = answersDoc.onSnapshot((data) => {
-                getStore().dispatch(saveAnswersOfResearch({
-                    researchId,
-                    answers: ComputedAnswers.from(data.data() as AnswersSnapshotData)
-                }))
-            });
-            getStore().dispatch(saveAnswersOfResearch(answersOfResearch));
-            return {result: true, error: null};
-        } catch (e) {
-            return {result: false, error: e}
-        }
-    }
-
 }
