@@ -28,8 +28,8 @@ export class ComputedAnswers {
         this.questions = questions;
     }
 
-    researchId: number;
-    questions: AnswersQuestionsProps[];
+    public researchId: number;
+    public questions: AnswersQuestionsProps[];
 
     static parseFirebase() {
 
@@ -41,7 +41,7 @@ export class ComputedAnswers {
             .map((question, index): AnswersQuestionsProps => {
                 return {
                     questionId: question.questionId,
-                    option: question.option.map((option, index) => ({
+                    options: question.option.map((option, index) => ({
                         [index.toString()]: option[index] as unknown as number
                     }))
                 }
