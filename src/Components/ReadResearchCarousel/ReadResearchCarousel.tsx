@@ -7,7 +7,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import firebase from "firebase";
-import {ReduxState} from "../../redux/reducer";
+import {ReduxState, ResearchProps} from "../../redux/reducer";
 import {useSelector} from "react-redux";
 import {FirestoreManager} from "../../utils/Services/FirebaseManager/FirestoreManager";
 import {AnswerResearchManager} from "../../utils/Services/AnswerResearchManager/AnswerResearchManager";
@@ -15,11 +15,11 @@ import { CircularProgress } from "@material-ui/core";
 
 export const ReadResearchCarousel = () => {
     const params: any = useParams();
-    const id = params.id || {id: null};
+    const researchId = params.id || {researchId: null};
     const [loading, setLoading] = useState(true);
-    const research = useSelector((state: ReduxState) => state.researchs).find((research) => research.id === id) || null;
+    const research = useSelector((state: ReduxState) => state.researchs).find((research) => research.researchId === researchId) || null;
     const [questionId, setQuestion] = useState(0);
-    const answers = useSelector((state: ReduxState) => state.answersOfResearch);
+    const answers = research?.answers;
     const _renderTitle = () => {
         if (!research) return null;
 
@@ -120,7 +120,7 @@ export const ReadResearchCarousel = () => {
     }
 
     useEffect(() => {
-        _loadAnswers(id);
+        _loadAnswers(researchId);
     }, [])
 
     const renderLoading = () => {
