@@ -1,8 +1,8 @@
 import {ActionsTypes} from "./ActionTypes";
 import {UserData} from "../utils/Data/UserData";
 import {Research} from "../utils/Data/ResearchData";
-import {AnswerData} from "../utils/Data/AnswerData";
 import {Answers} from "../utils/Data/Answers";
+import {ComputedAnswers} from "../utils/Data/ComputedAnswers";
 
 
 /*Mudar estrutura do redux para separar:
@@ -17,14 +17,13 @@ import {Answers} from "../utils/Data/Answers";
 
  */
 
-export interface AnswerResearchProps {researchId: string, answers: Answers}
-export interface ResearchProps {id: string, research: Research}
+export interface AnswerResearchProps {researchId: string, answers: ComputedAnswers}
+export interface ResearchProps {researchId: string, research: Research, answers: Answers | null, computedAnswers: ComputedAnswers | null}
 export interface ReduxState {
     user: UserData | null,
     research: Research | null,
     researchs: ResearchProps[],
-    answerResearchPayload: AnswerResearchPayloadProps | null,
-    answersOfResearch: AnswerResearchProps[] | null
+    inProgressAnswer: AnswerResearchPayloadProps | null,
 }
 
 export interface ReduxAction {
@@ -41,8 +40,7 @@ const initialState: ReduxState = {
     user: null,
     research: null,
     researchs: [],
-    answerResearchPayload: null,
-    answersOfResearch: null
+    inProgressAnswer: null
 }
 
 export const rootReducer = (state: ReduxState = initialState, action: ReduxAction): ReduxState => {
@@ -51,17 +49,24 @@ export const rootReducer = (state: ReduxState = initialState, action: ReduxActio
         case ActionsTypes.SAVE_AUTHENTICATED_USER:
             return {...state, user: payload};
         case ActionsTypes.CLEAR_SAVED_USER:
-            return {...state, user: null};
+            return initialState;
         case ActionsTypes.SAVE_RESEARCHS:
-            return {...state, researchs: payload};
+            const listResearchs = [...state.researchs];
+            payload.forEach((research: any) => {
+                const targetResearchIndex = listResearchs.findIndex((rsch) => rsch.researchId == research.researchId);
+                if (targetResearchIndex != -1) {
+                    listResearchs[targetResearchIndex].research = research
+                } else {
+                    listResearchs.push({researchId: research.researchId, research: research.research, answers: null, computedAnswers: null});
+                }
+            });
+            return {...state, researchs: listResearchs}   ;
         case ActionsTypes.SAVE_RESEARCH:
             return {...state, research: payload};
         case ActionsTypes.SAVE_ANSWER_RESEARCH_PAYLOAD:
-            return {...state, answerResearchPayload: payload};
+            return {...state, inProgressAnswer: payload};
         case ActionsTypes.SAVE_ANSWERS_OF_RESEARCH:
-            const {researchId, answers} = payload;
-            const anotherAnswers = state.answersOfResearch?.filter((answerOfResearch) => answerOfResearch.researchId != researchId) || [];
-            return {...state, answersOfResearch: [...anotherAnswers, payload]};
+
         default:
             return state;
     }

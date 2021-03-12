@@ -26,11 +26,11 @@ export interface UserData {email: string, name: string}
 
 export const AnswerResearchCarousel = ({ researchId, research, onGetSelectedOption}: AnswerResearchCarouselProps) => {
     const [currentStep, setStep] = useState<number>(STEPS.ONE);
-    const [answerData, setAnswerData] = useState<AnswerData | null>(null);
+    const [answerData, setAnswerData] = useState<Answers | null>(null);
     const {t} = useTranslation();
 
     const _handleEndOfResearch = async () => {
-        const answerResearchPayload = getStore().getState().answerResearchPayload;
+        const answerResearchPayload = getStore().getState().inProgressAnswer;
         const answerResearchManager = new AnswerResearchManager();
         const resFromFirebase = await answerResearchManager.endQuestionnaire({
             identifiers: {
@@ -54,7 +54,7 @@ export const AnswerResearchCarousel = ({ researchId, research, onGetSelectedOpti
                 return (
                     <Greeting
                         onStartQuestionnaire={async ({email, name}) => {
-                            const answerData = new AnswerData({email, name});
+                            const answerData = new Answers({email, name});
                             const res = await answerResearchManager.startQuestionnaire(researchId, answerData);
                             if (res.result) {
                                 setAnswerData(answerData);
@@ -78,7 +78,7 @@ export const AnswerResearchCarousel = ({ researchId, research, onGetSelectedOpti
                     />
                 )
             case STEPS.THREE:
-                const answerResearchPayload = getStore().getState().answerResearchPayload;
+                const answerResearchPayload = getStore().getState().inProgressAnswer;
                 return (
                     <Conclusion researchUrl={ShareManager.shareResearch(answerResearchPayload?.researchId || null)} finishMessage={t("privacy_text_information")}/>
                 )
@@ -88,7 +88,7 @@ export const AnswerResearchCarousel = ({ researchId, research, onGetSelectedOpti
     }
 
     const _handleGoBack = async () => {
-        const answerResearchPayload = getStore().getState().answerResearchPayload;
+        const answerResearchPayload = getStore().getState().inProgressAnswer;
         const answerResearchManager = new AnswerResearchManager();
         const resFromFirebase = await answerResearchManager.setAsInProgress({
             identifiers: {

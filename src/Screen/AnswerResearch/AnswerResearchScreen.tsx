@@ -16,10 +16,10 @@ import {isDevEnv} from "../../utils/utils";
 export const AnswerResearchScreen = () => {
     const [loading, setLoading] = useState<boolean>(false);
     const research: Research | null = useSelector((state:ReduxState) => state).research;
-    const {answerResearchPayload} = useSelector((state: ReduxState) => state);
+    const {inProgressAnswer} = useSelector((state: ReduxState) => state);
     const history = useHistory();
     const params: any = useParams();
-    const id = params.id || {id: null}
+    const id = params.id || {researchId: null}
     const TAG = "AnswerResearch";
 
     const loadResearch = async (id: string) => {
@@ -45,8 +45,8 @@ export const AnswerResearchScreen = () => {
         question.selectedOption = selectedOption;
         const newResearch = new Research(research.title, research.subtitle, research.description, research.questions, research.status, research.roles);
         const responseOnSave = await answerResearchManager.saveAnsweredQuestion({
-            researchId: answerResearchPayload?.researchId || null,
-            answerResearchId: answerResearchPayload?.answerResearchId || null,
+            researchId: inProgressAnswer?.researchId || null,
+            answerResearchId: inProgressAnswer?.answerResearchId || null,
             answeredQuestionId: question.id,
             selectedOption,
             prevSelectedOption

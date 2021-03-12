@@ -56,7 +56,7 @@ export class FirestoreManager {
             collection.onSnapshot((data) => {
                 const researchs = data.docs.map((doc) => {
                     return {
-                        id: doc.id,
+                        researchId: doc.id,
                         research: Research.from(doc.data())
                     }
                 });

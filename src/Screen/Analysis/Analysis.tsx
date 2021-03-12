@@ -6,7 +6,7 @@ import {AnswerResearchProps, ReduxState, ResearchProps} from "../../redux/reduce
 import {AnswerResearchManager} from "../../utils/Services/AnswerResearchManager/AnswerResearchManager";
 import {ChartWrapper} from "../../Components/Chart/ChartWrapper";
 import { CircularProgress } from "@material-ui/core";
-import {Answers} from "../../utils/Data/Answers";
+import {ComputedAnswers} from "../../utils/Data/ComputedAnswers";
 import {useTranslation} from "react-i18next";
 import Scrollbar from "react-scrollbars-custom";
 const randomColor = require('randomcolor');
@@ -18,13 +18,16 @@ interface DatasetProps {
 
 export const Analysis = () => {
     const TAG = "Analysis";
-    const {id} = useParams() as {id: string};
+    const {researchId} = useParams() as {researchId: string};
     const [dataSet, setDataset] = useState<{researchId: string, dataSet: DatasetProps[]} | null>(null);
-    const [research, answers]: (ResearchProps | null | AnswerResearchProps)[] = useSelector((state: ReduxState) =>
-    [
-        state.researchs.find((research) => research.id === id) || null,
-        state.answersOfResearch as AnswerResearchProps
-    ]);
+    const [research, answers]: (ResearchProps | null | ComputedAnswers)[] = useSelector((state: ReduxState) => {
+        const research = state.researchs.find((research) => research.researchId === researchId);
+        return [
+            research || null,
+            research?.computedAnswers || null
+        ]
+        }
+    );
     const answerResearchManager = new AnswerResearchManager();
     const [loading, setLoading] = useState(true);
     const {t} = useTranslation();
@@ -61,7 +64,8 @@ export const Analysis = () => {
     }
 
     function renderOptionsChart(research: ResearchProps, dataSet: {researchId: string, dataSet: DatasetProps[]}) {
-        if ((answers as AnswerResearchProps).researchId !== research.id || research.id !== dataSet.researchId) {
+        /* todo  change below*/
+        if (research == null || answers == null) {
             return renderNoDataAvailable();
         } else {
             return dataSet.dataSet.map(({data, questionId}) => {
@@ -127,21 +131,23 @@ export const Analysis = () => {
     useEffect(() => {
         // @ts-ignore
         if (answers == null) return;
-        const researchId = (answers as AnswerResearchProps).researchId;
-        if (researchId != id) return;
-        setDataset({researchId, dataSet: computeAnswers(answers as AnswerResearchProps)});
+        /* todo change below */
+        const researchId: string | null = (research as ResearchProps)?.researchId || null
+        if (researchId != researchId) return;
+        /* todo change below */
+        setDataset({researchId: researchId || "", dataSet: computeAnswers({researchId: (research as ResearchProps)?.researchId || "", answers: answers as ComputedAnswers})});
     }, [answers]);
 
     useEffect(() => {
         answerResearchManager.unsubscribeToUpdatedAnswers();
-        loadAnswer(id)
+        loadAnswer(researchId)
             .then(() => {
                 setLoading(false);
             })
             .catch(() => {
                 setLoading(false);
             })
-    }, [id])
+    }, [researchId])
 
     return (
         <div className={"analysisRoot"}>
