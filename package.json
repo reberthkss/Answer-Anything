@@ -30,6 +30,7 @@
     "react-i18next": "^11.8.5",
     "react-masonry-css": "^1.0.14",
     "react-redux": "^7.2.1",
+    "react-responsive-carousel": "^3.2.13",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.0",
     "react-scrollbars-custom": "^4.0.25",
