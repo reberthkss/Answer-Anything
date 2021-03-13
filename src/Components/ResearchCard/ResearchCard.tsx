@@ -7,6 +7,9 @@ import {useSelector} from "react-redux";
 import {Card, CardContent, CardHeader, IconButton, Typography} from "@material-ui/core";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import ComputedAnswersManager from "../../utils/Managers/ComputedAnswersManager/ComputedAnswersManager";
+import ComputedAnswersChartConverters from "../../utils/ChartConverters/ComputedAnswersChartConverters";
+import {ChartWrapper} from "../Chart/ChartWrapper";
+import ResearchCardChart from "./ResearchCardChart/ResearchCardChart";
 interface ResearchCardProps {
     researchId: string,
     title: string,
@@ -27,24 +30,12 @@ const ResearchCard = ({researchId, title, height}: ResearchCardProps) => {
         }
     }, []);
 
-    const renderChart = () => {
-        if (research.computedAnswers) {
-            const chartData = computedResearchManager.parseDataToChart({researchId: research.researchId, computedAnswers: research.computedAnswers});
-
-        } else {
-            return (
-                <div className={"research-card-no-available-data-container"}>
-                    <Typography>
-                        No available data!
-                    </Typography>
-                </div>
-            )
-        }
-    }
-
     return (
-        <div className={"research-card-root-container"} style={{height: height}}>
+        <div className={"research-card-root-container"}>
             <Card>
+                <CardContent>
+                    <ResearchCardChart research={research.research} computedAnswers={research.computedAnswers}/>
+                </CardContent>
                 <CardHeader
                     title={research.research.title}
                     subheader={research.research.subtitle}
@@ -54,9 +45,6 @@ const ResearchCard = ({researchId, title, height}: ResearchCardProps) => {
                         </IconButton>
                     }
                 />
-                <CardContent>
-                    {renderChart()}
-                </CardContent>
                 <CardContent>
                     <Typography>
                         {research.research.description}
