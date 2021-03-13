@@ -9,7 +9,6 @@ import {SelectResearch} from "../../Components/SelectResearch/SelectResearch";
 import {FirestoreManager} from "../../utils/Services/FirebaseManager/FirestoreManager";
 import {CircularProgress} from "@material-ui/core";
 import {RegisterResearchScreen} from "../RegisterResearch/RegisterResearchScreen";
-import {Analysis} from "../Analysis/Analysis";
 export const DashboardScreen = () => {
     const { path } = useRouteMatch();
     const [loading, setLoading] = useState(true);
@@ -30,7 +29,7 @@ export const DashboardScreen = () => {
             return (
                 <Switch>
                     <Route path={path} exact component={SelectResearch}/>
-                    <Route path={`${path}/research/:id`} component={Analysis}/>
+                    {/*<Route path={`${path}/research/:id`} component={Analysis}/>*/}
                     <Route path={`${path}/register-research/:id`} component={RegisterResearchScreen}/>
                 </Switch>
             )
