@@ -1,8 +1,6 @@
-import {CardContent, CardHeader, IconButton, Menu, MenuItem} from "@material-ui/core";
+import {CardHeader, IconButton, Menu, MenuItem} from "@material-ui/core";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import ShareIcon from '@material-ui/icons/Share';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import SendIcon from '@material-ui/icons/Send';
 import React, {ReactElement, useState} from "react";
 import FacebookIcon from '@material-ui/icons/Facebook';
 import LinkedInIcon from '@material-ui/icons/LinkedIn';
@@ -12,7 +10,11 @@ import WhatsAppIcon from '@material-ui/icons/WhatsApp';
 import TelegramIcon from '@material-ui/icons/Telegram';
 import FileCopyIcon from '@material-ui/icons/FileCopy';
 import "./ResearchCardHeader.css"
-import {Colors} from "../../../utils/Colors";
+import {Colors} from "../../../utils/Enums/Colors";
+import {ShareManager} from "../../../utils/Services/ShareManager/ShareManager";
+import SocialNetworkManager from "../../../utils/Managers/SocialNetworkManager/SocialNetworkManager";
+import SocialNetworks from "../../../utils/Enums/SocialNetworks";
+
 interface ResearchCardHeaderProps {
     title: string,
     subtitle: string,
@@ -21,22 +23,24 @@ interface ResearchCardHeaderProps {
 interface OptionsProps {
     icon?: ReactElement,
     text: string,
-    onClick?: () => void
+    onClick?: () => void,
+    shareLink: string
 }
 
 const ResearchCardHeader = ({title, subtitle, researchId}: ResearchCardHeaderProps) => {
     const [anchorElement, setAnchorElement] = useState<any>(null);
     const [options, setOptions] = useState<OptionsProps[]>([]);
+    const socialNetworkManager = new SocialNetworkManager(researchId, title);
     const detailOptions: OptionsProps[] = [
-        {icon: (<FileCopyIcon/>), text: "Copiar link da pesquisa"}
+        {icon: (<FileCopyIcon/>), text: "Copiar link da pesquisa", shareLink: ShareManager.shareResearch(researchId)}
         ];
     const shareOptions: OptionsProps[] = [
-        {icon: (<FacebookIcon style={{color: Colors.FACEBOOK}} />), text: "Facebook"},
-        {icon: (<LinkedInIcon style={{color: Colors.LINKEDIN}}/>), text: "Linkedin"},
-        {icon: (<RedditIcon style={{color: Colors.REDDIT}}/>), text: "Reddit"},
-        {icon: (<TwitterIcon style={{color: Colors.TWITTER}}/>) , text: "Twitter"},
-        {icon: (<WhatsAppIcon style={{color: Colors.WHATSAPP}}/>), text: "Whatsapp"},
-        {icon: (<TelegramIcon style={{color: Colors.TELEGRAM}}/>), text: "Telegram"}
+        {icon: (<FacebookIcon style={{color: Colors.FACEBOOK}} />), text: SocialNetworks.FACEBOOK, shareLink: socialNetworkManager.getShareLink(SocialNetworks.FACEBOOK)},
+        {icon: (<LinkedInIcon style={{color: Colors.LINKEDIN}}/>), text: SocialNetworks.LINKEDIN, shareLink: socialNetworkManager.getShareLink(SocialNetworks.LINKEDIN)},
+        {icon: (<RedditIcon style={{color: Colors.REDDIT}}/>), text: SocialNetworks.REDDIT, shareLink: socialNetworkManager.getShareLink(SocialNetworks.REDDIT)},
+        {icon: (<TwitterIcon style={{color: Colors.TWITTER}}/>) , text: SocialNetworks.TWITTER, shareLink: socialNetworkManager.getShareLink(SocialNetworks.TWITTER)},
+        {icon: (<WhatsAppIcon style={{color: Colors.WHATSAPP}}/>), text: SocialNetworks.WHATSAPP, shareLink: socialNetworkManager.getShareLink(SocialNetworks.WHATSAPP)},
+        {icon: (<TelegramIcon style={{color: Colors.TELEGRAM}}/>), text: SocialNetworks.TELEGRAM, shareLink: socialNetworkManager.getShareLink(SocialNetworks.TELEGRAM)}
     ];
 
     const renderOptionIcon = (icon: ReactElement | null) => {
@@ -85,8 +89,9 @@ const ResearchCardHeader = ({title, subtitle, researchId}: ResearchCardHeaderPro
                 {options.map((option) => (
                     <MenuItem key={option.text} onClick={() => {
                         setAnchorElement(null);
+                        window.open(option.shareLink);
                         // option.onClick();
-                    }} >
+                    }}>
                         {renderOptionIcon(option.icon || null)}
                         {option.text}
                     </MenuItem>
