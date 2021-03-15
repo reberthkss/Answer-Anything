@@ -21,7 +21,7 @@ class ComputedAnswersChartConverters {
     constructor(computedAnswersPayload: ComputedAnswers, targetResearch: Research) {
         this.researchComputedAnswers = [];
         this.targetResearch = targetResearch;
-        this.chartData = null;
+        this.chartData = [];
         this.parseDataToChart = computedAnswersPayload;
     }
 
@@ -78,7 +78,7 @@ class ComputedAnswersChartConverters {
 
     private targetResearch: Research;
     private researchComputedAnswers: ResearchComputedAnswers[];
-    public chartData: ComputedAnswersChartData[] | null;
+    public chartData: ComputedAnswersChartData[];
 }
 
 export default ComputedAnswersChartConverters;
