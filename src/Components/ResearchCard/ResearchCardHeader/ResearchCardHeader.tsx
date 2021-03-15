@@ -24,7 +24,7 @@ interface OptionsProps {
     icon?: ReactElement,
     text: string,
     onClick?: () => void,
-    shareLink: string
+    shareLink: string | null
 }
 
 const ResearchCardHeader = ({title, subtitle, researchId}: ResearchCardHeaderProps) => {
@@ -32,7 +32,7 @@ const ResearchCardHeader = ({title, subtitle, researchId}: ResearchCardHeaderPro
     const [options, setOptions] = useState<OptionsProps[]>([]);
     const socialNetworkManager = new SocialNetworkManager(researchId, title);
     const detailOptions: OptionsProps[] = [
-        {icon: (<FileCopyIcon/>), text: "Copiar link da pesquisa", shareLink: ShareManager.shareResearch(researchId)}
+        {icon: (<FileCopyIcon/>), text: "Copiar link da pesquisa", shareLink: null}
         ];
     const shareOptions: OptionsProps[] = [
         {icon: (<FacebookIcon style={{color: Colors.FACEBOOK}} />), text: SocialNetworks.FACEBOOK, shareLink: socialNetworkManager.getShareLink(SocialNetworks.FACEBOOK)},
@@ -89,7 +89,11 @@ const ResearchCardHeader = ({title, subtitle, researchId}: ResearchCardHeaderPro
                 {options.map((option) => (
                     <MenuItem key={option.text} onClick={() => {
                         setAnchorElement(null);
-                        window.open(option.shareLink);
+                        if (option.shareLink) {
+                            window.open(option.shareLink);
+                        } else {
+
+                        }
                         // option.onClick();
                     }}>
                         {renderOptionIcon(option.icon || null)}
