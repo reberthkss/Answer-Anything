@@ -1,5 +1,5 @@
 export interface AnswersSnapshotData {
-    "researchId": number,
+    "researchId": string,
     "questions": {
         "option": [
             {
@@ -23,12 +23,12 @@ export interface AnswersProps {
 }
 
 export class ComputedAnswers {
-    constructor(researchId: number, questions: AnswersQuestionsProps[]) {
+    constructor(researchId: string, questions: AnswersQuestionsProps[]) {
         this.researchId = researchId;
         this.questions = questions;
     }
 
-    public researchId: number;
+    public researchId: string;
     public questions: AnswersQuestionsProps[];
 
     static parseFirebase() {
@@ -36,7 +36,6 @@ export class ComputedAnswers {
     }
 
     static from(answerSnapshot: AnswersSnapshotData): ComputedAnswers {
-        console.log(answerSnapshot);
         const questions: AnswersQuestionsProps[] = answerSnapshot.questions
             .map((question, index): AnswersQuestionsProps => {
                 return {
