@@ -13,6 +13,7 @@ interface ChartProps {
 export function ChartWrapper({type, title, labels, backgroundColors, data, props}: ChartProps) {
     const chartRef = useRef<HTMLCanvasElement | null>(null);
     let chart: Chart | null = null;
+    const max = Math.max(...data);
     useEffect(() => {
         if (chartRef.current) {
             if (chart != null) {
@@ -24,6 +25,7 @@ export function ChartWrapper({type, title, labels, backgroundColors, data, props
                     data: {
                         labels: labels,
                         datasets: [{
+
                             label: '# of Votes',
                             data: data,
                             backgroundColor: backgroundColors,
@@ -39,7 +41,9 @@ export function ChartWrapper({type, title, labels, backgroundColors, data, props
                         scales: {
                             yAxes: [{
                                 ticks: {
-                                    beginAtZero: true
+                                    beginAtZero: true,
+                                    stepSize: max != 0 ? max/2 : 1  ,
+                                    suggestedMax: max != 0 ? max * 2 : 5
                                 }
                             }]
                         }
