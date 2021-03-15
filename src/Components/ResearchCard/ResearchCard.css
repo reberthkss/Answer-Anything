@@ -8,3 +8,9 @@
     justify-content: center;
     align-items: center;
 }
+
+.card-actions-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}

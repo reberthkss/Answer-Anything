@@ -1,15 +1,19 @@
-import {ReduxState, ResearchProps} from "../../redux/reducer";
+import {ReduxState} from "../../redux/reducer";
 import {useEffect} from "react";
 import ResearchCardManager from "../../utils/Managers/ResearchCardManager/ResearchCardManager";
 import React from "react";
 import "./ResearchCard.css"
 import {useSelector} from "react-redux";
-import {Card, CardContent, CardHeader, IconButton, Typography} from "@material-ui/core";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
+import {
+    Button,
+    Card,
+    CardActions,
+    CardContent,
+    Typography
+} from "@material-ui/core";
 import ComputedAnswersManager from "../../utils/Managers/ComputedAnswersManager/ComputedAnswersManager";
-import ComputedAnswersChartConverters from "../../utils/ChartConverters/ComputedAnswersChartConverters";
-import {ChartWrapper} from "../Chart/ChartWrapper";
 import ResearchCardChart from "./ResearchCardChart/ResearchCardChart";
+import ResearchCardHeader from "./ResearchCardHeader/ResearchCardHeader";
 interface ResearchCardProps {
     researchId: string,
     title: string,
@@ -36,21 +40,17 @@ const ResearchCard = ({researchId, title, height}: ResearchCardProps) => {
                 <CardContent>
                     <ResearchCardChart research={research.research} computedAnswers={research.computedAnswers}/>
                 </CardContent>
-                <CardHeader
-                    title={research.research.title}
-                    subheader={research.research.subtitle}
-                    action={
-                        <IconButton aria-label="settings">
-                            <MoreVertIcon />
-                        </IconButton>
-                    }
-                />
+                <ResearchCardHeader title={research.research.title || ""} subtitle={research.research.subtitle || ""} researchId={research.researchId}/>
                 <CardContent>
                     <Typography>
                         {research.research.description}
                     </Typography>
                 </CardContent>
-
+                <CardActions className={"card-actions-container"}>
+                    <Button color={"primary"} size={"large"}>
+                        Ver mais
+                    </Button>
+                </CardActions>
             </Card>
         </div>
     )
