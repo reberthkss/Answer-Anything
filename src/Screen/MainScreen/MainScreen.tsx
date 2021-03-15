@@ -31,8 +31,6 @@ export const MainScreen = () => {
             <Grid container item>
                 <Switch>
                     <Route path={path} component={DashboardScreen}/>
-                    {/*<Route path={`${path}/configurations`} component={ConfigurationScreen}/>*/}
-                    {/*<Route path={`${path}/register-research`} component={RegisterResearchScreen}/>*/}
                 </Switch>
             </Grid>
         </Grid>
