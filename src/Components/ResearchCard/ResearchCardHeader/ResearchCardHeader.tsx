@@ -84,17 +84,17 @@ const ResearchCardHeader = ({title, subtitle, researchId}: ResearchCardHeaderPro
                 anchorEl={anchorElement}
                 keepMounted
                 open={anchorElement != null}
-                onClose={() => setAnchorElement(null)}
+                onClose={async () => setAnchorElement(null)}
             >
                 {options.map((option) => (
-                    <MenuItem key={option.text} onClick={() => {
+                    <MenuItem key={option.text} onClick={async () => {
                         setAnchorElement(null);
                         if (option.shareLink) {
                             window.open(option.shareLink);
                         } else {
-
+                            const url = ShareManager.shareResearch(researchId)
+                            await navigator.clipboard.writeText(url);
                         }
-                        // option.onClick();
                     }}>
                         {renderOptionIcon(option.icon || null)}
                         {option.text}
