@@ -14,6 +14,7 @@ import {
 import ComputedAnswersManager from "../../utils/Managers/ComputedAnswersManager/ComputedAnswersManager";
 import ResearchCardChart from "./ResearchCardChart/ResearchCardChart";
 import ResearchCardHeader from "./ResearchCardHeader/ResearchCardHeader";
+import {useHistory, useRouteMatch} from "react-router-dom";
 interface ResearchCardProps {
     researchId: string,
     title: string,
@@ -24,6 +25,8 @@ const ResearchCard = ({researchId, title, height}: ResearchCardProps) => {
     const researchCardManager = new ResearchCardManager(researchId);
     const computedResearchManager = new ComputedAnswersManager(researchId);
     const research = useSelector((state: ReduxState) => state.researchs.find((research) => research.researchId == researchId));
+    const history = useHistory();
+    const match = useRouteMatch();
     if (!research) throw  Error("Research not found!");
     useEffect(() => {
         researchCardManager.subscribe();
@@ -47,7 +50,7 @@ const ResearchCard = ({researchId, title, height}: ResearchCardProps) => {
                     </Typography>
                 </CardContent>
                 <CardActions className={"card-actions-container"}>
-                    <Button color={"primary"} size={"large"}>
+                    <Button color={"primary"} size={"large"} onClick={() => history.push(`${match.url}/research/${researchId}`)}>
                         Ver mais
                     </Button>
                 </CardActions>
