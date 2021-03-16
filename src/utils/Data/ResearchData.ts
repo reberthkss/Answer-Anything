@@ -14,7 +14,6 @@ export class Research {
         roles: Map<string, string> | null = null,
         timestamp: FirestoreTimestamp = {seconds: Date.now()}
         ) {
-
         this.title = title;
         this.subtitle = subtitle;
         this.description = description;

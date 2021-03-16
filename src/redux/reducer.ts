@@ -47,6 +47,7 @@ const initialState: ReduxState = {
 
 export const rootReducer = (state: ReduxState = initialState, action: ReduxAction): ReduxState => {
     const {type, payload} = action;
+    let isSame = true;
     let researchList: ResearchProps[] = [];
     switch (type) {
         case ActionsTypes.SAVE_AUTHENTICATED_USER:
@@ -54,22 +55,23 @@ export const rootReducer = (state: ReduxState = initialState, action: ReduxActio
         case ActionsTypes.CLEAR_SAVED_USER:
             return initialState;
         case ActionsTypes.SAVE_RESEARCHS:
-            let isSame = true;
-
             for (let researchToFind of payload) {
                 const targetResearch: ResearchProps | undefined = state.researchs.find((reseach) => reseach.researchId == researchToFind.researchId);
-                if (targetResearch == undefined || targetResearch.research.timestamp.seconds != researchToFind.research.timestamp.seconds) {
+                if (targetResearch == undefined ||
+                    targetResearch.research.timestamp != null && researchToFind.research.timestamp != null &&
+                    targetResearch.research.timestamp.seconds != researchToFind.research.timestamp.seconds ||
+                    researchToFind.research.timestamp != null && targetResearch.research.timestamp == null
+                ) {
                     isSame = false;
                     break;
                 }
             }
 
-            console.log(isSame)
             if (isSame) {
                 return state;
             } else {
                 researchList = [...state.researchs];
-                payload.forEach((research: any) => {
+                payload.forEach((research: SaveResearchsPayload) => {
                     const targetResearchIndex = researchList.findIndex((rsch) => rsch.researchId == research.researchId);
                     if (targetResearchIndex != -1) {
                         researchList[targetResearchIndex].research = research.research
@@ -85,11 +87,21 @@ export const rootReducer = (state: ReduxState = initialState, action: ReduxActio
             return {...state, inProgressAnswer: payload};
         case ActionsTypes.SAVE_COMPUTED_ANSWER:
             researchList = [...state.researchs];
-            const indexOfTargetResearch = researchList.findIndex((research) => research.researchId == payload.researchId);
-            if (indexOfTargetResearch != -1) {
-                researchList[indexOfTargetResearch].computedAnswers = payload.computedAnswers;
+            const targetResearch = state.researchs.find((research) => research.researchId == payload.researchId);
+            if (targetResearch == undefined) throw new Error("Invalid computed answers!");
+            if (targetResearch.computedAnswers?.timestamp.seconds != payload.computedAnswers.timestamp.seconds) {
+                isSame = false;
             }
-            return {...state, researchs: researchList};
+            if (isSame) {
+                return state;
+            } else {
+                const indexOfTargetResearch = researchList.findIndex((research) => research.researchId == payload.researchId);
+                if (indexOfTargetResearch != -1) {
+                    researchList[indexOfTargetResearch].computedAnswers = payload.computedAnswers;
+                }
+                return {...state, researchs: researchList};
+            }
+
         default:
             return state;
     }

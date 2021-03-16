@@ -1,3 +1,5 @@
+import {FirestoreTimestamp} from "./ResearchData";
+
 export interface AnswersSnapshotData {
     "researchId": string,
     "questions": {
@@ -7,7 +9,8 @@ export interface AnswersSnapshotData {
             }[]
         ],
         "questionId": number
-    }[]
+    }[],
+    "timestamp": FirestoreTimestamp
 }
 
 export interface AnswersQuestionsOptionsProps {
@@ -23,13 +26,15 @@ export interface AnswersProps {
 }
 
 export class ComputedAnswers {
-    constructor(researchId: string, questions: AnswersQuestionsProps[]) {
+    constructor(researchId: string, questions: AnswersQuestionsProps[], timestamp: FirestoreTimestamp = {seconds: Date.now()}) {
         this.researchId = researchId;
         this.questions = questions;
+        this.timestamp = timestamp;
     }
 
     public researchId: string;
     public questions: AnswersQuestionsProps[];
+    public timestamp: FirestoreTimestamp;
 
     static parseFirebase() {
 
@@ -42,9 +47,9 @@ export class ComputedAnswers {
                     questionId: question.questionId,
                     options: question.option.map((option, index) => ({
                         [index.toString()]: option[index] as unknown as number
-                    }))
+                    })),
                 }
             })
-        return new ComputedAnswers(answerSnapshot.researchId, questions);
+        return new ComputedAnswers(answerSnapshot.researchId, questions, answerSnapshot.timestamp);
     }
 }
