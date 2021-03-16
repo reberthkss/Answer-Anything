@@ -52,16 +52,31 @@ export const rootReducer = (state: ReduxState = initialState, action: ReduxActio
         case ActionsTypes.CLEAR_SAVED_USER:
             return initialState;
         case ActionsTypes.SAVE_RESEARCHS:
-            researchList = [...state.researchs];
-            payload.forEach((research: any) => {
-                const targetResearchIndex = researchList.findIndex((rsch) => rsch.researchId == research.researchId);
-                if (targetResearchIndex != -1) {
-                    researchList[targetResearchIndex].research = research.research
-                } else {
-                    researchList.push({researchId: research.researchId, research: research.research, answers: null, computedAnswers: null});
+            let isSame = true;
+
+            for (let researchToFind of payload) {
+                const targetResearch: ResearchProps | undefined = state.researchs.find((reseach) => reseach.researchId == researchToFind.researchId);
+                if (targetResearch == undefined || targetResearch.research.timestamp.seconds != researchToFind.research.timestamp.seconds) {
+                    isSame = false;
+                    break;
                 }
-            });
-            return {...state, researchs: researchList}   ;
+            }
+
+            console.log(isSame)
+            if (isSame) {
+                return state;
+            } else {
+                researchList = [...state.researchs];
+                payload.forEach((research: any) => {
+                    const targetResearchIndex = researchList.findIndex((rsch) => rsch.researchId == research.researchId);
+                    if (targetResearchIndex != -1) {
+                        researchList[targetResearchIndex].research = research.research
+                    } else {
+                        researchList.push({researchId: research.researchId, research: research.research, answers: null, computedAnswers: null});
+                    }
+                });
+                return {...state, researchs: researchList};
+            }
         case ActionsTypes.SAVE_RESEARCH:
             return {...state, research: payload};
         case ActionsTypes.SAVE_ANSWER_RESEARCH_PAYLOAD:
