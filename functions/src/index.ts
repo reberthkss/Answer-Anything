@@ -50,7 +50,6 @@ exports.researchOnWrite = functions
                         'questionId': index,
                         'option': Array.from({length: optionsArray.length}).map((_, index) => {
                             if (afterAnswerData.answeredQuestions.find((answeredQuestion) => answeredQuestion.selectedOption == index)) {
-                                console.log("entrou");
                                 return {
                                     [index.toString()]: 1
                                 }
