@@ -11,17 +11,27 @@ import {CircularProgress} from "@material-ui/core";
 import {RegisterResearchScreen} from "./RegisterResearch/RegisterResearchScreen";
 import Analysis from "./Analysis/Analysis";
 import {NotFound} from "../NotFound";
+import {isDevEnv} from "../../utils/utils";
 export const DashboardScreen = () => {
     const { path } = useRouteMatch();
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
     const firestoreManager = new FirestoreManager();
+    const loadData = async () => {
+        const res = await firestoreManager.read();
+        if (res.result) {
+            isDevEnv() && console.log("Success set listener!");
+        } else {
+            isDevEnv() && console.log("Error on set listener!");
+        }
+        setLoading(false);
+    }
     useEffect(() => {
         /* TODO - Find ways to reduce requests to firestore */
-        firestoreManager.read().then(() => {
-            setLoading(false);
-        })
+        loadData();
+        return () => {
+            firestoreManager.clearReadSubscription();
+        }
     }, [])
-    /* TODO - ADD LOADING */
     const _renderPage = () => {
         if (loading) {
             return <div className={"loadingIndicatorDiv"}>
@@ -38,7 +48,6 @@ export const DashboardScreen = () => {
             )
         }
     }
-    console.log("re-rendered 1")
     return (
         <div className={"mainContainerDashboardScreen"}>
             {_renderPage()}
