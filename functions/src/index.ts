@@ -68,7 +68,8 @@ exports.researchOnWrite = functions
                 .collection("answers")
                 .add({
                     'researchId': identifiers.research,
-                    'questions': questionsData
+                    'questions': questionsData,
+                    'timestamp': admin.firestore.FieldValue.serverTimestamp()
                 });
         } else {
             afterAnswerData.answeredQuestions.map((question, index) => {
