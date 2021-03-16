@@ -26,6 +26,8 @@ export interface ReduxState {
     inProgressAnswer: AnswerResearchPayloadProps | null,
 }
 
+export interface SaveResearchsPayload {researchId: string, research: Research}
+
 export interface ReduxAction {
     payload?: any
     type: ActionsTypes

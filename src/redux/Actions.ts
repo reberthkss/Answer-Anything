@@ -1,4 +1,4 @@
-import {AnswerResearchPayloadProps, ComputedAnswersPayload, ReduxAction} from "./reducer";
+import {AnswerResearchPayloadProps, ComputedAnswersPayload, ReduxAction, SaveResearchsPayload} from "./reducer";
 import {ActionsTypes} from "./ActionTypes";
 import {UserData} from "../utils/Data/UserData";
 import {Research} from "../utils/Data/ResearchData";
@@ -14,7 +14,7 @@ export const clearAuthenticatedUser = (): ReduxAction => {
     return {type: ActionsTypes.CLEAR_SAVED_USER};
 }
 
-export const saveResearchs = (researchs: {researchId: string, research: Research}[]): ReduxAction => {
+export const saveResearchs = (researchs: SaveResearchsPayload[]): ReduxAction => {
     return {payload: researchs, type: ActionsTypes.SAVE_RESEARCHS};
 }
 
