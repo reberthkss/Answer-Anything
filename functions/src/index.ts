@@ -15,6 +15,7 @@ interface QuestionAnswered {
     'questionId': number,
     'option': { [key: string]: number }[],
     'prevSelectedOption': number | null,
+    'timestamp': {seconds: number, nanoseconds: number}
 }
 
 exports.researchOnWrite = functions
