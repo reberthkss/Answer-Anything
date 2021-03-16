@@ -28,6 +28,7 @@ export class FirestoreManager {
 
     private firestore: firebase.firestore.Firestore;
     private store: Store<ReduxState & PersistPartial, ReduxAction>;
+    private readSubscription: any;
 
     /*TODO - UPDATE THIS TO CHOOSE COLLECTION*/
     async read(): Promise<FirestoreManagerResponse> {
@@ -36,24 +37,7 @@ export class FirestoreManager {
             const collection = this.firestore
                 .collection(FirestoreManager.COLLECTIONS.RESEARCH)
                 .where(`roles.${user?.user.id}`, "==", "owner");
-
-            /*
-            ---------DEPRECATED - 11/02/2021---------
-            const researchs = (await this.firestore
-                .collection(FirestoreManager.COLLECTIONS.RESEARCH)
-                .where(`roles.${user?.user.id}`, "==", "owner")
-                .get())
-                .docs
-                .map((doc) => {
-                    return {
-                        id: doc.id,
-                        research: Research.from(doc.data())
-                    }
-                });
-
-            this.store.dispatch(saveResearchs(researchs));
-            */
-            collection.onSnapshot((data) => {
+            this.readSubscription = collection.onSnapshot((data) => {
                 const researchs = data.docs.map((doc) => {
                     return {
                         researchId: doc.id,
@@ -65,7 +49,6 @@ export class FirestoreManager {
             return {result: true, error: null}
         } catch (e) {
             isDevEnv() && console.log("error => ", e);
-            /* TODO - SHOW ERROR */
             return {result: false, error: e.message};
         }
     }
@@ -84,7 +67,6 @@ export class FirestoreManager {
             isDevEnv() && console.log(this.TAG, "Successful saved research!");
             return {result: true, error: null};
         } catch (e) {
-            /* TODO - SHOW ERROR */
             isDevEnv() && console.log(`error => ${e.message}`);
             return {result: false, error: e.message};
         }
@@ -100,7 +82,6 @@ export class FirestoreManager {
             return {result: true, error: null};
         } catch (e) {
             isDevEnv() && console.log(this.TAG, "[FIRESTOREMANAGER] error => ", e);
-            /* TODO - SHOW ERROR */
             return {result: false, error: e.message};
         }
     }
@@ -115,7 +96,6 @@ export class FirestoreManager {
             return {result: true, error: null};
         } catch (e) {
             isDevEnv() && console.log(this.TAG, "Error => ", e);
-            /* TODO - SHOW ERROR */
             return {result: false, error: e.message};
         }
     }
@@ -137,5 +117,9 @@ export class FirestoreManager {
             isDevEnv() && console.log(this.TAG, e.message);
             return {result: false, error: e.message};
         }
+    }
+
+    public clearReadSubscription() {
+        this.readSubscription();
     }
 }
