@@ -3,6 +3,7 @@ import {ResearchStatus, StatusTypes} from "./ResearchStatus";
 import firebase from "firebase";
 import { store } from "../../redux/ConfigureStore";
 
+export interface FirestoreTimestamp {seconds: number, nanoseconds?: number}
 export class Research {
     constructor(
         title: string | null = null,
@@ -11,6 +12,7 @@ export class Research {
         questions: ResearchQuestionData[] = [new ResearchQuestionData()],
         status: ResearchStatus | null = null,
         roles: Map<string, string> | null = null,
+        timestamp: FirestoreTimestamp = {seconds: Date.now()}
         ) {
 
         this.title = title;
@@ -19,6 +21,7 @@ export class Research {
         this.questions = questions;
         this.status = status;
         this.roles = roles;
+        this.timestamp = timestamp;
     }
 
     title: string | null;
@@ -26,7 +29,8 @@ export class Research {
     description: string | null;
     questions: ResearchQuestionData[];
     status: ResearchStatus | null;
-    roles: Map<string, string> | null
+    roles: Map<string, string> | null;
+    timestamp: FirestoreTimestamp;
 
     static from(data:  firebase.firestore.DocumentData): Research {
         const questions  = data["questions"]
@@ -38,7 +42,8 @@ export class Research {
             data["description"],
             questions,
             status,
-            data["roles"]
+            data["roles"],
+            data["timestamp"]
         )
     }
 
@@ -51,7 +56,8 @@ export class Research {
             "description": this.description,
             "questions": this.questions.map((question) => question.parseFirebase()),
             "status": this.status?.toUpperCase(),
-            "roles": roles
+            "roles": roles,
+            "timestamp": firebase.firestore.FieldValue.serverTimestamp()
         }
     }
 

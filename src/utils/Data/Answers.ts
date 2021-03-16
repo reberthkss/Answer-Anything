@@ -1,5 +1,6 @@
 import firebase from "firebase";
 import {UserData} from "../../Components/AnswerResearchCarousel/AnswerResearchCarousel";
+import {FirestoreTimestamp} from "./ResearchData";
 
 interface AnsweredQuestions {
     question: number,
@@ -8,10 +9,11 @@ interface AnsweredQuestions {
 }
 
 export class Answers {
-    constructor( userData: UserData, answeredQuestions: AnsweredQuestions[] = [], status: "progress" | "done" = "progress") {
+    constructor( userData: UserData, answeredQuestions: AnsweredQuestions[] = [], status: "progress" | "done" = "progress", timestamp: FirestoreTimestamp = {seconds: Date.now()}) {
         this.answeredQuestions = answeredQuestions;
         this.userData = userData;
         this.status = status;
+        this.timestamp = timestamp;
     }
 
     private static TAG = "AnswerData";
@@ -19,6 +21,7 @@ export class Answers {
     userData: UserData;
     answeredQuestions: AnsweredQuestions[];
     status: "progress" | "done" ;
+    timestamp: FirestoreTimestamp;
 
     parseFirebase() {
         const answeredQuestions: { "questionId": number, "selectedOption": number }[] = this.answeredQuestions
@@ -34,7 +37,8 @@ export class Answers {
                 "email": this.userData.email,
                 "name": this.userData.name
             },
-            "status": this.status
+            "status": this.status,
+            "timestamp": firebase.firestore.FieldValue.serverTimestamp()
         }
     }
 
@@ -48,7 +52,8 @@ export class Answers {
                     prevSelectedOption: answeredQuestion["prevSelectedOption"],
                 }
                 )),
-            data["status"]
+            data["status"],
+            data["timestamp"]
         )
     }
 
