@@ -94,6 +94,5 @@ exports.researchOnWrite = functions
             })
         }
 
-        // research.questions.find((question) => question.id == index.toString()).
         return snap.after.data();
     });

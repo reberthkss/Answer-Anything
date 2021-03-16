@@ -5,18 +5,6 @@ import {Answers} from "../utils/Data/Answers";
 import {ComputedAnswers} from "../utils/Data/ComputedAnswers";
 
 
-/*Mudar estrutura do redux para separar:
-
- *   Os reducers do Dashboard do usuário
- *   Os reducers da tela de respostas
-
- +/- assim:
-
- dashboard: {},
- answerScreen: {}
-
- */
-
 export interface ComputedAnswersPayload {researchId: string, computedAnswers: ComputedAnswers}
 export interface ResearchProps {researchId: string, research: Research, answers: Answers | null, computedAnswers: ComputedAnswers | null}
 export interface ReduxState {

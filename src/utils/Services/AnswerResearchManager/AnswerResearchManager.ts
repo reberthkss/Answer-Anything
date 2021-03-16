@@ -5,6 +5,7 @@ import {getStore} from "../../../redux/ConfigureStore";
 import {saveAnswerResearchPayload, saveComputedAnswer} from "../../../redux/Actions";
 import {app} from "../../../index";
 import {ComputedAnswers, AnswersSnapshotData} from "../../Data/ComputedAnswers";
+import {isDevEnv} from "../../utils";
 
 
 
@@ -132,7 +133,7 @@ export class AnswerResearchManager {
                 });
             return {result: false, error: null};
         } catch (e) {
-            console.log("Error => ", e.message);
+            isDevEnv() && console.log("Error => ", e.message);
             return {result: false, error: e.message};
         }
     }
