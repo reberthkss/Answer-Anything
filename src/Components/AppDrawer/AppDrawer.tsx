@@ -4,7 +4,6 @@ import {
     AccordionSummary,
     ButtonBase,
     Drawer,
-    Link,
     List,
     ListItem,
     ListItemIcon,
@@ -18,7 +17,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {UserSection} from "./UserSection/UserSection";
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import "./AppDrawer.css"
-import {useHistory, useRouteMatch} from "react-router-dom";
+import {Link, useHistory, useRouteMatch} from "react-router-dom";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import {clearAuthenticatedUser} from "../../redux/Actions";
 interface AppDrawerOptions {
@@ -61,6 +60,13 @@ export const AppDrawer = ({researchList, drawerStatus, handleCloseCallback}: App
             />
             <div className={"app-drawer-list-container"}>
                 <List component="nav" >
+                    <ListItem>
+                        <a className={"app-drawer-link"} onClick={() => history.replace("/")} >
+                            <Typography>
+                                Home
+                            </Typography>
+                        </a>
+                    </ListItem>
                     {options.map((option) => {
                         return (
                             <Accordion>
@@ -74,7 +80,7 @@ export const AppDrawer = ({researchList, drawerStatus, handleCloseCallback}: App
                                 </AccordionSummary>
                                 {researchList.map((research) => (
                                     <div className={"research-list-item"}>
-                                        <Link href={`${url}/research/${research.researchId}`} className={"app-drawer-link"}>
+                                        <Link to={`${url}/research/${research.researchId}`} className={"app-drawer-link"} onClick={handleCloseCallback}>
                                             {research.research.title}
                                         </Link>
                                     </div>

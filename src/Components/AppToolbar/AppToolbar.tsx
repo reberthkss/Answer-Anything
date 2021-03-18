@@ -97,7 +97,7 @@ export const AppToolbar = () => {
                                             Home
                                         </Link>
                                     </Grid>
-                                    <Grid container item xs={10} sm={10} md={10} lg={10} xl={10} direction={"row"} justify={"flex-start"}>
+                                    <Grid container item xs={10} sm={10} md={10} lg={10} xl={10} direction={"row"} justify={"flex-start"} style={{display: "none"}}>
                                         <TextInputWithIconMdLgXl
                                             type={"search"}
                                             icon={() => (<Search/>)}
