@@ -332,14 +332,6 @@ export const RegisterCarousel = () => {
                     onQuestionTitleUpdate={onQuestionTitleUpdate}
                     />)
             case STEPS.THREE:
-                /* todo check if is not null */
-                /* Disable back and next button while saving*/
-                /* Animation to indicates that is saving */
-                /* Animation to indicates that successful saved */
-                /* Animation to Indicates that failed saved */
-                /* Share options */
-                /* Show share options after successful save */
-                /* Show try again button option after failed saved */
                 if (loading.loading) {
                     return <Loading/>
                 } else {
@@ -351,7 +343,6 @@ export const RegisterCarousel = () => {
     }
 
     const _increaseStep = () => {
-
         switch (actualStep) {
             case STEPS.ONE:
                 if (researchInfoIsValid()) {
