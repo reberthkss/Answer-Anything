@@ -1,0 +1,31 @@
+const ptBrTranslation = {
+    "select_research": "Selecione uma pesquisa",
+    "go_back": "Voltar",
+    "go_next": "Próximo",
+    "thanks_for_answer": "Obrigado por responder nossa pesquisa!",
+    "privacy_text_information": "A resposta será registrada nos servidores do Answer Anything. Toda data é armazenada seguindo as politicas de privacidades.",
+    "start": "COMEÇAR",
+    "register_new_research": "Registrar nova pesquisa",
+    "home": "Inicio",
+    "sign_out": "Sair",
+    "field_must_be_filled": "O campo deve estar preenchido",
+    "delete_this_option": "Remover está opção",
+    "tip_a_option": "Digite aqui uma possivel resposta",
+    "information": "Informações",
+    "type_some_message_to_share_with_link": "Digite uma mensagem para ser compartilhada junto ao link",
+    "new_option": "Nova opção",
+    "the_question": "a pergunta",
+    "which_question": "Qual sua pergunta?",
+    "new_question": "Nova questão",
+    "share": "Compartilhe com seus amigos com o link abaixo: ",
+    "or_share_in_social_media": "Ou compartilhe em suas mídias sociais: ",
+    "copy": "Copiar",
+    "no_data_available": "Nenhum dado disponível",
+    "survey_anywhere": "Pesquise onde você quiser",
+    "create_a_survey": "Crie uma pesquisa",
+    "create_a_survey_description": "com uma interface intuitiva e minimalista. Prepare uma enquete rápida, crie um questionário e muito mais.",
+    "review": "Analise",
+    "review_description": "os dados coletados de forma organizada e automática com auxilio de gráficos"
+};
+
+export default ptBrTranslation;

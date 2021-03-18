@@ -1,0 +1,31 @@
+const enTranslation = {
+    "select_research": "Select a research",
+    "go_back": "Back",
+    "go_next": "Next",
+    "thanks_for_answer": "Thank you to answered our research!",
+    "privacy_text_information": "The answer were be registered on the Answer Anything servers. All data is storage following the privacy policies.",
+    "start": "START",
+    "register_new_research": "Register new research",
+    "home": "Home",
+    "sign_out": "Sign out",
+    "field_must_be_filled": "The field must be filled",
+    "delete_this_option": "Remove this option",
+    "tip_a_option": "Type it here a option",
+    "information": "Information",
+    "type_some_message_to_share_with_link": "Type here some message to share with link",
+    "new_option": "New option",
+    "the_question": "the question",
+    "which_question": "Say the question",
+    "new_question": "New question",
+    "share": "Share with your friends with that url below: ",
+    "or_share_in_social_media": "Or share on your social media: ",
+    "copy": "Copy",
+    "no_data_available": "No data available",
+    "survey_anywhere": "Survey anywhere you want",
+    "create_a_survey": "Create a survey",
+    "create_a_survey_description": "with an intuitive and minimalist interface. Start a quick poll, create a questionnaire and more.",
+    "review": "Review",
+    "review_description": "the data collected in an organized and automatic way with the aid of graphs"
+}
+
+export default enTranslation;
