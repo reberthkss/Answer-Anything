@@ -6,36 +6,15 @@ import * as serviceWorker from './serviceWorker';
 import {PersistGate} from "redux-persist/integration/react";
 import { Provider } from 'react-redux';
 import {store, persistor} from "./redux/ConfigureStore";
-import {getEnvironment} from "./utils/config";
+import {getEnvironment} from "./utils/Configs/firebase";
 import firebase from "firebase";
 
 export const app = firebase.initializeApp(getEnvironment());
 
-
-async function mockDataFirestore() {
-    try {
-        const document = await app
-            .firestore()
-            .collection("test")
-            .add({
-                "value": 1
-            });
-        await document
-            .collection("value")
-            .add({
-                "value": 2
-            });
-    } catch (e) {
-        console.log(`Error => ${e.message}`);
-    }
-}
 if (window.location.hostname == "localhost") {
     app.firestore().settings({
         host: "localhost:8080", ssl: false
     })
-    /*mockDataFirestore().then(() => {
-        console.log("Finnaly mocked data!");
-    })*/
 
 }
 
