@@ -1,5 +1,5 @@
 const enTranslation = {
-    "select_research": "Select a research",
+    "go_on_and_create_your_first_research": 'You have not created your first research yet. Go on and click in the button "Register new research"',
     "go_back": "Back",
     "go_next": "Next",
     "thanks_for_answer": "Thank you to answered our research!",
@@ -58,7 +58,8 @@ const enTranslation = {
     "form_text_field_research_description": "Description",
     "error_on_select_option": "Error on select option",
     "succeeded_selected_option": "Succeeded on select option!",
-    "stepper_survey_created": "Research created! Go survey! 🤩"
+    "stepper_survey_created": "Research created! Go survey! 🤩",
+    "chart_label_votes": "# of Votes"
 }
 
 export default enTranslation;

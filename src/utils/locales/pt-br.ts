@@ -1,5 +1,5 @@
 const ptBrTranslation = {
-    "select_research": "Selecione uma pesquisa",
+    "go_on_and_create_your_first_research": 'Você não criou nenhuma pesquisa ainda, crie agora mesmo clicando no botão "Registrar nova pesquisa"',
     "go_back": "Voltar",
     "go_next": "Próximo",
     "thanks_for_answer": "Obrigado por responder nossa pesquisa!",
@@ -59,7 +59,8 @@ const ptBrTranslation = {
     "form_text_field_research_description": "Descrição",
     "error_on_select_option": "Erro ao selecionar a opção",
     "succeeded_selected_option": "Opção selecionada com sucesso!",
-    "stepper_survey_created": "Pesquisa criada! Go survey! 🤩"
+    "stepper_survey_created": "Pesquisa criada! Go survey! 🤩",
+    "chart_label_votes": "# de votos"
 
 };
 

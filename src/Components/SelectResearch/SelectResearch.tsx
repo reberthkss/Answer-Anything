@@ -12,7 +12,7 @@ export const SelectResearch = () => {
     const renderContent = () => {
         if (researchs.length == 0) {
             return (<div className={"select-research-span-container"}>
-                <span className={"select-research-span"}>{t("select_research")}</span>
+                <span className={"select-research-span"}>{t("go_on_and_create_your_first_research")}</span>
             </div>);
         } else {
             return (
