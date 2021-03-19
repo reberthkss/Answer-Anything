@@ -8,7 +8,6 @@ import { Provider } from 'react-redux';
 import {store, persistor} from "./redux/ConfigureStore";
 import {getEnvironment} from "./utils/Configs/firebase";
 import firebase from "firebase";
-
 export const app = firebase.initializeApp(getEnvironment());
 
 if (window.location.hostname == "localhost") {

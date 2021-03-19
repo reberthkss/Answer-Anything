@@ -7,17 +7,19 @@ import {Research} from "../../../utils/Data/ResearchData";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from 'react-responsive-carousel';
 import "./ResearchCardChart.css"
+import {useTranslation} from "react-i18next";
 interface ResearchCardChartProps {
     research: Research,
     computedAnswers: ComputedAnswers | null
 }
 
 const ResearchCardChart = ({research, computedAnswers}: ResearchCardChartProps) => {
+    const {t} = useTranslation();
     const renderNoDataAvailable = () => {
         return (
             <div className={"research-card-no-available-data-container"}>
-                <Typography>
-                    No available data!
+                <Typography  variant={"h5"} align={"center"}>
+                    {t("no_available_data")}
                 </Typography>
             </div>
         )
@@ -42,7 +44,7 @@ const ResearchCardChart = ({research, computedAnswers}: ResearchCardChartProps) 
                             }}>{index}</span>
                     )
                 })}
-                statusFormatter={((currentItem, total) => `Questão ${currentItem} de ${total}`)}
+                statusFormatter={((currentItem, total) => t("question_status_formatter", {currentItem, total}))}
                 emulateTouch={true}
             >
                 {chartConverter.chartData.map((data) => (

@@ -1,26 +1,22 @@
-import {DiscordIcon} from "../../resources/Icons/DiscordIcon";
-import {FacebookIcon} from "../../resources/Icons/FacebookIcon";
-import {GmailIcon} from "../../resources/Icons/GmailIcon";
-import {InstagramIcon} from "../../resources/Icons/InstagramIcon";
-import {LinkedinIcon} from "../../resources/Icons/LinkedinIcon";
-import {MessengerIcon} from "../../resources/Icons/MessengerIcon";
-import {OutlookIcon} from "../../resources/Icons/OutlookIcon";
-import {SlackIcon} from "../../resources/Icons/SlackIcon";
-import {TelegramIcon} from "../../resources/Icons/TelegramIcon";
-import {WhatsappIcon} from "../../resources/Icons/WhatsAppIcon";
+import FacebookIcon from '@material-ui/icons/Facebook';
+import LinkedInIcon from '@material-ui/icons/LinkedIn';
+import TelegramIcon from '@material-ui/icons/Telegram';
+import RedditIcon from '@material-ui/icons/Reddit';
+import WhatsAppIcon from '@material-ui/icons/WhatsApp';
+import TwitterIcon from '@material-ui/icons/Twitter';
 import "./ShareSocialMedia.css";
 import React from "react";
 import {
     FacebookShareButton,
-    FacebookMessengerShareButton,
     LinkedinShareButton,
     TelegramShareButton,
     WhatsappShareButton,
-    RedditShareButton, RedditIcon, TwitterShareButton, TwitterIcon
+    RedditShareButton,
+    TwitterShareButton
 } from "react-share";
 import Clipboard from 'react-clipboard.js';
 import {useTranslation} from "react-i18next";
-import {Reddit} from "@material-ui/icons";
+import {Colors} from "../../utils/Enums/Colors";
 export interface ShareSocialMediaProps {
     url: string,
     message: string
@@ -47,26 +43,25 @@ export const ShareSocialMedia = ({url, message = "Hey there! Take a look at the 
                 </div>
             </div>
             <div className={"socialMedia"}>
-                {/*<DiscordIcon onClick={() => null}/>*/}
                 <FacebookShareButton url={url} quote={message}>
-                    <FacebookIcon/>
+                    <FacebookIcon fontSize={"large"} style={{color: Colors.FACEBOOK}}/>
                 </FacebookShareButton>
                 <LinkedinShareButton title={TITLE} url={url} summary={message} source={"www.answeranything.com"}>
-                    <LinkedinIcon/>
+                    <LinkedInIcon fontSize={"large"} style={{color: Colors.LINKEDIN}}/>
                 </LinkedinShareButton>
                 <RedditShareButton title={TITLE} url={url}>
-                    <RedditIcon/>
+                    <RedditIcon fontSize={"large"} style={{color: Colors.REDDIT}} />
                 </RedditShareButton>
             </div>
             <div className={"socialMedia"}>
                 <TelegramShareButton title={TITLE} url={url}>
-                    <TelegramIcon />
+                    <TelegramIcon fontSize={"large"} style={{color: Colors.TELEGRAM}}/>
                 </TelegramShareButton>
                 <WhatsappShareButton title={TITLE} separator={"-"} url={url}>
-                    <WhatsappIcon />
+                    <WhatsAppIcon fontSize={"large"} style={{color: Colors.WHATSAPP}} />
                 </WhatsappShareButton>
                 <TwitterShareButton title={TITLE} url={url} via={message}>
-                    <TwitterIcon />
+                    <TwitterIcon fontSize={"large"} style={{color: Colors.TWITTER}} />
                 </TwitterShareButton>
             </div>
         </div>

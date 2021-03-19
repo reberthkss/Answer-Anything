@@ -1,15 +1,12 @@
 import {
     Accordion,
-    AccordionDetails,
     AccordionSummary,
     ButtonBase,
     Drawer,
     List,
     ListItem,
-    ListItemIcon,
-    ListItemText, Typography
+    Typography
 } from "@material-ui/core";
-import Divider from '@material-ui/core/Divider';
 import React from "react";
 import ListIcon from '@material-ui/icons/List';
 import {ReduxState, ResearchProps} from "../../redux/reducer";
@@ -20,6 +17,7 @@ import "./AppDrawer.css"
 import {Link, useHistory, useRouteMatch} from "react-router-dom";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import {clearAuthenticatedUser} from "../../redux/Actions";
+import {useTranslation} from "react-i18next";
 interface AppDrawerOptions {
     icon: any,
     text: string,
@@ -33,6 +31,7 @@ interface AppDrawerProps {
 
 export const AppDrawer = ({researchList, drawerStatus, handleCloseCallback}: AppDrawerProps) => {
     const {url} = useRouteMatch();
+    const {t} = useTranslation();
     const dispatch = useDispatch();
     const history = useHistory();
 
@@ -45,7 +44,7 @@ export const AppDrawer = ({researchList, drawerStatus, handleCloseCallback}: App
     }
 
     const options: AppDrawerOptions[] = [
-        {icon: (<ListIcon/>), text: "Pesquisas"}
+        {icon: (<ListIcon/>), text: t("researchs")}
     ]
 
     return (
@@ -91,7 +90,7 @@ export const AppDrawer = ({researchList, drawerStatus, handleCloseCallback}: App
                 </List>
                 <ButtonBase className={"app-drawer-logout-container"} onClick={exitClickEvent}>
                     <ExitToAppIcon />
-                    <span className={"app-drawer-span-text"}>Sair</span>
+                    <span className={"app-drawer-span-text"}>{t("sign_out")}</span>
                 </ButtonBase>
             </div>
         </Drawer>

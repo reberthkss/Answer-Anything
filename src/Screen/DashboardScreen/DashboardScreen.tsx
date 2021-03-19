@@ -12,12 +12,13 @@ import {RegisterResearchScreen} from "./RegisterResearch/RegisterResearchScreen"
 import Analysis from "./Analysis/Analysis";
 import {NotFound} from "../NotFound";
 import {isDevEnv} from "../../utils/utils";
+
 export const DashboardScreen = () => {
     const { path } = useRouteMatch();
     const [loading, setLoading] = useState(true);
-    const firestoreManager = new FirestoreManager();
+    const [firestoreManager] = useState(new FirestoreManager());
     const loadData = async () => {
-        const res = await firestoreManager.read();
+        const res = await firestoreManager.subscribeRead();
         if (res.result) {
             isDevEnv() && console.log("Success set listener!");
         } else {
@@ -26,12 +27,12 @@ export const DashboardScreen = () => {
         setLoading(false);
     }
     useEffect(() => {
-        /* TODO - Find ways to reduce requests to firestore */
         loadData();
         return () => {
             firestoreManager.clearReadSubscription();
         }
-    }, [])
+    }, [firestoreManager]);
+
     const _renderPage = () => {
         if (loading) {
             return <div className={"loadingIndicatorDiv"}>

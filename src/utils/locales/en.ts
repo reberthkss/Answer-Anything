@@ -25,7 +25,46 @@ const enTranslation = {
     "create_a_survey": "Create a survey",
     "create_a_survey_description": "with an intuitive and minimalist interface. Start a quick poll, create a questionnaire and more.",
     "review": "Review",
-    "review_description": "the data collected in an organized and automatic way with the aid of graphs"
+    "review_description": "the data collected in an organized and automatic way with the aid of graphs",
+    "invalid_research_name": "Research name invalid",
+    "research_card_see_more": "See more",
+    "no_available_data": "None answered question yet 😢",
+    "question_status_formatter": "Question {{currentItem}} of {{total}}",
+    "copy_research_link": "Copy research link",
+    "research_link_copied": "Copied research link!",
+    "researchs": "Researchs",
+    "question_number": "Question {{questionNumber}}",
+    "invalid_email": "Invalid e-mail!",
+    "invalid_name": "Invalid name!",
+    "type_the_name": "Type the name!",
+    "type_the_email": "Type the e-mail",
+    "name_label": "Name",
+    "sign_in_with_facebook": "Sign in with Facebook",
+    "remove_option": "Remove option",
+    "option_label": "Option {{optionNumber}}",
+    "option_field_placeholder": "Type a possible answer",
+    "dont_let_field_empty": "Don't let field empty",
+    "add_option_tooltip": "Add",
+    "remove_option_tooltip": "Remove",
+    "place_a_question_here": "Place a question here",
+    "previous_question": "Previous question",
+    "next_question": "Próxima questão",
+    "remove_question": "Remove question",
+    "add_question": "Add question",
+    "stepper_supply_a_name_to_research": "Supply a name and a description for the research 🤔",
+    "steppter_create_the_questions": "Liste as perguntas que você tenha em mente 📝",
+    "form_text_field_research_title": "Title",
+    "form_text_field_research_sub_title": "Sub-title",
+    "form_text_field_research_description": "Description",
+    "error_on_select_option": "Error on select option",
+    "succeeded_selected_option": "Succeeded on select option!"
+
+
+
+
+
+
+
 }
 
 export default enTranslation;

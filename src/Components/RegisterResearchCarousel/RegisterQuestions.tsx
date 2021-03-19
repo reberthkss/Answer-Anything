@@ -6,6 +6,7 @@ import QuestionOptions from "./QuestionOptions";
 import ColumnCommands from "./ColumnCommands";
 import PostAddIcon from "@material-ui/icons/PostAdd";
 import QuestionTitle from "./QuestionTitle";
+import {useTranslation} from "react-i18next";
 
 export interface OptionState {id: string, index: number, payload: string, isValid: boolean}
 
@@ -32,6 +33,7 @@ export interface QuestionsState {
 const INITIAL_INDEX_QUESTION = 0;
 const RegisterQuestions = ({questions, onQuestionOptionUpdate, onQuestionTitleUpdate, addNewOption, removeOption, addNewQuestion, removeQuestion}: RegisterQuestionsProps) => {
     const [currentQuestion, setCurrentQuestion] = useState<number>(INITIAL_INDEX_QUESTION);
+    const {t} = useTranslation();
     const selectedQuestion = questions[currentQuestion];
 
     const goToNextQuestion = (currentQuestion: number) => {
@@ -48,17 +50,16 @@ const RegisterQuestions = ({questions, onQuestionOptionUpdate, onQuestionTitleUp
     const removeQuestionIsDisabled = (currentQuestion: number) => currentQuestion <= 0;
     const addNewQuestionIsDisabled = (currentQuestion: number) => currentQuestion >= 3;
 
-
     return (
        <div className={"register-questions-container"}>
            <ColumnCommands>
                <div>
-                   <Tooltip title={"Questão anterior"}>
+                   <Tooltip title={() => t("previous_question")}>
                        <IconButton onClick={() => goToPreviousQuestion(currentQuestion)} disabled={goToPreviousQuestionsIsDisabled(currentQuestion)}>
                            <ArrowBackIos fontSize={"large"}/>
                        </IconButton>
                    </Tooltip>
-                   <Tooltip title={"Remover questão"}>
+                   <Tooltip title={() => t("remove_question")}>
                        <IconButton onClick={() => {
                            removeQuestion(currentQuestion);
                            setCurrentQuestion(currentQuestion-1);
@@ -70,7 +71,7 @@ const RegisterQuestions = ({questions, onQuestionOptionUpdate, onQuestionTitleUp
            </ColumnCommands>
            <div className={"question-content-container"}>
                <div className={"question-label-container"}>
-                   <h2>Pergunta {currentQuestion+1}</h2>
+                   <h2>{t("question_number", {questionNumber: currentQuestion+1})}</h2>
                </div>
                <div className={"question-title-container"}>
                    <QuestionTitle
@@ -90,12 +91,12 @@ const RegisterQuestions = ({questions, onQuestionOptionUpdate, onQuestionTitleUp
            </div>
            <ColumnCommands>
                <div>
-                   <Tooltip title={"Próxima questão"}>
+                   <Tooltip title={() => t("next_question")}>
                        <IconButton onClick={() => goToNextQuestion(currentQuestion)} disabled={goToNextQuestionIsDisabled(currentQuestion, questions.length)}>
                            <NavigateNext fontSize={"large"}/>
                        </IconButton>
                    </Tooltip>
-                   <Tooltip title={"Adicionar questão"}>
+                   <Tooltip title={() => t("add_question")}>
                        <IconButton onClick={() => {
                            addNewQuestion(currentQuestion);
                            setCurrentQuestion(currentQuestion+1);

@@ -1,10 +1,8 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import "./NewOption.css"
-import DeleteIcon from '@material-ui/icons/Delete';
 import {Tooltip} from "@material-ui/core";
 import IconButton from "@material-ui/core/IconButton";
 import {useTranslation} from "react-i18next";
-import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
 interface NewOptionProps {
     id: string,
@@ -60,7 +58,7 @@ export const NewOption = ({onDeleteOption, onUpdateValue, value = "", id, onKeyP
                         placeholder={t("tip_a_option")}
                         onBlur={() => setError(false)}
                     />
-                    <Tooltip title={"Remover pergunta"}>
+                    <Tooltip title={() => t("remove_option")}>
                         <IconButton onClick={() => onDeleteOption(id)}>
                             <RemoveCircleOutlineIcon/>
                         </IconButton>

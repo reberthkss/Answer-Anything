@@ -12,11 +12,14 @@ import {AnswerResearchManager} from "../../utils/Services/AnswerResearchManager/
 import {getStore} from "../../redux/ConfigureStore";
 import {saveResearch} from "../../redux/Actions";
 import {isDevEnv} from "../../utils/utils";
+import {toast} from "react-toastify";
+import {useTranslation} from "react-i18next";
 
 export const AnswerResearchScreen = () => {
     const [loading, setLoading] = useState<boolean>(false);
     const research: Research | null = useSelector((state:ReduxState) => state).research;
     const {inProgressAnswer} = useSelector((state: ReduxState) => state);
+    const {t} = useTranslation();
     const history = useHistory();
     const params: any = useParams();
     const id = params.id || {researchId: null}
@@ -53,19 +56,16 @@ export const AnswerResearchScreen = () => {
         });
 
         if (responseOnSave.result) {
-            /* TODO - Success*/
+            toast.success(t("succeeded_selected_option"))
         } else {
-            /* TODO - Error*/
+            toast.error(t("error_on_select_option"))
         }
 
-        /*TODO - MAKE A CALL TO REGISTER A ANSWER*/
         getStore().dispatch(saveResearch(newResearch))
     }
 
     const Content = () => {
         if (loading) {
-            /*TODO - fix center position*/
-          // return ( <Loading />)
             return (
                 <div className={"loading"}>
                     <CircularProgress/>

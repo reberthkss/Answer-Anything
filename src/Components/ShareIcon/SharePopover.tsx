@@ -2,18 +2,15 @@ import {IconButton, Popover, Tooltip} from "@material-ui/core";
 import Clipboard from "react-clipboard.js";
 import {ShareManager} from "../../utils/Services/ShareManager/ShareManager";
 import FileCopyIcon from "@material-ui/icons/FileCopy";
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import ShareIcon from '@material-ui/icons/Share';
 import "./SharePopover.css";
 import {
     FacebookIcon,
-    FacebookMessengerShareButton,
     FacebookShareButton, TwitterIcon, TwitterShareButton,
     WhatsappIcon,
     WhatsappShareButton
 } from "react-share";
-import {makeStyles} from "@material-ui/styles";
-import Scrollbar from "react-scrollbars-custom";
 
 interface ShareIconProps {
     researchId: string

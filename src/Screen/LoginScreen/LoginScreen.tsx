@@ -1,18 +1,16 @@
 import React from "react";
 import "./LoginScreen.css"
-import {makeStyles} from "@material-ui/core/styles";
 import GoogleButton from 'react-google-button'
-import {useDimensions} from "../../utils/Hooks/Hooks";
 import {GoogleAuth} from "../../utils/Services/GoogleAuth";
 import { useHistory } from "react-router-dom";
 import {FacebookAuth} from "../../utils/Services/FacebookAuth";
 import FacebookLogin from "../../Components/FacebookLogin/FacebookLogin";
 import {useTranslation} from "react-i18next";
 import Scrollbar from "react-scrollbars-custom";
+import {toast} from "react-toastify";
 
 
 export const LoginScreen = () => {
-    const dimensions = useDimensions();
     const history = useHistory();
     const authGoogle = new GoogleAuth();
     const authFacebook = new FacebookAuth();
@@ -23,7 +21,7 @@ export const LoginScreen = () => {
        if (authResponse.isSuccessful) {
            history.push("/");
        } else {
-           /*toast error*/
+           toast(authResponse.error)
        }
     }
 

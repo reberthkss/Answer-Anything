@@ -30,8 +30,7 @@ export class FirestoreManager {
     private store: Store<ReduxState & PersistPartial, ReduxAction>;
     private readSubscription: any;
 
-    /*TODO - UPDATE THIS TO CHOOSE COLLECTION*/
-    async read(): Promise<FirestoreManagerResponse> {
+    async subscribeRead(): Promise<FirestoreManagerResponse> {
         try {
             const user = this.store.getState().user;
             const collection = this.firestore

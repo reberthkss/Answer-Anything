@@ -1,7 +1,7 @@
 import React, {useEffect, useRef, useState} from "react";
 import "./RegisterResearchCarousel.css"
 import {STEPS} from "../../utils/Steps";
-import {Card, Step, StepLabel, Stepper} from "@material-ui/core";
+import {Card, CircularProgress, Step, StepLabel, Stepper} from "@material-ui/core";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import {Research} from "../../utils/Data/ResearchData";
@@ -10,7 +10,6 @@ import {store} from "../../redux/ConfigureStore";
 import {ResearchStatus} from "../../utils/Data/ResearchStatus";
 import {FirestoreManager} from "../../utils/Services/FirebaseManager/FirestoreManager";
 import {ShareResearch} from "./ShareResearch";
-import {Loading} from "../AnimatedComponents/Loading/Loading";
 import {FormTextField} from "../../Form/TextField/FormTextField";
 import {useTranslation} from "react-i18next";
 import {useLocation, useParams} from "react-router-dom";
@@ -54,7 +53,7 @@ export const RegisterCarousel = () => {
     const [desError, setDesError] = useState(false);
     const nextRef = useRef<HTMLDivElement | null>(null);
     const [research, setResearch] = useState(new Research());
-    const firestoreManager = new FirestoreManager();
+    const [firestoreManager] = useState(new FirestoreManager());
     const {id}: any = useParams();
     const {t} = useTranslation();
     const location = useLocation();
@@ -64,10 +63,6 @@ export const RegisterCarousel = () => {
         setResearch(new Research());
         setQuestions(getInitialQuestionState(0));
     }, [location]);
-
-    useEffect(() => {
-
-    }, [questions])
 
     const _decreaseStep = () => setStep(actualStep - 1);
 
@@ -131,7 +126,7 @@ export const RegisterCarousel = () => {
                 getRef={() => titleRef}
                 errorInField={titleError}
                 field={"titulo"}
-                title={"Titulo"}
+                title={t("form_text_field_research_title")}
                 onChangeCallback={(title) => {
                     research.title = title;
                 }}
@@ -150,7 +145,7 @@ export const RegisterCarousel = () => {
                 getRef={() => subTitleRef}
                 errorInField={subTitleError}
                 field={"sub-titulo"}
-                title={"Sub-titulo"}
+                title={t("form_text_field_research_sub_title")}
                 onChangeCallback={(title) => {
                     research.subtitle = title;
                 }}
@@ -166,7 +161,7 @@ export const RegisterCarousel = () => {
                 getRef={() => desRef}
                 errorInField={desError}
                 field={"descrição"}
-                title={"Descrição"}
+                title={t("form_text_field_research_description")}
                 onChangeCallback={(title) => {
                     research.description = title;
                 }}
@@ -202,9 +197,6 @@ export const RegisterCarousel = () => {
         const response = await firestoreManager.write(research, id);
         return response.result;
     }
-
-
-
 
     const onQuestionOptionUpdate = (questionIndex: number,  optionIndex: number, newValue: string) => {
         const targetQuestion = questions.find((question) => question.index == questionIndex);
@@ -247,7 +239,6 @@ export const RegisterCarousel = () => {
                 option.index = index;
             })
             targetQuestion.options = newOptions;
-            // newQuestions[questionIndex] = targetQuestion;
             newQuestions.push(targetQuestion);
             newQuestions.sort((questionA, questionB) => questionA.index - questionB.index);
             setQuestions(newQuestions)
@@ -333,7 +324,9 @@ export const RegisterCarousel = () => {
                     />)
             case STEPS.THREE:
                 if (loading.loading) {
-                    return <Loading/>
+                    return (<div>
+                        <CircularProgress/>
+                    </div>)
                 } else {
                     return _renderStepThree();
                 }
@@ -391,12 +384,12 @@ export const RegisterCarousel = () => {
                 <Stepper activeStep={actualStep} alternativeLabel className={"stepper"} >
                     <Step>
                         <StepLabel>
-                            Dê um nome e uma descrição a sua pesquisa 🤔
+                            {t("stepper_supply_a_name_to_research")}
                         </StepLabel>
                     </Step>
                     <Step>
                         <StepLabel >
-                            Liste as perguntas que você tenha em mente 📝
+                            {t("stepper_create_the_questions")}
                         </StepLabel>
                     </Step>
                     <Step>

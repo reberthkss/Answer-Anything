@@ -28,10 +28,7 @@ export const SelectResearch = () => {
                         className="masonry-grid-container"
                         columnClassName="masonry-grid-column-container">
                         {researchs.map((research, index) => (
-                            <ResearchCard researchId={research.researchId}
-                                          title={research.research.title || "Name not found"}
-                                          height={((index+1)*10) + 200}
-                            />
+                            <ResearchCard researchId={research.researchId}/>
                         ))}
                     </Masonry>
                 </div>

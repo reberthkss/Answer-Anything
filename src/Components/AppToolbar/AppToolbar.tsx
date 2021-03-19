@@ -12,9 +12,6 @@ import {useTranslation} from "react-i18next";
 import {FirestoreManager} from "../../utils/Services/FirebaseManager/FirestoreManager";
 import MenuIcon from '@material-ui/icons/Menu';
 import firebase from "firebase";
-import TextInputWithIconMdLgXl from "../TextInputWithIcon-md-lg-xl/TextInputWithIcon-md-lg-xl";
-import {Search} from "@material-ui/icons";
-import TextInputWithIconXsSm from "../TextInputWithIcon-xs-sm/TextInputWithIcon-xs-sm";
 import {AppDrawer} from "../AppDrawer/AppDrawer";
 
 const AppPopOver = ({id, open, anchorElement, handleClose, children}: {id: string | undefined, open: boolean, anchorElement: any, handleClose: () => void, children: any}) => {
@@ -96,20 +93,6 @@ export const AppToolbar = () => {
                                         <Link to={"/"} className={"toolbar-link-to-home"}>
                                             Home
                                         </Link>
-                                    </Grid>
-                                    <Grid container item xs={10} sm={10} md={10} lg={10} xl={10} direction={"row"} justify={"flex-start"} style={{display: "none"}}>
-                                        <TextInputWithIconMdLgXl
-                                            type={"search"}
-                                            icon={() => (<Search/>)}
-                                            placeholder={"Pesquisar..."}
-                                            onChange={() => null}  /* TODO */
-                                        />
-                                        <TextInputWithIconXsSm
-                                            type={"search"}
-                                            icon={() => (<Search />)}
-                                            placeholder={"Pesquisar..."}
-                                            onChange={() => null} /* TODO */
-                                        />
                                     </Grid>
                                 </Grid>
                                 <Grid container item  xs={6} sm={6} md={6} lg={6} xl={6} direction={"row"}  alignItems={"center"} spacing={1}>

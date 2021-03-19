@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import ComputedAnswersChartConverters from "../../../utils/ChartConverters/ComputedAnswersChartConverters";
 import {useHistory, useParams, useRouteMatch} from "react-router-dom";
 import {useSelector} from "react-redux";
@@ -10,7 +10,9 @@ import Masonry from "react-masonry-css";
 import "./Analysis.css"
 import ResearchCardManager from "../../../utils/Managers/ResearchCardManager/ResearchCardManager";
 import ComputedAnswersManager from "../../../utils/Managers/ComputedAnswersManager/ComputedAnswersManager";
+import {useTranslation} from "react-i18next";
 const Analysis = () => {
+    const {t} = useTranslation();
     const routeProps = useParams();
     const history = useHistory();
     // @ts-ignore
@@ -18,8 +20,8 @@ const Analysis = () => {
     // @ts-ignore
     const research = useSelector((state: ReduxState) => state.researchs.find((research) => research.researchId == routeProps.id));
     if (!research) history.replace("/404-not-found");
-    const researchCardManager = new ResearchCardManager(research!!.researchId);
-    const computedResearchManager = new ComputedAnswersManager(research!!.researchId);
+    const [researchCardManager] = useState(new ResearchCardManager(research!!.researchId));
+    const [computedResearchManager] = useState(new ComputedAnswersManager(research!!.researchId));
     useEffect(() => {
         researchCardManager.subscribe();
         computedResearchManager.subscribe();
@@ -27,12 +29,12 @@ const Analysis = () => {
             researchCardManager.unsubscribe();
             computedResearchManager.unsubscribe();
         }
-    }, []);
+    }, [researchCardManager, computedResearchManager]);
     const renderNoDataAvailable = () => {
         return (
             <div className={"research-card-no-available-data-container"}>
-                <Typography>
-                    No available data!
+                <Typography align={"center"} variant={"h2"}>
+                    {t("no_available_data")}
                 </Typography>
             </div>
         )

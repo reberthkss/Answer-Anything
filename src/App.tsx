@@ -16,8 +16,11 @@ import {CircularProgress} from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import enTranslation from "./utils/locales/en";
 import ptBrTranslation from "./utils/locales/pt-br";
-import XHR from "i18next-http-backend"
-import LanguageDetector from 'i18next-browser-languagedetector'
+import XHR from "i18next-http-backend";
+import LanguageDetector from 'i18next-browser-languagedetector';
+import 'fontsource-roboto';
+import {ToastContainer} from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 const fallbackLng = {
     'pt-br': ['pt'],
     'default': ['en']
@@ -26,6 +29,7 @@ const availableLanguages = ['pt', 'es', 'en'];
 
 function App() {
     const [loading, setLoading] = useState(true);
+
     i18n
         .use(XHR)
         .use(LanguageDetector)
@@ -75,6 +79,13 @@ function App() {
                             <Route exact path={"/researchs/:id"} component={AnswerResearchScreen}/>
                             <Route path={"*"} component={NotFound}/>
                         </Switch>
+                        <ToastContainer
+                            position="top-right"
+                            autoClose={3000}
+                            closeOnClick
+                            rtl={false}
+                            pauseOnHover
+                        />
                     </Grid>
                 </Router>
             );

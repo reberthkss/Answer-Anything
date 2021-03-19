@@ -2,7 +2,10 @@
     .registerCarouselCard {
         height: 65%;
         width: 70%;
-        /*background-color: red;*/
+    }
+
+    .stepper-container {
+        width: 100%;
     }
 }
 
@@ -10,7 +13,9 @@
     .registerCarouselCard {
         width: 90%;
         height: 75%;
-        /*background-color: red;*/
+    }
+    .stepper-container {
+        width: 90%;
     }
 }
 
@@ -116,7 +121,6 @@
 .stepper-container{
     display: flex;
     flex-direction: row;
-    width: 90%;
 }
 
 .stepper {

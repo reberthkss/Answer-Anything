@@ -1,6 +1,7 @@
 import React, {ChangeEvent} from "react";
-import {Input, TextField} from "@material-ui/core";
+import {TextField} from "@material-ui/core";
 import "./QuestionTitle.css"
+import {useTranslation} from "react-i18next";
 
 interface QuestionTitleProps {
     questionId: number,
@@ -10,6 +11,7 @@ interface QuestionTitleProps {
 }
 
 const QuestionTitle = ({questionId, title, hasError, onQuestionTitleUpdate}: QuestionTitleProps) => {
+    const {t} = useTranslation();
     return (
         <div className={"title-container"}>
             <TextField
@@ -17,9 +19,9 @@ const QuestionTitle = ({questionId, title, hasError, onQuestionTitleUpdate}: Que
                 onChange={({target: {value}}: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => onQuestionTitleUpdate(questionId, value)}
                 error={hasError}
                 autoFocus={true}
-                label={"Pergunta"}
-                helperText={"Não deixe o campo vazio!"}
-                placeholder={"Digite a pergunta aqui"}
+                label={t("question_title_label")}
+                helperText={t("dont_let_field_empty")}
+                placeholder={t("place_a_question_here")}
                 className={"input-container"}
             />
         </div>

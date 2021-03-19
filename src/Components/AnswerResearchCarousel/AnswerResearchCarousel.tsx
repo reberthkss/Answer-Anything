@@ -12,9 +12,9 @@ import {ResearchQuestionData} from "../../utils/Data/ResearchQuestionData";
 import {Answers} from "../../utils/Data/Answers";
 import {AnswerResearchManager} from "../../utils/Services/AnswerResearchManager/AnswerResearchManager";
 import {getStore} from "../../redux/ConfigureStore";
-import { useLocation } from "react-router-dom";
 import {ShareManager} from "../../utils/Services/ShareManager/ShareManager";
 import {useTranslation} from "react-i18next";
+import {toast} from "react-toastify";
 
 interface AnswerResearchCarouselProps {
     researchId: string,
@@ -42,7 +42,7 @@ export const AnswerResearchCarousel = ({ researchId, research, onGetSelectedOpti
         if (resFromFirebase.result) {
             setStep(STEPS.THREE);
         } else {
-            console.log("Error => ", resFromFirebase.error);
+            toast.error(resFromFirebase.error);
         }
     }
 
@@ -60,8 +60,7 @@ export const AnswerResearchCarousel = ({ researchId, research, onGetSelectedOpti
                                 setAnswerData(answerData);
                                 setStep(1);
                             } else {
-                                /*TODO - display error*/
-                                console.log(res.error);
+                                toast.error(res.error);
                             }
 
                         }}
@@ -97,12 +96,10 @@ export const AnswerResearchCarousel = ({ researchId, research, onGetSelectedOpti
             }
         });
 
-        console.log("go back called");
-        console.log("res => ", resFromFirebase)
         if (resFromFirebase.result) {
             /*TODO*/
         } else {
-            console.log("Error => ", resFromFirebase.error);
+            toast.error(resFromFirebase.error);
         }
     }
 

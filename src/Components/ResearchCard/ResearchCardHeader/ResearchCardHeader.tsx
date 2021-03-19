@@ -14,6 +14,8 @@ import {Colors} from "../../../utils/Enums/Colors";
 import {ShareManager} from "../../../utils/Services/ShareManager/ShareManager";
 import SocialNetworkManager from "../../../utils/Managers/SocialNetworkManager/SocialNetworkManager";
 import SocialNetworks from "../../../utils/Enums/SocialNetworks";
+import {useTranslation} from "react-i18next";
+import {toast} from "react-toastify";
 
 interface ResearchCardHeaderProps {
     title: string,
@@ -30,9 +32,10 @@ interface OptionsProps {
 const ResearchCardHeader = ({title, subtitle, researchId}: ResearchCardHeaderProps) => {
     const [anchorElement, setAnchorElement] = useState<any>(null);
     const [options, setOptions] = useState<OptionsProps[]>([]);
-    const socialNetworkManager = new SocialNetworkManager(researchId, title);
+    const [socialNetworkManager] = useState(new SocialNetworkManager(researchId, title));
+    const {t} = useTranslation();
     const detailOptions: OptionsProps[] = [
-        {icon: (<FileCopyIcon/>), text: "Copiar link da pesquisa", shareLink: null}
+        {icon: (<FileCopyIcon/>), text: t("copy_research_link"), shareLink: null}
         ];
     const shareOptions: OptionsProps[] = [
         {icon: (<FacebookIcon style={{color: Colors.FACEBOOK}} />), text: SocialNetworks.FACEBOOK, shareLink: socialNetworkManager.getShareLink(SocialNetworks.FACEBOOK)},
@@ -45,7 +48,6 @@ const ResearchCardHeader = ({title, subtitle, researchId}: ResearchCardHeaderPro
 
     const renderOptionIcon = (icon: ReactElement | null) => {
         if (icon) {
-
             return (
                 <div className={"research-card-header-option-icon-container"}>
                     {icon}
@@ -94,6 +96,7 @@ const ResearchCardHeader = ({title, subtitle, researchId}: ResearchCardHeaderPro
                         } else {
                             const url = ShareManager.shareResearch(researchId)
                             await navigator.clipboard.writeText(url);
+                            toast.success(t("research_link_copied"))
                         }
                     }}>
                         {renderOptionIcon(option.icon || null)}

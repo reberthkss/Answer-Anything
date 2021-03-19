@@ -34,7 +34,7 @@ export const Greeting = ({title, description, onStartQuestionnaire}: GreetingPro
 
     const onBlurEmail = (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
         if (!Validators.isEmailValid(event.target.value)) {
-            setInputStatus({...inputsStatus, email: {error: true, message: "E-mail inválido!"}})
+            setInputStatus({...inputsStatus, email: {error: true, message: t("invalid_email")}})
         } else {
             setUserData({...userData, email: event.target.value});
         }
@@ -42,7 +42,7 @@ export const Greeting = ({title, description, onStartQuestionnaire}: GreetingPro
 
     const onBlurName = (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
         if (event.target.value.length === 0) {
-            setInputStatus({...inputsStatus, name: {error: true, message: "Nome inválido!"}})
+            setInputStatus({...inputsStatus, name: {error: true, message: t("invalid_name")}})
         } else {
             setUserData({...userData, name: event.target.value});
         }
@@ -59,13 +59,13 @@ export const Greeting = ({title, description, onStartQuestionnaire}: GreetingPro
     const handleStartEvent = () => {
         if (userData.name.length === 0 && userData.email.length === 0) {
             setInputStatus({
-                email: {error: true, message: "Digite um e-mail!"},
-                name: {error: true, message: "Digite um nome!"}
+                email: {error: true, message: t("type_the_email")},
+                name: {error: true, message: t("type_the_name")}
             });
         } else if (userData.name.length === 0) {
-            setInputStatus({...inputsStatus, name: {error: true, message: "Digite um nome!"}});
+            setInputStatus({...inputsStatus, name: {error: true, message: t("type_the_name")}});
         } else if (userData.email.length === 0) {
-            setInputStatus({...inputsStatus, email: {error: true, message: "Digite um e-mail!"}});
+            setInputStatus({...inputsStatus, email: {error: true, message: t("type_the_email")}});
         } else {
             onStartQuestionnaire(userData);
         }
@@ -94,7 +94,7 @@ export const Greeting = ({title, description, onStartQuestionnaire}: GreetingPro
                 </div>
                 <div className={"inputContainer"}>
                     <div className={"input-sub-container"}>
-                        <TextField id="outlined-basic" label="Nome" variant="outlined" required
+                        <TextField id="outlined-basic" label={t("name_label")} variant="outlined" required
                                    fullWidth
                                    type={"text"}
                                    error={inputsStatus.name.error}

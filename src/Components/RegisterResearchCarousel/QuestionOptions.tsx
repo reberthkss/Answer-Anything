@@ -4,6 +4,7 @@ import Scrollbar from "react-scrollbars-custom";
 import {IconButton, Input, TextField, Tooltip} from "@material-ui/core";
 import {Add, Remove} from "@material-ui/icons";
 import "./QuestionOptions.css"
+import {useTranslation} from "react-i18next";
 interface QuestionOptionsProps {
     questionId: number,
     options: OptionState[],
@@ -12,7 +13,7 @@ interface QuestionOptionsProps {
     removeOption: (questionIndex: number, optionIndex: number) => void
 }
 const QuestionOptions = ({questionId, options, onQuestionOptionUpdate, addNewOption, removeOption}: QuestionOptionsProps) => {
-
+    const {t} = useTranslation();
     const removeOptionIsEnabled = (options: OptionState[]) => options.length == 1;
     return (
         <Scrollbar>
@@ -24,18 +25,18 @@ const QuestionOptions = ({questionId, options, onQuestionOptionUpdate, addNewOpt
                             onChange={({target: {value}}: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => onQuestionOptionUpdate(questionId, option.index, value)}
                             error={!option.isValid}
                             multiline={true}
-                            label={`Opção ${index+1}`}
-                            placeholder={"Digite uma possível resposta"}
-                            helperText={"Não deixe o campo vazio!"}
+                            label={t("option_label", {optionNumber: index+1})}
+                            placeholder={t("option_field_placeholder")}
+                            helperText={t("dont_let_field_empty")}
                             className={"input-container"}
                         />
                         <div className={"actions-container"}>
-                            <Tooltip title={"Adicionar"}>
+                            <Tooltip title={() => t("add_option_tooltip")}>
                                 <IconButton onClick={() => addNewOption(questionId, option.index)}>
                                     <Add/>
                                 </IconButton>
                             </Tooltip>
-                            <Tooltip title={"Remover"}>
+                            <Tooltip title={() => t("remove_option_tooltip")}>
                                 <IconButton onClick={() => removeOption(questionId, option.index)} disabled={removeOptionIsEnabled(options)}>
                                     <Remove/>
                                 </IconButton>

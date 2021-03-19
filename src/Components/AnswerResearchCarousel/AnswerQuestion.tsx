@@ -6,6 +6,7 @@ import {IconButton} from "@material-ui/core";
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import Scrollbar from "react-scrollbars-custom";
 import {UserData} from "./AnswerResearchCarousel";
+import {useTranslation} from "react-i18next";
 
 interface AnswerQuestionProps {
     questions: ResearchQuestionData[],
@@ -16,16 +17,14 @@ interface AnswerQuestionProps {
 
 export const AnswerQuestion = ({questions, onFinishAnswerQuestion, onAnswerQuestion, userData}: AnswerQuestionProps) => {
     const [currentQuestion, setCurrentQuestion] = useState<number>(0);
-
+    const {t} = useTranslation();
     if (questions[currentQuestion].id === null) throw new Error("Question is null");
     if (questions[currentQuestion].options === null) throw new Error("None options are available");
 
     const goBackClick = async () => {
-        console.log("go back clicked!");
         if (currentQuestion === 0) {
             throw new Error("Already in the first question")
         } else {
-
             setCurrentQuestion(currentQuestion-1);
         }
     }
@@ -76,7 +75,7 @@ export const AnswerQuestion = ({questions, onFinishAnswerQuestion, onAnswerQuest
     return (
         <div className={"questionRootContainer"}>
             <div className={"headerContainer"}>
-                Pergunta {parseInt(questions[currentQuestion].id!!) + 1}
+                {t("question_number", {questionNumber: parseInt(questions[currentQuestion].id!!) + 1})}
             </div>
             <div className={"questionsContainer"}>
                 <div className={"answerQuestionGoBackContainer"}>
@@ -89,7 +88,7 @@ export const AnswerQuestion = ({questions, onFinishAnswerQuestion, onAnswerQuest
                 </div>
                 <div className={"answerQuestionContentContainer"}>
                     <div className={"answerQuestionTitleContainer"}>
-                        {userData.name + ', ' + questions[currentQuestion].question}
+                        {questions[currentQuestion].question}
                     </div>
                     <div className={"answerQuestionOptionsContainer"}>
                         <Scrollbar className={"scrollBar"}>

@@ -7,21 +7,14 @@ import {useSelector} from "react-redux";
 import {DashboardScreen} from "../DashboardScreen/DashboardScreen";
 import {Grid} from "@material-ui/core";
 
-
-
-
 export const MainScreen = () => {
     const history = useHistory();
-    let {path, url} = useRouteMatch();
+    let {path} = useRouteMatch();
     const user = useSelector((state: ReduxState) => state.user);
-
-    /* TODO - FIX ME - Security
-    * USER CAN EDIT LOCAL STORAGE DATA AND THEN GET ACCESS TO MAIN SCREEN
-    * */
 
     useEffect(() => {
         if (user == null) {
-            history.push("/login");
+            history.replace("/login");
         }
     }, [user]);
 
