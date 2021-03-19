@@ -394,25 +394,23 @@ export const RegisterCarousel = () => {
                     </Step>
                     <Step>
                         <StepLabel>
-                            Pesquisa criada! Go survey! 🤩
+                            {t("stepper_survey_created")}
                         </StepLabel>
                     </Step>
                 </Stepper>
             </div>
-            <div className={"registerCarouselCard"}>
-                <Card className={"card"} elevation={5} raised={true}>
-                    <div className={"header"}>
-                        {t("information")}
-                    </div>
-                    <div className={"contentDiv"}>
-                        {_renderAsFromStep()}
-                    </div>
-                    <div className={"optionsDiv"}>
-                        {_renderBackStep()}
-                        {_renderNextStep()}
-                    </div>
-                </Card>
-            </div>
+            <Card className={"card"}>
+                <div className={"header"}>
+                    {t("information")}
+                </div>
+                <div className={"contentDiv"}>
+                    {_renderAsFromStep()}
+                </div>
+                <div className={"optionsDiv"}>
+                    {_renderBackStep()}
+                    {_renderNextStep()}
+                </div>
+            </Card>
         </div>
     )
 }

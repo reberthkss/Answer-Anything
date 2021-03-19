@@ -53,12 +53,13 @@ const ptBrTranslation = {
     "remove_question": "Remover questão",
     "add_question": "Add question",
     "stepper_supply_a_name_to_research": "Dê um nome e uma descrição a sua pesquisa 🤔",
-    "steppter_create_the_questions": "Liste as perguntas que você tenha em mente 📝",
+    "stepper_create_the_questions": "Liste as perguntas que você tenha em mente 📝",
     "form_text_field_research_title": "Título",
     "form_text_field_research_sub_title": "Sub-título",
     "form_text_field_research_description": "Descrição",
     "error_on_select_option": "Erro ao selecionar a opção",
-    "succeeded_selected_option": "Opção selecionada com sucesso!"
+    "succeeded_selected_option": "Opção selecionada com sucesso!",
+    "stepper_survey_created": "Pesquisa criada! Go survey! 🤩"
 
 };
 

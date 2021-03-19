@@ -52,19 +52,13 @@ const enTranslation = {
     "remove_question": "Remove question",
     "add_question": "Add question",
     "stepper_supply_a_name_to_research": "Supply a name and a description for the research 🤔",
-    "steppter_create_the_questions": "Liste as perguntas que você tenha em mente 📝",
+    "stepper_create_the_questions": "Liste as perguntas que você tenha em mente 📝",
     "form_text_field_research_title": "Title",
     "form_text_field_research_sub_title": "Sub-title",
     "form_text_field_research_description": "Description",
     "error_on_select_option": "Error on select option",
-    "succeeded_selected_option": "Succeeded on select option!"
-
-
-
-
-
-
-
+    "succeeded_selected_option": "Succeeded on select option!",
+    "stepper_survey_created": "Research created! Go survey! 🤩"
 }
 
 export default enTranslation;
